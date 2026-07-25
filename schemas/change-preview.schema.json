@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.jlceda.invalid/schemas/change-preview-1.0.0.json",
+  "title": "Offline Change Preview Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "kind", "generatedAt", "baseSnapshot", "changeSetId", "projectUuid", "disposition", "edaWriteAuthorized", "operationSummary", "riskSummary", "blockers", "warnings", "integrity"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "kind": { "const": "jlceda-change-preview" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "baseSnapshot": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "changeSetId": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "projectUuid": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "disposition": { "enum": ["blocked", "review-required"] },
+    "edaWriteAuthorized": { "const": false },
+    "operationSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total", "addComponent", "updateComponent", "addNet"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "addComponent": { "type": "integer", "minimum": 0 },
+        "updateComponent": { "type": "integer", "minimum": 0 },
+        "addNet": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "riskSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["medium", "high"],
+      "properties": {
+        "medium": { "type": "integer", "minimum": 0 },
+        "high": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "blockers": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 512 } },
+    "warnings": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 512 } },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest"],
+      "properties": {
+        "algorithm": { "const": "sha256" },
+        "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    }
+  }
+}

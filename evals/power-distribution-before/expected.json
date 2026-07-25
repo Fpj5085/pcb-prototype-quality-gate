@@ -1,0 +1,36 @@
+{
+  "schema": "jlceda-eval-expected/1.0",
+  "rating": "not_suitable_for_prototype",
+  "counts": {
+    "pass": 3,
+    "advisory": 0,
+    "blocker": 1
+  },
+  "requiredFindings": [
+    {
+      "id": "DECOUPLING_DISTANCE:J2:+5V",
+      "severity": "blocker",
+      "confidence": "high"
+    },
+    {
+      "id": "TRACE_PASS:+5V",
+      "severity": "pass"
+    },
+    {
+      "id": "TRACE_PASS:GND",
+      "severity": "pass"
+    },
+    {
+      "id": "SCHEMATIC_TOPOLOGY",
+      "severity": "pass"
+    }
+  ],
+  "forbiddenSeverities": [],
+  "findingIdsExact": [
+    "TRACE_PASS:+5V",
+    "TRACE_PASS:GND",
+    "DECOUPLING_DISTANCE:J2:+5V",
+    "SCHEMATIC_TOPOLOGY"
+  ],
+  "claimBoundary": "Offline deterministic forecast; no live EDA save/reload evidence is bundled."
+}

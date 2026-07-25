@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.jlceda.invalid/schemas/firmware-pin-manifest-1.0.0.json",
+  "title": "Firmware Pin Binding Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "kind", "status", "generatedAt", "sourceHardwareContract", "projectUuid", "bindings", "ignoredHardwareSignals", "approvals", "integrity"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "kind": { "const": "firmware-pin-manifest" },
+    "status": { "enum": ["draft", "reviewed"] },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "sourceHardwareContract": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "projectUuid": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "bindings": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["signal", "mcuPin", "direction", "activeLevel", "voltageDomain", "firmware", "approved"],
+        "properties": {
+          "signal": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "mcuPin": { "type": ["string", "null"], "maxLength": 64 },
+          "direction": { "type": ["string", "null"], "maxLength": 64 },
+          "activeLevel": { "type": ["string", "null"], "maxLength": 64 },
+          "voltageDomain": { "type": ["string", "null"], "maxLength": 64 },
+          "firmware": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["symbol", "peripheral", "mode"],
+            "properties": {
+              "symbol": { "type": ["string", "null"], "maxLength": 256 },
+              "peripheral": { "type": ["string", "null"], "maxLength": 128 },
+              "mode": { "type": ["string", "null"], "maxLength": 128 }
+            }
+          },
+          "approved": { "type": "boolean" }
+        }
+      }
+    },
+    "ignoredHardwareSignals": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["signal", "reason", "approved"],
+        "properties": {
+          "signal": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "reason": { "type": "string", "minLength": 1, "maxLength": 512 },
+          "approved": { "type": "boolean" }
+        }
+      }
+    },
+    "approvals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hardwareOwner", "firmwareOwner"],
+      "properties": {
+        "hardwareOwner": { "type": "boolean" },
+        "firmwareOwner": { "type": "boolean" }
+      }
+    },
+    "integrity": { "$ref": "#/$defs/integrity" }
+  },
+  "$defs": {
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest"],
+      "properties": {
+        "algorithm": { "const": "sha256" },
+        "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    }
+  }
+}

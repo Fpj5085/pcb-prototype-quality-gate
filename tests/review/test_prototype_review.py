@@ -1,0 +1,147 @@
+import copy
+import json
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+REPO = HERE.parents[1]
+ROOT = REPO / "src" / "review"
+FIXTURES = HERE / "fixtures"
+sys.path.insert(0, str(ROOT))
+
+from prototype_review import (  # noqa: E402
+    Review,
+    RATING_FIX_FIRST,
+    RATING_SUITABLE,
+    RATING_UNSUITABLE,
+    normalize_raw_input,
+)
+
+
+class PrototypeReviewTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.profiles = json.loads((ROOT / "component-profiles.json").read_text(encoding="utf-8"))
+        cls.safe = json.loads((FIXTURES / "synthetic-safe-input.json").read_text(encoding="utf-8"))
+
+    def review(self, design):
+        return Review(copy.deepcopy(design), self.profiles).run()
+
+    def ids(self, result):
+        return {f["id"] for f in result["findings"]}
+
+    def test_current_car_black_box_hits_required_families(self):
+        path = FIXTURES / "car-adversarial-input.json"
+        design = json.loads(path.read_text(encoding="utf-8"))
+        result = self.review(design)
+        ids = self.ids(result)
+        expected_prefixes = [
+            "POWER_HEADROOM:U_REG", "PACKAGE_UNSUPPORTED:U_REG", "FUSE_HOLD:F_INPUT", "HBRIDGE_THERMAL:U_DRIVER",
+            "TRACE_CAPACITY:VIN_IN", "BULK_CAP:U_DRIVER:VIN_PROT", "DECOUPLING_DISTANCE:U_DRIVER:VIN_PROT",
+            "LEVEL_MARGIN:SENSOR_ECHO", "DEBUG_SIGNALS", "TESTPOINTS", "SILKSCREEN",
+        ]
+        for expected in expected_prefixes:
+            self.assertIn(expected, ids)
+        self.assertEqual(result["rating"], RATING_UNSUITABLE)
+        self.assertEqual(design["checks"]["pcbDrcFindings"], 0)
+
+    def test_synthetic_safe_fixture_has_no_current_design_names_and_passes(self):
+        text = (FIXTURES / "synthetic-safe-input.json").read_text(encoding="utf-8")
+        for forbidden in ["L293D", "AMS1117", "STM32F030", "HC-SR04", "MF-MSMF050"]:
+            self.assertNotIn(forbidden, text)
+        result = self.review(self.safe)
+        self.assertEqual(result["rating"], RATING_SUITABLE)
+        self.assertEqual(result["counts"]["blocker"], 0)
+        self.assertEqual(result["counts"]["advisory"], 0)
+
+    def test_dropout_exact_boundary_passes_and_below_fails(self):
+        d = copy.deepcopy(self.safe)
+        d["powerPaths"][0]["sourceMinV"] = 5.3
+        r = self.review(d)
+        self.assertNotIn("POWER_HEADROOM:PWR_A", self.ids(r))
+        d["powerPaths"][0]["sourceMinV"] = 5.299
+        self.assertIn("POWER_HEADROOM:PWR_A", self.ids(self.review(d)))
+
+    def test_fuse_hold_boundary(self):
+        d = copy.deepcopy(self.safe)
+        d["protectedCircuits"][0].update({"continuousCurrentA": 2.4, "surgeCurrentA": 5.9, "holdDerating": 0.8})
+        self.assertIn("FUSE_PASS:FUSE_A", self.ids(self.review(d)))
+        d["protectedCircuits"][0]["continuousCurrentA"] = 2.401
+        self.assertIn("FUSE_HOLD:FUSE_A", self.ids(self.review(d)))
+
+    def test_hbridge_thermal_threshold(self):
+        d = copy.deepcopy(self.safe)
+        d["hbridgeUses"][0]["maxEstimatedRiseC"] = 4.0
+        self.assertNotEqual(self.review(d)["rating"], RATING_UNSUITABLE)
+        d["hbridgeUses"][0]["maxEstimatedRiseC"] = 3.99
+        self.assertIn("HBRIDGE_THERMAL:DRV_A", self.ids(self.review(d)))
+        f = next(x for x in self.review(d)["findings"] if x["id"] == "HBRIDGE_THERMAL:DRV_A")
+        self.assertEqual(f["severity"], "blocker")
+
+    def test_regulator_thermal_budget(self):
+        d = copy.deepcopy(self.safe)
+        d["regulatorUses"][0]["loadMaxA"] = 0.25
+        f = next(x for x in self.review(d)["findings"] if x["id"] == "REGULATOR_THERMAL:PWR_A")
+        self.assertEqual(f["severity"], "advisory")
+        d["regulatorUses"][0]["loadMaxA"] = 0.5
+        f = next(x for x in self.review(d)["findings"] if x["id"] == "REGULATOR_THERMAL:PWR_A")
+        self.assertEqual(f["severity"], "blocker")
+
+    def test_trace_width_current_boundary(self):
+        d = copy.deepcopy(self.safe)
+        net = d["nets"][0]
+        cap = Review.ipc2221_capacity(net["minWidthMm"], 1.0, 10.0)
+        net["designCurrentA"] = cap / 1.25
+        self.assertIn("TRACE_PASS:SOURCE", self.ids(self.review(d)))
+        net["designCurrentA"] = cap / 1.25 + 0.001
+        self.assertIn("TRACE_CAPACITY:SOURCE", self.ids(self.review(d)))
+
+    def test_decoupling_distance_boundary(self):
+        d = copy.deepcopy(self.safe)
+        cap = next(c for c in d["components"] if c["ref"] == "C_FAST_RAW")
+        cap["x"] = 33.0
+        self.assertIn("DECOUPLING_PASS:DRV_A:RAW", self.ids(self.review(d)))
+        cap["x"] = 33.001
+        self.assertIn("DECOUPLING_DISTANCE:DRV_A:RAW", self.ids(self.review(d)))
+
+    def test_level_margin_boundary(self):
+        d = copy.deepcopy(self.safe)
+        div = d["voltageDividers"][0]
+        div.update({"inputMaxV": 5.1, "topOhm": 1, "bottomOhm": 2, "receiverAbsMaxV": 3.6, "requiredMarginV": 0.2})
+        finding = next(f for f in self.review(d)["findings"] if f["id"] == "LEVEL_MARGIN:SENSE_A")
+        self.assertEqual(finding["severity"], "pass")
+        div["inputMaxV"] = 5.115
+        finding = next(f for f in self.review(d)["findings"] if f["id"] == "LEVEL_MARGIN:SENSE_A")
+        self.assertEqual(finding["severity"], "advisory")
+
+    def test_missing_datasheet_degrades_rating_but_other_checks_continue(self):
+        d = copy.deepcopy(self.safe)
+        d["components"].append({"ref": "CRITICAL_X", "critical": True, "package": "GENERIC", "x": 0, "y": 0, "nets": []})
+        result = self.review(d)
+        self.assertIn("DATASHEET_MISSING:CRITICAL_X", self.ids(result))
+        self.assertEqual(result["rating"], RATING_FIX_FIRST)
+        self.assertGreater(result["counts"]["pass"], 0)
+
+    def test_drc_zero_does_not_override_engineering_blocker(self):
+        d = copy.deepcopy(self.safe)
+        self.assertEqual(d["checks"]["pcbDrcFindings"], 0)
+        d["powerPaths"][0]["sourceMinV"] = 4.0
+        result = self.review(d)
+        self.assertEqual(result["rating"], RATING_UNSUITABLE)
+        self.assertIn("POWER_HEADROOM:PWR_A", self.ids(result))
+
+    def test_ground_and_topology_fail_closed(self):
+        d = copy.deepcopy(self.safe)
+        d["groundReview"]["islands"] = 1
+        d["schematicTopology"]["floatingInputs"] = ["CTRL_A.5"]
+        result = self.review(d)
+        ids = self.ids(result)
+        self.assertIn("GROUND_RETURN", ids)
+        self.assertIn("SCHEMATIC_TOPOLOGY", ids)
+        self.assertEqual(result["rating"], RATING_UNSUITABLE)
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)

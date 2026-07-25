@@ -1,0 +1,35 @@
+{
+  "name": "codex-jlceda-hardware-agent",
+  "version": "0.1.0-alpha",
+  "description": "Evidence-driven Prototype readiness review and governed repair planning for JLCEDA hardware workflows.",
+  "author": {
+    "name": "codex-jlceda-hardware-agent contributors"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "jlceda",
+    "easyeda",
+    "hardware-review",
+    "prototype-readiness",
+    "pcb"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "JLCEDA Hardware Quality Gate",
+    "shortDescription": "Review AI-generated hardware before prototyping.",
+    "longDescription": "A governed, evidence-driven Prototype review workflow for normalized JLCEDA schematic and PCB evidence, with explainable findings and conservative bounded-repair planning.",
+    "developerName": "Project contributors",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read-only review",
+      "Evidence-based rating",
+      "Bounded repair planning"
+    ],
+    "defaultPrompt": [
+      "Review this normalized JLCEDA evidence in Prototype mode and explain whether it is worth a low-risk sample.",
+      "请审核这份嘉立创EDA归一化证据，列出阻止打样的问题和需要补测的参数。",
+      "Compare the BEFORE and AFTER fixtures and verify that only the intended finding changes."
+    ],
+    "brandColor": "#2563EB"
+  }
+}

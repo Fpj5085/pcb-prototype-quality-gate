@@ -1,0 +1,123 @@
+# Public file list
+
+This is the complete intended file set for the local v0.1.0-alpha Git repository and release archive. All paths are repository-relative. Local Git metadata and the external ZIP/checksum sidecar are not part of the archive.
+
+**Total intended repository files: 94.**
+
+## Core review and command entry
+
+- `scripts/prototype-review.ps1`
+- `scripts/run-evals.py`
+- `src/review/component-profiles.json`
+- `src/review/prototype_review.py`
+
+## Schemas
+
+- `schemas/README.md`
+- `schemas/change-preview.schema.json`
+- `schemas/change-set.schema.json`
+- `schemas/circuit-dsl.schema.json`
+- `schemas/component-lockfile.schema.json`
+- `schemas/component-profiles.schema.json`
+- `schemas/firmware-pin-manifest.schema.json`
+- `schemas/hardware-contract.schema.json`
+- `schemas/pin-consistency-report.schema.json`
+- `schemas/project-snapshot.schema.json`
+- `schemas/prototype-review-input.schema.json`
+- `schemas/prototype-review-output.schema.json`
+
+## Codex plugin and skill
+
+- `.codex-plugin/plugin.json`
+- `skills/jlceda-hardware-design/SKILL.md`
+- `skills/jlceda-hardware-design/agents/openai.yaml`
+- `skills/jlceda-hardware-design/references/review-evidence.md`
+- `skills/jlceda-hardware-design/references/safety-and-privacy.md`
+- `skills/jlceda-hardware-design/references/supported-repair-policy.md`
+- `skills/jlceda-hardware-design/references/work-modes.md`
+
+## Evaluations and tests
+
+- `evals/car-controller-adversarial/README.md`
+- `evals/car-controller-adversarial/evidence/README.md`
+- `evals/car-controller-adversarial/evidence/status.json`
+- `evals/car-controller-adversarial/expected.json`
+- `evals/car-controller-adversarial/input.json`
+- `evals/car-controller-adversarial/manifest.json`
+- `evals/car-controller-adversarial/manifest.template.json`
+- `evals/power-distribution-after/README.md`
+- `evals/power-distribution-after/evidence/README.md`
+- `evals/power-distribution-after/evidence/status.json`
+- `evals/power-distribution-after/expected.json`
+- `evals/power-distribution-after/input.json`
+- `evals/power-distribution-after/manifest.json`
+- `evals/power-distribution-after/manifest.template.json`
+- `evals/power-distribution-before/README.md`
+- `evals/power-distribution-before/evidence/README.md`
+- `evals/power-distribution-before/evidence/status.json`
+- `evals/power-distribution-before/expected.json`
+- `evals/power-distribution-before/input.json`
+- `evals/power-distribution-before/manifest.json`
+- `evals/power-distribution-before/manifest.template.json`
+- `evals/synthetic-safe/README.md`
+- `evals/synthetic-safe/evidence/README.md`
+- `evals/synthetic-safe/evidence/status.json`
+- `evals/synthetic-safe/expected.json`
+- `evals/synthetic-safe/input.json`
+- `evals/synthetic-safe/manifest.json`
+- `evals/synthetic-safe/manifest.template.json`
+- `tests/__init__.py`
+- `tests/review/__init__.py`
+- `tests/review/fixtures/car-adversarial-input.json`
+- `tests/review/fixtures/synthetic-safe-input.json`
+- `tests/review/test_prototype_review.py`
+- `tests/review/test_release_runtime.py`
+
+## Documentation and examples
+
+- `docs/architecture.md`
+- `docs/demo.md`
+- `docs/evidence-schema.md`
+- `docs/limitations.md`
+- `docs/privacy.md`
+- `docs/resume.md`
+- `docs/review-model.md`
+- `docs/roadmap.md`
+- `docs/supported-repairs.md`
+- `examples/README.md`
+- `examples/expected-output.zh-CN.md`
+- `examples/ordinary-language-requests.zh-CN.md`
+
+## Repository governance and metadata
+
+- `.gitattributes`
+- `.gitignore`
+- `CHANGELOG.md`
+- `CONTRIBUTING.md`
+- `INSTALL.md`
+- `LICENSE`
+- `LICENSE-DECISION.md`
+- `NOTICE`
+- `README.md`
+- `README.zh-CN.md`
+- `SECURITY.md`
+- `THIRD_PARTY.md`
+- `VERSION`
+
+## Release inventory and validation
+
+- `EXCLUDED-FILES.md`
+- `FILE-MANIFEST.json`
+- `PRIVACY-SCAN.md`
+- `PUBLIC-FILES.md`
+- `RELEASE-CHECKLIST.md`
+- `SHA256SUMS.txt`
+- `TEST-REPORT.md`
+
+## Release audit detail
+
+- `release-audit/DOCS-REVIEW.md`
+- `release-audit/M2-INTEGRATION-STATUS.md`
+- `release-audit/PRIVACY-SCAN-ALLOWLIST.json`
+- `release-audit/SOURCE-BOUNDARY.md`
+- `release-audit/SOURCE-INVENTORY.md`

@@ -1,0 +1,93 @@
+{
+  "schema": "jlceda-eval-expected/1.0",
+  "rating": "not_suitable_for_prototype",
+  "counts": {
+    "pass": 5,
+    "advisory": 9,
+    "blocker": 15
+  },
+  "requiredFindings": [
+    {
+      "id": "POWER_HEADROOM:U_REG",
+      "severity": "blocker"
+    },
+    {
+      "id": "PACKAGE_UNSUPPORTED:U_REG",
+      "severity": "blocker"
+    },
+    {
+      "id": "FUSE_HOLD:F_INPUT",
+      "severity": "blocker"
+    },
+    {
+      "id": "HBRIDGE_THERMAL:U_DRIVER",
+      "severity": "blocker"
+    },
+    {
+      "id": "TRACE_CAPACITY:VIN_IN",
+      "severity": "blocker"
+    },
+    {
+      "id": "BULK_CAP:U_DRIVER:VIN_PROT",
+      "severity": "blocker"
+    },
+    {
+      "id": "DECOUPLING_DISTANCE:U_DRIVER:VIN_PROT",
+      "severity": "blocker"
+    },
+    {
+      "id": "LEVEL_MARGIN:SENSOR_ECHO",
+      "severity": "advisory"
+    },
+    {
+      "id": "DEBUG_SIGNALS",
+      "severity": "advisory"
+    },
+    {
+      "id": "TESTPOINTS",
+      "severity": "advisory"
+    },
+    {
+      "id": "SILKSCREEN",
+      "severity": "advisory"
+    }
+  ],
+  "benchmark": {
+    "scope": "this sanitized fixture only",
+    "seededRiskFamilies": 9,
+    "requiredFamilyMatches": {
+      "regulator-headroom": [
+        "POWER_HEADROOM:U_REG"
+      ],
+      "regulator-package": [
+        "PACKAGE_UNSUPPORTED:U_REG"
+      ],
+      "input-protection-budget": [
+        "FUSE_HOLD:F_INPUT"
+      ],
+      "motor-driver-loss": [
+        "HBRIDGE_THERMAL:U_DRIVER"
+      ],
+      "power-routing": [
+        "TRACE_CAPACITY:VIN_IN"
+      ],
+      "local-energy-storage": [
+        "BULK_CAP:U_DRIVER:VIN_PROT"
+      ],
+      "local-decoupling": [
+        "DECOUPLING_DISTANCE:U_DRIVER:VIN_PROT"
+      ],
+      "interface-level-margin": [
+        "LEVEL_MARGIN:SENSOR_ECHO"
+      ],
+      "debug-and-usability": [
+        "DEBUG_SIGNALS",
+        "TESTPOINTS",
+        "SILKSCREEN"
+      ]
+    },
+    "expectedMatchedFamilies": 9,
+    "generalAccuracyClaim": false
+  },
+  "claimBoundary": "9/9 refers only to the nine seeded/manual benchmark risk families in this fixture."
+}

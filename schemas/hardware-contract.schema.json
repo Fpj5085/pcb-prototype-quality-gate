@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.jlceda.invalid/schemas/hardware-contract-1.0.0.json",
+  "title": "JLCEDA Hardware Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "kind", "status", "generatedAt", "sourceSnapshot", "board", "components", "signals", "interfaces", "powerDomains", "constraints", "approvals", "unresolved"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "kind": { "const": "hardware-contract" },
+    "status": { "enum": ["draft", "reviewed", "approved"] },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "sourceSnapshot": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "board": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["projectUuid", "projectName", "boardName", "schematicUuid", "pcbUuid"],
+      "properties": {
+        "projectUuid": { "type": "string", "minLength": 1 },
+        "projectName": { "type": ["string", "null"] },
+        "boardName": { "type": ["string", "null"] },
+        "schematicUuid": { "type": ["string", "null"] },
+        "pcbUuid": { "type": ["string", "null"] }
+      }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["designator", "name", "manufacturerId", "supplierId", "footprintUuid", "approved"],
+        "properties": {
+          "designator": { "type": ["string", "null"] },
+          "name": { "type": ["string", "null"] },
+          "manufacturerId": { "type": ["string", "null"] },
+          "supplierId": { "type": ["string", "null"] },
+          "footprintUuid": { "type": ["string", "null"] },
+          "approved": { "type": "boolean" }
+        }
+      }
+    },
+    "signals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "mcuPin", "direction", "activeLevel", "voltageDomain", "approved"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "mcuPin": { "type": ["string", "null"] },
+          "direction": { "type": ["string", "null"] },
+          "activeLevel": { "type": ["string", "null"] },
+          "voltageDomain": { "type": ["string", "null"] },
+          "approved": { "type": "boolean" }
+        }
+      }
+    },
+    "interfaces": { "type": "array" },
+    "powerDomains": { "type": "array" },
+    "constraints": { "type": "array" },
+    "approvals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["componentSelection", "pinMap", "electricalRules", "firmwareBinding"],
+      "properties": {
+        "componentSelection": { "type": "boolean" },
+        "pinMap": { "type": "boolean" },
+        "electricalRules": { "type": "boolean" },
+        "firmwareBinding": { "type": "boolean" }
+      }
+    },
+    "unresolved": { "type": "array", "items": { "type": "string" } }
+  }
+}

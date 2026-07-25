@@ -1,0 +1,7 @@
+{
+  "schema": "jlceda-eval-evidence-status/1.0",
+  "evalId": "synthetic-safe",
+  "status": "not-bundled",
+  "liveEvidenceIncluded": false,
+  "reason": "This public fixture intentionally excludes raw projects, screenshots and private execution logs."
+}

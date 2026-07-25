@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.jlceda.invalid/schemas/prototype-review-output.schema.json",
+  "title": "JLCEDA Prototype review result",
+  "type": "object",
+  "required": ["schema", "generatedAt", "designName", "rating", "counts", "findings"],
+  "properties": {
+    "schema": {"const": "jlceda-prototype-review/1.0"},
+    "generatedAt": {"type": "string", "format": "date-time"},
+    "designName": {"type": "string", "minLength": 1},
+    "rating": {
+      "enum": [
+        "not_suitable_for_prototype",
+        "suitable_after_corrections",
+        "suitable_for_low_risk_prototype"
+      ]
+    },
+    "counts": {
+      "type": "object",
+      "required": ["blocker", "advisory", "pass"],
+      "properties": {
+        "blocker": {"type": "integer", "minimum": 0},
+        "advisory": {"type": "integer", "minimum": 0},
+        "pass": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "severity", "confidence", "title", "locations", "evidence", "calculation", "ruleFamily"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "severity": {"enum": ["blocker", "advisory", "pass"]},
+          "confidence": {"enum": ["low", "medium", "high"]},
+          "title": {"type": "string"},
+          "riskZh": {"type": "string"},
+          "locations": {"type": "array", "items": {"type": "string"}},
+          "evidence": {"type": "array", "items": {"type": "object"}},
+          "calculation": {"type": "string"},
+          "recommendationZh": {"type": "string"},
+          "revalidation": {"type": "string"},
+          "unresolvedAssumptions": {"type": "array", "items": {"type": "string"}},
+          "ruleFamily": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": true
+      }
+    },
+    "sourceEvidence": {"type": "array", "items": {"type": "string"}},
+    "ratingPolicy": {"type": "object"}
+  },
+  "additionalProperties": true
+}

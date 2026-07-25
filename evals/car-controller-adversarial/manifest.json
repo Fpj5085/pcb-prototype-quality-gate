@@ -1,0 +1,25 @@
+{
+  "schema": "jlceda-eval-manifest/1.0",
+  "id": "car-controller-adversarial",
+  "title": "Two-motor controller adversarial Prototype review fixture",
+  "fixtureKind": "sanitized-adversarial-replay",
+  "input": "input.json",
+  "expected": "expected.json",
+  "evidence": "evidence/status.json",
+  "execution": {
+    "status": "offline-replay-from-sanitized-evidence",
+    "liveEdaVerified": false,
+    "liveSaveReloadVerified": false,
+    "edaWritesInThisReleaseFixture": 0
+  },
+  "privacy": {
+    "containsRealProjectIdentifiers": false,
+    "containsInternalUuidsOrApprovalIds": false,
+    "containsScreenshotsOrPrivateLogs": false,
+    "containsBundledThirdPartyDatasheets": false
+  },
+  "notes": [
+    "Project, page, library and object identifiers have been removed or replaced.",
+    "No screenshots, private logs, EDA project files or third-party documents are bundled."
+  ]
+}

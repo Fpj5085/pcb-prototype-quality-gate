@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.jlceda.invalid/schemas/project-snapshot-1.0.0.json",
+  "title": "JLCEDA Read-Only Project Snapshot",
+  "type": "object",
+  "required": ["schemaVersion", "kind", "createdAt", "project", "sources", "schematic", "pcb", "bom", "warnings", "contentDigest", "integrity"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "kind": { "const": "jlceda-project-snapshot" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "project": {
+      "type": "object",
+      "required": ["uuid"],
+      "properties": { "uuid": { "type": "string", "minLength": 1 } }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["captureDigest", "capturedAt", "documentUuid", "scope"],
+        "properties": {
+          "captureDigest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "capturedAt": { "type": "string", "format": "date-time" },
+          "documentUuid": { "type": ["string", "null"] },
+          "scope": { "enum": ["project", "schematic", "pcb"] }
+        }
+      }
+    },
+    "schematic": { "type": ["object", "null"] },
+    "pcb": { "type": ["object", "null"] },
+    "bom": {
+      "type": "object",
+      "required": ["groups", "reconciliation"],
+      "properties": {
+        "groups": { "type": "array" },
+        "reconciliation": {
+          "type": "object",
+          "required": ["missingFromPcb", "onlyInPcb"],
+          "properties": {
+            "missingFromPcb": { "type": "array", "items": { "type": "string" } },
+            "onlyInPcb": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "contentDigest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "integrity": {
+      "type": "object",
+      "required": ["algorithm", "digest"],
+      "properties": {
+        "algorithm": { "const": "sha256" },
+        "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    }
+  }
+}

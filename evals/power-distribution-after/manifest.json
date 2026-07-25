@@ -1,0 +1,25 @@
+{
+  "schema": "jlceda-eval-manifest/1.0",
+  "id": "power-distribution-after",
+  "title": "5 V / 1 A one-input two-output distribution board - AFTER successor",
+  "fixtureKind": "synthetic-offline-successor",
+  "input": "input.json",
+  "expected": "expected.json",
+  "evidence": "evidence/status.json",
+  "execution": {
+    "status": "offline-successor-forecast-pending-live-evidence",
+    "liveEdaVerified": false,
+    "liveSaveReloadVerified": false,
+    "edaWritesInThisReleaseFixture": 0
+  },
+  "privacy": {
+    "containsRealProjectIdentifiers": false,
+    "containsInternalUuidsOrApprovalIds": false,
+    "containsScreenshotsOrPrivateLogs": false,
+    "containsBundledThirdPartyDatasheets": false
+  },
+  "notes": [
+    "The successor adds one synthetic 100 nF X7R C0805 bypass capacitor at the planned local position.",
+    "Live component identity, save/reload, ERC, connectivity, containment and DRC evidence remain pending."
+  ]
+}

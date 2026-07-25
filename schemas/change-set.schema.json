@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.jlceda.invalid/schemas/change-set-1.0.0.json",
+  "title": "Immutable Offline JLCEDA ChangeSet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "kind", "changeSetId", "status", "createdAt", "base", "sources", "operations", "safety", "integrity"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "kind": { "const": "jlceda-change-set" },
+    "changeSetId": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "status": { "const": "preview-only" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "base": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["snapshot", "contentDigest", "projectUuid", "schematicUuid", "pcbUuid"],
+      "properties": {
+        "snapshot": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "contentDigest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "projectUuid": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "schematicUuid": { "type": ["string", "null"], "maxLength": 128 },
+        "pcbUuid": { "type": ["string", "null"], "maxLength": 128 }
+      }
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["circuitDsl", "componentLock"],
+      "properties": {
+        "circuitDsl": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "componentLock": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+      }
+    },
+    "operations": {
+      "type": "array",
+      "maxItems": 50000,
+      "items": {
+        "oneOf": [
+          { "$ref": "#/$defs/addComponent" },
+          { "$ref": "#/$defs/updateComponent" },
+          { "$ref": "#/$defs/addNet" }
+        ]
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["writeAuthorization", "requiresHumanApproval", "blockers", "warnings"],
+      "properties": {
+        "writeAuthorization": { "const": false },
+        "requiresHumanApproval": { "const": true },
+        "blockers": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 512 } },
+        "warnings": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 512 } }
+      }
+    },
+    "integrity": { "$ref": "#/$defs/integrity" }
+  },
+  "$defs": {
+    "libraryRef": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["library", "uuid"],
+      "properties": {
+        "library": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "uuid": { "type": "string", "minLength": 1, "maxLength": 128 }
+      }
+    },
+    "risk": { "enum": ["medium", "high"] },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["componentId", "designator", "role", "value", "selectionKey", "manufacturer", "mpn", "supplier", "supplierPartNumber", "symbolRef", "footprintRef"],
+      "properties": {
+        "componentId": { "type": "string", "pattern": "^[a-z][a-z0-9_-]{0,63}$" },
+        "designator": { "type": "string", "minLength": 1, "maxLength": 32 },
+        "role": { "type": ["string", "null"], "maxLength": 128 },
+        "value": { "type": ["string", "null"], "maxLength": 256 },
+        "selectionKey": { "type": ["string", "null"], "maxLength": 128 },
+        "manufacturer": { "type": ["string", "null"], "maxLength": 128 },
+        "mpn": { "type": ["string", "null"], "maxLength": 128 },
+        "supplier": { "type": ["string", "null"], "maxLength": 128 },
+        "supplierPartNumber": { "type": ["string", "null"], "maxLength": 128 },
+        "symbolRef": { "$ref": "#/$defs/libraryRef" },
+        "footprintRef": { "$ref": "#/$defs/libraryRef" }
+      }
+    },
+    "addComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operationId", "type", "component", "risk", "rationale"],
+      "properties": {
+        "operationId": { "type": "string", "pattern": "^op-[0-9]{4,}$" },
+        "type": { "const": "add_component" },
+        "component": { "$ref": "#/$defs/component" },
+        "risk": { "$ref": "#/$defs/risk" },
+        "rationale": { "type": "string", "minLength": 1, "maxLength": 512 }
+      }
+    },
+    "updateComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operationId", "type", "designator", "expectedFingerprint", "changes", "risk", "rationale"],
+      "properties": {
+        "operationId": { "type": "string", "pattern": "^op-[0-9]{4,}$" },
+        "type": { "const": "update_component" },
+        "designator": { "type": "string", "minLength": 1, "maxLength": 32 },
+        "expectedFingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "changes": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "value": { "type": ["string", "null"], "maxLength": 256 },
+            "manufacturerId": { "type": ["string", "null"], "maxLength": 128 },
+            "supplierId": { "type": ["string", "null"], "maxLength": 128 },
+            "footprintUuid": { "type": ["string", "null"], "maxLength": 128 }
+          }
+        },
+        "risk": { "$ref": "#/$defs/risk" },
+        "rationale": { "type": "string", "minLength": 1, "maxLength": 512 }
+      }
+    },
+    "addNet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operationId", "type", "net", "risk", "rationale"],
+      "properties": {
+        "operationId": { "type": "string", "pattern": "^op-[0-9]{4,}$" },
+        "type": { "const": "add_net" },
+        "net": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["netId", "name", "class", "voltageDomain", "nodes"],
+          "properties": {
+            "netId": { "type": "string", "pattern": "^[a-z][a-z0-9_-]{0,63}$" },
+            "name": { "type": "string", "minLength": 1, "maxLength": 128 },
+            "class": { "enum": ["signal", "power", "ground", "analog", "clock", "reset", "programming", "differential"] },
+            "voltageDomain": { "type": ["string", "null"], "maxLength": 64 },
+            "nodes": {
+              "type": "array",
+              "maxItems": 10000,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["componentId", "pin"],
+                "properties": {
+                  "componentId": { "type": "string", "minLength": 1, "maxLength": 64 },
+                  "pin": { "type": "string", "minLength": 1, "maxLength": 64 }
+                }
+              }
+            }
+          }
+        },
+        "risk": { "$ref": "#/$defs/risk" },
+        "rationale": { "type": "string", "minLength": 1, "maxLength": 512 }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest"],
+      "properties": {
+        "algorithm": { "const": "sha256" },
+        "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    }
+  }
+}

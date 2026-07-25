@@ -1,0 +1,42 @@
+{
+  "schema": "jlceda-eval-expected/1.0",
+  "rating": "suitable_for_low_risk_prototype",
+  "counts": {
+    "pass": 4,
+    "advisory": 0,
+    "blocker": 0
+  },
+  "requiredFindings": [
+    {
+      "id": "DECOUPLING_PASS:J2:+5V",
+      "severity": "pass",
+      "confidence": "high"
+    },
+    {
+      "id": "TRACE_PASS:+5V",
+      "severity": "pass"
+    },
+    {
+      "id": "TRACE_PASS:GND",
+      "severity": "pass"
+    },
+    {
+      "id": "SCHEMATIC_TOPOLOGY",
+      "severity": "pass"
+    }
+  ],
+  "forbiddenFindings": [
+    "DECOUPLING_DISTANCE:J2:+5V"
+  ],
+  "forbiddenSeverities": [
+    "blocker",
+    "advisory"
+  ],
+  "findingIdsExact": [
+    "TRACE_PASS:+5V",
+    "TRACE_PASS:GND",
+    "DECOUPLING_PASS:J2:+5V",
+    "SCHEMATIC_TOPOLOGY"
+  ],
+  "claimBoundary": "Offline successor forecast only; the rating is not a live EDA closure claim."
+}

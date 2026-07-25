@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.jlceda.invalid/schemas/component-lockfile-1.0.0.json",
+  "title": "Component Selection and Datasheet Evidence Lockfile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "kind", "status", "generatedAt", "sourceDsl", "projectUuid", "components", "approvals", "unresolved", "integrity"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "kind": { "const": "component-lockfile" },
+    "status": { "enum": ["draft", "locked"] },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "sourceDsl": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "projectUuid": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "components": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["selectionKey", "manufacturer", "mpn", "supplier", "supplierPartNumber", "lifecycle", "symbolRef", "footprintRef", "footprintPinCount", "pinMap", "evidenceDocuments", "claims", "approved"],
+        "properties": {
+          "selectionKey": { "type": "string", "pattern": "^[a-z][a-z0-9_.-]{0,127}$" },
+          "manufacturer": { "type": ["string", "null"], "maxLength": 128 },
+          "mpn": { "type": ["string", "null"], "maxLength": 128 },
+          "supplier": { "type": ["string", "null"], "maxLength": 128 },
+          "supplierPartNumber": { "type": ["string", "null"], "maxLength": 128 },
+          "lifecycle": { "enum": ["unknown", "active", "nrfd", "obsolete", "not-recommended"] },
+          "symbolRef": { "$ref": "#/$defs/libraryRef" },
+          "footprintRef": { "$ref": "#/$defs/libraryRef" },
+          "footprintPinCount": { "type": ["integer", "null"], "minimum": 1, "maximum": 100000 },
+          "pinMap": {
+            "type": "array",
+            "maxItems": 100000,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["symbolPin", "footprintPad", "function", "approved"],
+              "properties": {
+                "symbolPin": { "type": "string", "minLength": 1, "maxLength": 64 },
+                "footprintPad": { "type": "string", "minLength": 1, "maxLength": 64 },
+                "function": { "type": ["string", "null"], "maxLength": 128 },
+                "approved": { "type": "boolean" }
+              }
+            }
+          },
+          "evidenceDocuments": {
+            "type": "array",
+            "maxItems": 1000,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["evidenceId", "title", "manufacturer", "revision", "sourceUrl", "retrievedAt", "sha256"],
+              "properties": {
+                "evidenceId": { "type": "string", "pattern": "^[a-z][a-z0-9_.-]{0,127}$" },
+                "title": { "type": "string", "minLength": 1, "maxLength": 256 },
+                "manufacturer": { "type": "string", "minLength": 1, "maxLength": 128 },
+                "revision": { "type": ["string", "null"], "maxLength": 64 },
+                "sourceUrl": { "type": "string", "format": "uri", "pattern": "^https://" },
+                "retrievedAt": { "type": "string", "format": "date-time" },
+                "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+              }
+            }
+          },
+          "claims": {
+            "type": "array",
+            "maxItems": 10000,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["claimId", "evidenceId", "topic", "value", "unit", "page", "section", "quote", "verifiedByHuman"],
+              "properties": {
+                "claimId": { "type": "string", "pattern": "^[a-z][a-z0-9_.-]{0,127}$" },
+                "evidenceId": { "type": "string", "pattern": "^[a-z][a-z0-9_.-]{0,127}$" },
+                "topic": { "enum": ["identity", "pinout", "package", "absolute_max", "rated_voltage", "current", "temperature", "timing", "layout", "power", "programming", "polarity", "other"] },
+                "value": { "type": "string", "minLength": 1, "maxLength": 512 },
+                "unit": { "type": ["string", "null"], "maxLength": 32 },
+                "page": { "type": ["integer", "null"], "minimum": 1 },
+                "section": { "type": ["string", "null"], "maxLength": 128 },
+                "quote": { "type": ["string", "null"], "maxLength": 1000 },
+                "verifiedByHuman": { "type": "boolean" }
+              }
+            }
+          },
+          "approved": { "type": "boolean" }
+        }
+      }
+    },
+    "approvals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["componentSelection", "symbolMapping", "footprintMapping", "datasheetEvidence"],
+      "properties": {
+        "componentSelection": { "type": "boolean" },
+        "symbolMapping": { "type": "boolean" },
+        "footprintMapping": { "type": "boolean" },
+        "datasheetEvidence": { "type": "boolean" }
+      }
+    },
+    "unresolved": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 512 } },
+    "integrity": { "$ref": "#/$defs/integrity" }
+  },
+  "$defs": {
+    "libraryRef": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["library", "uuid"],
+      "properties": {
+        "library": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "uuid": { "type": "string", "minLength": 1, "maxLength": 128 }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest"],
+      "properties": {
+        "algorithm": { "const": "sha256" },
+        "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    }
+  }
+}

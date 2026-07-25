@@ -1,0 +1,6 @@
+interface:
+  display_name: JLCEDA Prototype Review
+  short_description: Review AI-generated hardware before a low-risk prototype.
+  default_prompt: Review the supplied JLCEDA evidence in Prototype mode, explain the rating, and keep live EDA work behind an audited environment adapter.
+policy:
+  allow_implicit_invocation: true

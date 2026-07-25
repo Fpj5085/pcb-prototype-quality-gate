@@ -1,0 +1,24 @@
+{
+  "schema": "jlceda-eval-manifest/1.0",
+  "id": "synthetic-safe",
+  "title": "Synthetic low-risk unit fixture",
+  "fixtureKind": "synthetic-unit",
+  "input": "input.json",
+  "expected": "expected.json",
+  "evidence": "evidence/status.json",
+  "execution": {
+    "status": "offline-synthetic-unit",
+    "liveEdaVerified": false,
+    "liveSaveReloadVerified": false,
+    "edaWritesInThisReleaseFixture": 0
+  },
+  "privacy": {
+    "containsRealProjectIdentifiers": false,
+    "containsInternalUuidsOrApprovalIds": false,
+    "containsScreenshotsOrPrivateLogs": false,
+    "containsBundledThirdPartyDatasheets": false
+  },
+  "notes": [
+    "Uses original synthetic component profiles and generic package names."
+  ]
+}

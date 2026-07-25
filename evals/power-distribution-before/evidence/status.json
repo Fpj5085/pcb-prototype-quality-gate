@@ -1,0 +1,7 @@
+{
+  "schema": "jlceda-eval-evidence-status/1.0",
+  "evalId": "power-distribution-before",
+  "status": "pending",
+  "liveEvidenceIncluded": false,
+  "reason": "A future live run must add sanitized identity, readback, save/reload and fresh-review evidence."
+}

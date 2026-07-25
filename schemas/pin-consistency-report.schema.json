@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.jlceda.invalid/schemas/pin-consistency-report-1.0.0.json",
+  "title": "Hardware Firmware Pin Consistency Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "kind", "generatedAt", "sourceHardwareContract", "sourceFirmwareManifest", "projectUuid", "status", "statistics", "blockers", "warnings", "integrity"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "kind": { "const": "pin-consistency-report" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "sourceHardwareContract": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "sourceFirmwareManifest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "projectUuid": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "status": { "enum": ["pass", "blocked", "not-applicable"] },
+    "statistics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hardwareSignals", "firmwareBindings", "ignoredSignals", "matchedBindings"],
+      "properties": {
+        "hardwareSignals": { "type": "integer", "minimum": 0 },
+        "firmwareBindings": { "type": "integer", "minimum": 0 },
+        "ignoredSignals": { "type": "integer", "minimum": 0 },
+        "matchedBindings": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "blockers": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 512 } },
+    "warnings": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 512 } },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest"],
+      "properties": {
+        "algorithm": { "const": "sha256" },
+        "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    }
+  }
+}

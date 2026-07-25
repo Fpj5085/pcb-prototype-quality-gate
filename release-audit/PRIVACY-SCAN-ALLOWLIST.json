@@ -1,0 +1,101 @@
+{
+  "schema": "jlceda-release-privacy-allowlist/1.0",
+  "status": "suggested",
+  "principle": "Allow only documented syntax or policy vocabulary, never a concrete live value.",
+  "entries": [
+    {
+      "id": "schema-security-field-names",
+      "paths": [
+        "schemas/*.schema.json"
+      ],
+      "terms": [
+        "approval",
+        "changeSetId",
+        "projectUuid",
+        "snapshotId"
+      ],
+      "allowedContext": "JSON property names, required-property lists, descriptions, and validation patterns",
+      "forbiddenContext": "A fixture or document containing a concrete live identifier"
+    },
+    {
+      "id": "security-and-audit-vocabulary",
+      "paths": [
+        "SECURITY.md",
+        "LICENSE-DECISION.md",
+        "release-audit/*.md",
+        "skills/**/references/safety-and-privacy.md"
+      ],
+      "terms": [
+        "token",
+        "cookie",
+        "authorization",
+        "password",
+        "private key",
+        "approval",
+        "receipt",
+        "checkpoint",
+        "nonce"
+      ],
+      "allowedContext": "Prohibition, scanning rule, threat model, or excluded-file description",
+      "forbiddenContext": "Assignment, header value, credential example, or copied runtime record"
+    },
+    {
+      "id": "sha256-release-digests",
+      "paths": [
+        "FILE-MANIFEST.json",
+        "SHA256SUMS.txt",
+        "release-audit/*.json",
+        "release-audit/*.md"
+      ],
+      "pattern": "(?i)^[0-9a-f]{64}$",
+      "allowedContext": "A SHA-256 file digest with a repository-relative file name",
+      "forbiddenContext": "An opaque runtime, project, approval, receipt, or session identifier"
+    },
+    {
+      "id": "synthetic-schema-identifiers",
+      "paths": [
+        "schemas/*.schema.json"
+      ],
+      "patterns": [
+        "^https://local[.]jlceda[.]invalid/schemas/[a-z0-9.-]+[.]json$",
+        "^https://example[.]invalid/codex-jlceda-hardware-agent/schemas/[a-z0-9.-]+[.]json$"
+      ],
+      "allowedContext": "Non-resolving JSON Schema $id namespace",
+      "forbiddenContext": "A private resolvable host or service endpoint"
+    },
+    {
+      "id": "symbolic-evaluation-identifiers",
+      "paths": [
+        "evals/**/*.json",
+        "tests/review/fixtures/*.json"
+      ],
+      "pattern": "^[A-Za-z][A-Za-z0-9_:+.-]{0,127}$",
+      "allowedContext": "A human-readable synthetic eval name, reference designator, net name, or finding ID",
+      "forbiddenContext": "A UUID, database key, EDA object identity, approval value, receipt, or opaque session identifier"
+    },
+    {
+      "id": "official-evidence-links",
+      "paths": [
+        "src/review/component-profiles.json",
+        "THIRD_PARTY.md"
+      ],
+      "allowedHosts": [
+        "advanced-monolithic.com",
+        "bourns.com",
+        "st.com",
+        "ti.com",
+        "vishay.com"
+      ],
+      "allowedContext": "Link-only manufacturer evidence citation",
+      "forbiddenContext": "Bundled PDF, copied figure/table, credentialized URL, or private mirror"
+    }
+  ],
+  "neverAllow": [
+    "A real workstation absolute path or username",
+    "A concrete project, page, object, library, or device identifier",
+    "A concrete approval, receipt, checkpoint, nonce, token, cookie, or authorization value",
+    "A private key or password",
+    "A private log, screenshot, EDA project, extension package, data-sheet PDF, or supplier catalog",
+    "Generated caches, temporary smoke output, or unexplained binaries"
+  ]
+}

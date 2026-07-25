@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.jlceda.invalid/schemas/component-profiles.schema.json",
+  "title": "Prototype review component profiles",
+  "type": "object",
+  "required": ["schema", "profiles"],
+  "properties": {
+    "schema": {"const": "jlceda-component-profiles/1.0"},
+    "profiles": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["kind", "source"],
+        "properties": {
+          "kind": {"type": "string", "minLength": 1},
+          "supportedPackages": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+          "source": {
+            "type": "object",
+            "required": ["manufacturer", "title", "confidence", "redistribution"],
+            "properties": {
+              "manufacturer": {"type": "string", "minLength": 1},
+              "title": {"type": "string", "minLength": 1},
+              "url": {"type": ["string", "null"], "format": "uri"},
+              "pageOrTable": {"type": ["string", "null"]},
+              "confidence": {"enum": ["low", "medium", "high"]},
+              "redistribution": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

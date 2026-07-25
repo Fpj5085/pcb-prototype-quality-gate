@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.jlceda.invalid/schemas/prototype-review-input.schema.json",
+  "title": "JLCEDA Prototype review normalized input",
+  "type": "object",
+  "required": ["schema", "designName", "components", "nets", "checks"],
+  "properties": {
+    "schema": {"const": "jlceda-prototype-review-input/1.0"},
+    "designName": {"type": "string", "minLength": 1},
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ref"],
+        "properties": {
+          "ref": {"type": "string", "minLength": 1},
+          "mpn": {"type": "string"},
+          "profile": {"type": "string"},
+          "package": {"type": "string"},
+          "critical": {"type": "boolean"},
+          "capacitanceUf": {"type": "number", "minimum": 0},
+          "x": {"type": "number"},
+          "y": {"type": "number"},
+          "nets": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+        },
+        "additionalProperties": true
+      }
+    },
+    "nets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "role": {"type": "string"},
+          "designCurrentA": {"type": "number", "minimum": 0},
+          "minWidthMm": {"type": "number", "exclusiveMinimum": 0}
+        },
+        "additionalProperties": true
+      }
+    },
+    "checks": {
+      "type": "object",
+      "properties": {
+        "schematicErrors": {"type": "integer", "minimum": 0},
+        "schematicWarnings": {"type": "integer", "minimum": 0},
+        "pcbDrcFindings": {"type": "integer", "minimum": 0},
+        "unroutedNets": {"type": "integer", "minimum": 0},
+        "containment": {"type": "boolean"},
+        "savedReloaded": {"type": "boolean"}
+      },
+      "additionalProperties": true
+    },
+    "sourceEvidence": {"type": "array", "items": {"type": "string"}},
+    "powerPaths": {"type": "array", "items": {"type": "object"}},
+    "protectedCircuits": {"type": "array", "items": {"type": "object"}},
+    "hbridgeUses": {"type": "array", "items": {"type": "object"}},
+    "regulatorUses": {"type": "array", "items": {"type": "object"}},
+    "decouplingRequirements": {"type": "array", "items": {"type": "object"}},
+    "bulkCapRequirements": {"type": "array", "items": {"type": "object"}},
+    "voltageDividers": {"type": "array", "items": {"type": "object"}},
+    "debugInterface": {"type": "object"},
+    "usability": {"type": "object"},
+    "pcb": {"type": "object"},
+    "groundReview": {"type": "object"},
+    "schematicTopology": {"type": "object"},
+    "firmwarePins": {"type": "array", "items": {"type": "object"}}
+  },
+  "additionalProperties": true
+}

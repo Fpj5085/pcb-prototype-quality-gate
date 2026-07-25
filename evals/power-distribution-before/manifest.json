@@ -1,0 +1,25 @@
+{
+  "schema": "jlceda-eval-manifest/1.0",
+  "id": "power-distribution-before",
+  "title": "5 V / 1 A one-input two-output distribution board - BEFORE",
+  "fixtureKind": "synthetic-offline-before",
+  "input": "input.json",
+  "expected": "expected.json",
+  "evidence": "evidence/status.json",
+  "execution": {
+    "status": "offline-pending-live-evidence",
+    "liveEdaVerified": false,
+    "liveSaveReloadVerified": false,
+    "edaWritesInThisReleaseFixture": 0
+  },
+  "privacy": {
+    "containsRealProjectIdentifiers": false,
+    "containsInternalUuidsOrApprovalIds": false,
+    "containsScreenshotsOrPrivateLogs": false,
+    "containsBundledThirdPartyDatasheets": false
+  },
+  "notes": [
+    "The fixture intentionally contains one local-bypass blocker.",
+    "Component count, geometry and checks are synthetic design evidence rather than a live project export."
+  ]
+}

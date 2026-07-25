@@ -1,0 +1,25 @@
+{
+  "schema": "jlceda-eval-manifest/1.0",
+  "id": "<public-case-id>",
+  "title": "<public-case-title>",
+  "fixtureKind": "sanitized-adversarial-replay",
+  "input": "input.json",
+  "expected": "expected.json",
+  "evidence": "evidence/status.json",
+  "execution": {
+    "status": "offline-replay-from-sanitized-evidence",
+    "liveEdaVerified": false,
+    "liveSaveReloadVerified": false,
+    "edaWritesInThisReleaseFixture": 0
+  },
+  "privacy": {
+    "containsRealProjectIdentifiers": false,
+    "containsInternalUuidsOrApprovalIds": false,
+    "containsScreenshotsOrPrivateLogs": false,
+    "containsBundledThirdPartyDatasheets": false
+  },
+  "notes": [
+    "Declare the benchmark denominator and keep it fixture-scoped.",
+    "Describe sanitization without publishing the source project identity."
+  ]
+}

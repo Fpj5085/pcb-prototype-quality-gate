@@ -1,0 +1,25 @@
+{
+  "schema": "jlceda-eval-manifest/1.0",
+  "id": "<public-case-id>",
+  "title": "<public-case-title>",
+  "fixtureKind": "synthetic-offline-before",
+  "input": "input.json",
+  "expected": "expected.json",
+  "evidence": "evidence/status.json",
+  "execution": {
+    "status": "offline-pending-live-evidence",
+    "liveEdaVerified": false,
+    "liveSaveReloadVerified": false,
+    "edaWritesInThisReleaseFixture": 0
+  },
+  "privacy": {
+    "containsRealProjectIdentifiers": false,
+    "containsInternalUuidsOrApprovalIds": false,
+    "containsScreenshotsOrPrivateLogs": false,
+    "containsBundledThirdPartyDatasheets": false
+  },
+  "notes": [
+    "State whether values are synthetic, sanitized-derived or measured.",
+    "Keep live verification false until sanitized persistence evidence exists."
+  ]
+}

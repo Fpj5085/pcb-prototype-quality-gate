@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.jlceda.invalid/schemas/circuit-dsl-1.0.0.json",
+  "title": "Offline Circuit Design Intent DSL",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "kind", "status", "createdAt", "sourceSnapshot", "target", "components", "nets", "constraints", "approvals", "unresolved"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "kind": { "const": "circuit-dsl" },
+    "status": { "enum": ["draft", "reviewed", "approved"] },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "sourceSnapshot": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["projectUuid", "boardName", "schematicUuid", "pcbUuid"],
+      "properties": {
+        "projectUuid": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "boardName": { "type": ["string", "null"], "maxLength": 128 },
+        "schematicUuid": { "type": ["string", "null"], "maxLength": 128 },
+        "pcbUuid": { "type": ["string", "null"], "maxLength": 128 }
+      }
+    },
+    "components": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "designator", "role", "value", "selectionKey", "approved"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9_-]{0,63}$" },
+          "designator": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,31}$" },
+          "role": { "type": ["string", "null"], "maxLength": 128 },
+          "value": { "type": ["string", "null"], "maxLength": 256 },
+          "selectionKey": { "type": ["string", "null"], "pattern": "^[a-z][a-z0-9_.-]{0,127}$" },
+          "approved": { "type": "boolean" }
+        }
+      }
+    },
+    "nets": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "class", "voltageDomain", "nodes", "approved"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9_-]{0,63}$" },
+          "name": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "class": { "enum": ["signal", "power", "ground", "analog", "clock", "reset", "programming", "differential"] },
+          "voltageDomain": { "type": ["string", "null"], "maxLength": 64 },
+          "nodes": {
+            "type": "array",
+            "maxItems": 10000,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["componentId", "pin"],
+              "properties": {
+                "componentId": { "type": "string", "pattern": "^[a-z][a-z0-9_-]{0,63}$" },
+                "pin": { "type": "string", "minLength": 1, "maxLength": 64 }
+              }
+            }
+          },
+          "approved": { "type": "boolean" }
+        }
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type", "severity", "subjectIds", "parameters", "evidenceIds", "approved"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9_-]{0,63}$" },
+          "type": { "enum": ["voltage", "current", "differential_pair", "impedance", "length", "skew", "placement", "thermal"] },
+          "severity": { "enum": ["info", "warning", "error"] },
+          "subjectIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 128 } },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "nominalVoltageV": { "type": "number" },
+              "minVoltageV": { "type": "number" },
+              "maxVoltageV": { "type": "number" },
+              "maxCurrentA": { "type": "number", "minimum": 0 },
+              "impedanceOhm": { "type": "number", "exclusiveMinimum": 0 },
+              "tolerancePercent": { "type": "number", "minimum": 0 },
+              "maxLengthMm": { "type": "number", "minimum": 0 },
+              "maxSkewMm": { "type": "number", "minimum": 0 },
+              "maxDistanceMm": { "type": "number", "minimum": 0 }
+            }
+          },
+          "evidenceIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 128 } },
+          "approved": { "type": "boolean" }
+        }
+      }
+    },
+    "approvals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["componentIntent", "connectivity", "constraints", "humanReview"],
+      "properties": {
+        "componentIntent": { "type": "boolean" },
+        "connectivity": { "type": "boolean" },
+        "constraints": { "type": "boolean" },
+        "humanReview": { "type": "boolean" }
+      }
+    },
+    "unresolved": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 512 } }
+  }
+}

@@ -1,0 +1,35 @@
+# Source inventory
+
+This inventory records how the staged v0.1.0-alpha files were assembled. It is an internal release-review aid and contains no workstation paths.
+
+| Area | Classification | Treatment in staging | Release note |
+| --- | --- | --- | --- |
+| `src/review/prototype_review.py` | Original project code | Copied from the private working tree, then changed to machine-stable English ratings and repository-relative evidence output | Read-only deterministic Prototype review core |
+| `src/review/component-profiles.json` | Original project rule facts plus third-party factual citations | Local PDF filenames replaced by manufacturer/title/official-link metadata; PDFs excluded | Numeric facts must be rechecked against current official revisions |
+| `schemas/*.schema.json` | Original project schemas | Copied without live runtime state or example identifiers | Contracts only; no bridge runtime included |
+| `tests/review/*` | Original project tests and synthetic fixtures | Paths made repository-relative; adversarial input regenerated as a sanitized synthetic fixture | No live project identity |
+| `skills/jlceda-hardware-design/*` | Public rewrite of an original private skill | Rewritten around portable triggers, evidence gates and bounded claims | Private wrappers, approvals and machine paths removed |
+| `README*`, `docs/*`, `INSTALL.md`, `CONTRIBUTING.md`, `CHANGELOG.md` | Original public documentation | Written for the alpha candidate | Claims must match committed files and fixture status |
+| `evals/*` | Synthetic/sanitized evaluation successors | Regenerated from engineering structures; internal IDs and raw evidence excluded | BEFORE/AFTER live persistence remains pending unless explicitly recorded |
+| `LICENSE` | Apache License 2.0 standard text | Included as proposed root license | Applies only after ownership review passes |
+| `NOTICE`, `THIRD_PARTY.md` | Original attribution documents | Distinguish original work, reference-only dependencies and excluded artifacts | No third-party source or binaries bundled |
+
+## Original value proposed for publication
+
+- Draft/Prototype/Manufacturing Release governance model;
+- explainable three-rating Prototype review;
+- finding evidence and confidence model;
+- deterministic electrical, thermal, protection, layout and persistence screening rules;
+- immutable-plan and allow-list repair policy;
+- sanitized positive and adversarial evaluation design;
+- reusable JSON schemas and tests.
+
+## Reference-only or excluded capabilities
+
+- JLCEDA/EasyEDA application and APIs;
+- third-party draft-generation adapters, including EasyEDA Copilot;
+- live bridge/gateway delivery, approval and recovery implementations;
+- manufacturer data-sheet PDFs and supplier catalogs;
+- raw EDA projects, screenshots, logs, receipts, checkpoints and machine state.
+
+No excluded capability should be described as original project code or as a generally demonstrated alpha feature.

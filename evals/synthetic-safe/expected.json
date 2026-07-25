@@ -1,0 +1,44 @@
+{
+  "schema": "jlceda-eval-expected/1.0",
+  "rating": "suitable_for_low_risk_prototype",
+  "counts": {
+    "pass": 20,
+    "advisory": 0,
+    "blocker": 0
+  },
+  "forbiddenSeverities": [
+    "blocker",
+    "advisory"
+  ],
+  "requiredFindings": [
+    {
+      "id": "POWER_HEADROOM_PASS:PWR_A",
+      "severity": "pass"
+    },
+    {
+      "id": "FUSE_PASS:FUSE_A",
+      "severity": "pass"
+    },
+    {
+      "id": "HBRIDGE_THERMAL:DRV_A",
+      "severity": "pass"
+    },
+    {
+      "id": "DECOUPLING_PASS:DRV_A:RAW",
+      "severity": "pass"
+    },
+    {
+      "id": "BULK_PASS:DRV_A:RAW",
+      "severity": "pass"
+    },
+    {
+      "id": "GROUND_RETURN",
+      "severity": "pass"
+    },
+    {
+      "id": "SCHEMATIC_TOPOLOGY",
+      "severity": "pass"
+    }
+  ],
+  "claimBoundary": "Synthetic unit coverage only; not evidence that an arbitrary physical board is safe."
+}

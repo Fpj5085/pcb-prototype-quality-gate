@@ -1,0 +1,160 @@
+{
+  "schema": "jlceda-prototype-review-input/1.0",
+  "designName": "M2 5V/1A one-input two-output power distribution board AFTER successor",
+  "components": [
+    {
+      "ref": "J1",
+      "value": "5V_INPUT",
+      "package": "HDR-TH_2P-P2.54-V-M-2",
+      "x": -18.8,
+      "y": 0,
+      "nets": [
+        "+5V",
+        "GND"
+      ]
+    },
+    {
+      "ref": "J2",
+      "value": "5V_OUTPUT_A",
+      "package": "HDR-TH_2P-P2.54-V-M-2",
+      "x": 18.8,
+      "y": 5,
+      "nets": [
+        "+5V",
+        "GND"
+      ]
+    },
+    {
+      "ref": "J3",
+      "value": "5V_OUTPUT_B",
+      "package": "HDR-TH_2P-P2.54-V-M-2",
+      "x": 18.8,
+      "y": -5,
+      "nets": [
+        "+5V",
+        "GND"
+      ]
+    },
+    {
+      "ref": "C1",
+      "value": "10uF",
+      "package": "C0805",
+      "x": -14,
+      "y": 0,
+      "nets": [
+        "+5V",
+        "GND"
+      ],
+      "capacitanceUf": 10
+    },
+    {
+      "ref": "C2",
+      "value": "10uF",
+      "package": "C0805",
+      "x": 15,
+      "y": 5,
+      "nets": [
+        "+5V",
+        "GND"
+      ],
+      "capacitanceUf": 10
+    },
+    {
+      "ref": "C3",
+      "value": "10uF",
+      "package": "C0805",
+      "x": 15,
+      "y": -5,
+      "nets": [
+        "+5V",
+        "GND"
+      ],
+      "capacitanceUf": 10
+    },
+    {
+      "ref": "C4",
+      "value": "100nF X7R 50V",
+      "package": "C0805",
+      "x": 16.9,
+      "y": 5,
+      "nets": [
+        "+5V",
+        "GND"
+      ],
+      "capacitanceUf": 0.1
+    }
+  ],
+  "nets": [
+    {
+      "name": "+5V",
+      "minWidthMm": 1.2192,
+      "maxWidthMm": 1.2192,
+      "vias": 1,
+      "role": "power",
+      "designCurrentA": 1.0
+    },
+    {
+      "name": "GND",
+      "minWidthMm": 1.2192,
+      "maxWidthMm": 1.2192,
+      "vias": 1,
+      "role": "high_current_return",
+      "designCurrentA": 1.0
+    }
+  ],
+  "checks": {
+    "schematicErrors": 0,
+    "schematicWarnings": 0,
+    "schematicWarningDetailsAvailable": true,
+    "pcbDrcFindings": 0,
+    "unroutedNets": 0,
+    "containment": true
+  },
+  "sourceEvidence": [
+    "synthetic offline evaluation fixture derived from an immutable design plan; live EDA save/reload evidence is pending"
+  ],
+  "decouplingRequirements": [
+    {
+      "targetRef": "J2",
+      "supplyNet": "+5V",
+      "returnNet": "GND",
+      "minCapacitanceUf": 0.08,
+      "maxCapacitanceUf": 0.22,
+      "maxDistanceMm": 7,
+      "severity": "blocker",
+      "assumptions": [
+        "J2 represents the physical output split region; final live readback must recompute the distance"
+      ]
+    }
+  ],
+  "pcb": {
+    "traceCapacity": {
+      "copperOz": 1,
+      "allowedRiseC": 10,
+      "currentMargin": 1.25
+    }
+  },
+  "schematicTopology": {
+    "floatingInputs": [],
+    "sameNameConflicts": [],
+    "pinPadVerified": true,
+    "hiddenPowerPinsVerified": true,
+    "confidence": "high"
+  },
+  "fixtureCounts": {
+    "schematicComponents": 7,
+    "schematicPins": 14,
+    "schematicConnectedPins": 14,
+    "schematicNets": 2,
+    "pcbComponents": 7,
+    "pcbVias": 2,
+    "pcbPours": 0
+  },
+  "fixtureMetadata": {
+    "fixtureType": "synthetic-offline-successor",
+    "executionStatus": "offline-successor-forecast-pending-live-evidence",
+    "liveEdaVerified": false,
+    "persistenceEvidenceIncluded": false,
+    "notForManufacturing": true
+  }
+}

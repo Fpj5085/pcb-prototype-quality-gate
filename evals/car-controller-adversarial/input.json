@@ -1,0 +1,889 @@
+{
+  "schema": "jlceda-prototype-review-input/1.0",
+  "designName": "Synthetic two-motor controller adversarial fixture",
+  "components": [
+    {
+      "ref": "C1",
+      "value": "10uF",
+      "package": "C0805",
+      "x": -29.4,
+      "y": -20.9,
+      "nets": [
+        "GND",
+        "VIN_PROT"
+      ],
+      "capacitanceUf": 10.0
+    },
+    {
+      "ref": "C2",
+      "value": "100nF",
+      "package": "C0805",
+      "x": -31.8,
+      "y": -20.9,
+      "nets": [
+        "GND",
+        "VIN_PROT"
+      ],
+      "capacitanceUf": 0.1
+    },
+    {
+      "ref": "C3",
+      "value": "10uF",
+      "package": "C0805",
+      "x": -32.2,
+      "y": -11,
+      "nets": [
+        "+5V",
+        "GND"
+      ],
+      "capacitanceUf": 10.0
+    },
+    {
+      "ref": "C4",
+      "value": "100nF",
+      "package": "C0805",
+      "x": 40.5,
+      "y": -14,
+      "nets": [
+        "+5V",
+        "GND"
+      ],
+      "capacitanceUf": 0.1
+    },
+    {
+      "ref": "C5",
+      "value": "10uF",
+      "package": "C0805",
+      "x": 0,
+      "y": 4.6,
+      "nets": [
+        "+3V3",
+        "GND"
+      ],
+      "capacitanceUf": 10.0
+    },
+    {
+      "ref": "C6",
+      "value": "100nF",
+      "package": "C0805",
+      "x": 7.2,
+      "y": -25.9,
+      "nets": [
+        "+3V3",
+        "GND"
+      ],
+      "capacitanceUf": 0.1
+    },
+    {
+      "ref": "C7",
+      "value": "100nF",
+      "package": "C0805",
+      "x": 4.8,
+      "y": -25.9,
+      "nets": [
+        "+3V3",
+        "GND"
+      ],
+      "capacitanceUf": 0.1
+    },
+    {
+      "ref": "C8",
+      "value": "100nF",
+      "package": "C0805",
+      "x": -5.6,
+      "y": -17.3,
+      "nets": [
+        "GND",
+        "NRST"
+      ],
+      "capacitanceUf": 0.1
+    },
+    {
+      "ref": "D_REVERSE",
+      "value": "SS34",
+      "package": "SMA_L4.3-W2.6-LS5.0-RD",
+      "x": -38.8,
+      "y": -16.5,
+      "nets": [
+        "VIN_FUSED",
+        "VIN_PROT"
+      ],
+      "mpn": "SS34",
+      "profile": "diode.ss34",
+      "critical": true
+    },
+    {
+      "ref": "D_TRANSIENT",
+      "value": "generic fixture part",
+      "package": "SMB_L4.6-W3.6-LS5.3-RD",
+      "x": -38.8,
+      "y": -20.4,
+      "nets": [
+        "GND",
+        "VIN_PROT"
+      ]
+    },
+    {
+      "ref": "F_INPUT",
+      "value": "MF-MSMF050-2",
+      "package": "F1812",
+      "x": -25.2,
+      "y": -10.9,
+      "nets": [
+        "VIN_FUSED",
+        "VIN_IN"
+      ],
+      "mpn": "MF-MSMF050-2",
+      "profile": "fuse.mf_msmf050",
+      "critical": true
+    },
+    {
+      "ref": "J1",
+      "value": null,
+      "package": "HDR-TH_2P-P2.54-V-M-2",
+      "x": -40,
+      "y": -12,
+      "nets": [
+        "GND",
+        "VIN_IN"
+      ]
+    },
+    {
+      "ref": "J2",
+      "value": null,
+      "package": "HDR-TH_2P-P2.54-V-M-2",
+      "x": 40,
+      "y": -10,
+      "nets": [
+        "MOTOR_A1",
+        "MOTOR_A2"
+      ]
+    },
+    {
+      "ref": "J3",
+      "value": null,
+      "package": "HDR-TH_2P-P2.54-V-M-2",
+      "x": 40,
+      "y": -25,
+      "nets": [
+        "MOTOR_B1",
+        "MOTOR_B2"
+      ]
+    },
+    {
+      "ref": "SENSOR_IF",
+      "value": "generic fixture part",
+      "package": "CONN-TH_B4B-XH-A-LF-SN",
+      "x": -30,
+      "y": 30,
+      "nets": [
+        "+5V",
+        "GND",
+        "US_ECHO_5V",
+        "US_TRIG"
+      ]
+    },
+    {
+      "ref": "RADIO_IF",
+      "value": "generic fixture part",
+      "package": "CONN-TH_B4B-XH-A-LF-SN",
+      "x": 0,
+      "y": 30,
+      "nets": [
+        "+5V",
+        "BT_TX_TO_MCU",
+        "GND",
+        "MCU_TX_TO_BT"
+      ]
+    },
+    {
+      "ref": "DEBUG_IF",
+      "value": "generic fixture part",
+      "package": "CONN-TH_B4B-XH-A-LF-SN",
+      "x": 30,
+      "y": 30,
+      "nets": [
+        "+3V3",
+        "GND",
+        "SWCLK",
+        "SWDIO"
+      ]
+    },
+    {
+      "ref": "LED1",
+      "value": "generic fixture part",
+      "package": "LED0805-FD-GREEN",
+      "x": 5.1,
+      "y": -31.5,
+      "nets": [
+        "GND",
+        "LED_A"
+      ]
+    },
+    {
+      "ref": "R1",
+      "value": "10kΩ",
+      "package": "R0805",
+      "x": -4.5,
+      "y": -14.7,
+      "nets": [
+        "BOOT0",
+        "GND"
+      ]
+    },
+    {
+      "ref": "R2",
+      "value": "10kΩ",
+      "package": "R0805",
+      "x": -5.6,
+      "y": -19.7,
+      "nets": [
+        "+3V3",
+        "NRST"
+      ]
+    },
+    {
+      "ref": "R3",
+      "value": "1kΩ",
+      "package": "R0805",
+      "x": 1.4,
+      "y": -25.9,
+      "nets": [
+        "LED_A",
+        "STATUS_LED"
+      ]
+    },
+    {
+      "ref": "R4",
+      "value": "10kΩ",
+      "package": "R0805",
+      "x": -27.9,
+      "y": 25,
+      "nets": [
+        "US_ECHO_3V3",
+        "US_ECHO_5V"
+      ]
+    },
+    {
+      "ref": "R5",
+      "value": "20kΩ",
+      "package": "R0805",
+      "x": -32.1,
+      "y": 25,
+      "nets": [
+        "GND",
+        "US_ECHO_3V3"
+      ]
+    },
+    {
+      "ref": "SW1",
+      "value": "generic fixture part",
+      "package": "KEY-TH_4P-L6.2-W6.2-P4.50-LS6.5",
+      "x": -12,
+      "y": -29,
+      "nets": [
+        "GND",
+        "NRST"
+      ]
+    },
+    {
+      "ref": "U_MCU",
+      "value": "STM32F030F4P6",
+      "package": "TSSOP-20_L6.5-W4.4-P0.65-LS6.4-BL",
+      "x": 2.4,
+      "y": -19.8,
+      "nets": [
+        "+3V3",
+        "BOOT0",
+        "BT_TX_TO_MCU",
+        "GND",
+        "MCU_TX_TO_BT",
+        "MOTOR_A_IN1",
+        "MOTOR_A_IN2",
+        "MOTOR_A_PWM",
+        "MOTOR_B_IN1",
+        "MOTOR_B_IN2",
+        "MOTOR_B_PWM",
+        "NRST",
+        "STATUS_LED",
+        "SWCLK",
+        "SWDIO",
+        "US_ECHO_3V3",
+        "US_TRIG"
+      ],
+      "mpn": "STM32F030F4P6",
+      "profile": "mcu.stm32f030f4p6",
+      "critical": true
+    },
+    {
+      "ref": "U_DRIVER",
+      "value": "L293D",
+      "package": "DIP-16_L20.0-W6.4-P2.54-LS7.6-BL",
+      "x": 27.6,
+      "y": -11.2,
+      "nets": [
+        "+5V",
+        "GND",
+        "MOTOR_A1",
+        "MOTOR_A2",
+        "MOTOR_A_IN1",
+        "MOTOR_A_IN2",
+        "MOTOR_A_PWM",
+        "MOTOR_B1",
+        "MOTOR_B2",
+        "MOTOR_B_IN1",
+        "MOTOR_B_IN2",
+        "MOTOR_B_PWM",
+        "VIN_PROT"
+      ],
+      "mpn": "L293D",
+      "profile": "hbridge.l293d",
+      "critical": true
+    },
+    {
+      "ref": "U_REG",
+      "value": "AMS1117-5.0",
+      "package": "SOT-89-3_L4.5-W2.5-P1.50-LS4.2-BR",
+      "x": -32.2,
+      "y": -16,
+      "nets": [
+        "+5V",
+        "GND",
+        "VIN_PROT"
+      ],
+      "mpn": "AMS1117-5.0",
+      "profile": "regulator.ams1117_5_generic",
+      "critical": true
+    },
+    {
+      "ref": "U_LOGIC_REG",
+      "value": "AMS1117-3.3V",
+      "package": "SOT-223-4_L6.5-W3.5-P2.30-LS7.0-TR",
+      "x": 0,
+      "y": -2.2,
+      "nets": [
+        "+3V3",
+        "+5V",
+        "GND"
+      ],
+      "mpn": "AMS1117-3.3V",
+      "profile": "regulator.ams1117_3v3_generic",
+      "critical": true
+    }
+  ],
+  "nets": [
+    {
+      "name": "BOOT0",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 0
+    },
+    {
+      "name": "LED_A",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 0
+    },
+    {
+      "name": "US_ECHO_5V",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 0
+    },
+    {
+      "name": "NRST",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 1
+    },
+    {
+      "name": "VIN_FUSED",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 2,
+      "role": "power",
+      "designCurrentA": 2.2
+    },
+    {
+      "name": "VIN_IN",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 1,
+      "role": "power",
+      "designCurrentA": 2.2
+    },
+    {
+      "name": "MOTOR_A1",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 0,
+      "role": "motor",
+      "designCurrentA": 1.0
+    },
+    {
+      "name": "MOTOR_B2",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 0,
+      "role": "motor",
+      "designCurrentA": 1.0
+    },
+    {
+      "name": "MOTOR_B1",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 0,
+      "role": "motor",
+      "designCurrentA": 1.0
+    },
+    {
+      "name": "MOTOR_A2",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 0,
+      "role": "motor",
+      "designCurrentA": 1.0
+    },
+    {
+      "name": "STATUS_LED",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 0
+    },
+    {
+      "name": "MOTOR_B_PWM",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 0
+    },
+    {
+      "name": "SWCLK",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 1
+    },
+    {
+      "name": "SWDIO",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 1
+    },
+    {
+      "name": "MOTOR_B_IN1",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 1
+    },
+    {
+      "name": "MOTOR_A_PWM",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 0
+    },
+    {
+      "name": "MOTOR_B_IN2",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 2
+    },
+    {
+      "name": "US_TRIG",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 1
+    },
+    {
+      "name": "US_ECHO_3V3",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 2
+    },
+    {
+      "name": "VIN_PROT",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 3,
+      "role": "power",
+      "designCurrentA": 2.2
+    },
+    {
+      "name": "+5V",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 1,
+      "role": "power",
+      "designCurrentA": 1.0
+    },
+    {
+      "name": "BT_TX_TO_MCU",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 1
+    },
+    {
+      "name": "MCU_TX_TO_BT",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 1
+    },
+    {
+      "name": "MOTOR_A_IN2",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 0
+    },
+    {
+      "name": "+3V3",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 0,
+      "role": "power",
+      "designCurrentA": 0.2
+    },
+    {
+      "name": "MOTOR_A_IN1",
+      "minWidthMm": 0.254,
+      "maxWidthMm": 0.254,
+      "vias": 0
+    },
+    {
+      "name": "GND",
+      "role": "high_current_return",
+      "designCurrentA": 2.2
+    }
+  ],
+  "checks": {
+    "schematicErrors": 0,
+    "schematicWarnings": 5,
+    "schematicWarningDetailsAvailable": false,
+    "pcbDrcFindings": 0,
+    "unroutedNets": 0,
+    "containment": true,
+    "savedReloaded": true
+  },
+  "sourceEvidence": [
+    "synthetic normalized evidence; third-party PDFs, screenshots, logs and project identifiers are not included"
+  ],
+  "observedCounts": {
+    "schematicComponents": 28,
+    "schematicPins": 99,
+    "schematicConnectedPins": 97,
+    "schematicNets": 27,
+    "pcbComponents": 28,
+    "pcbVias": 68,
+    "pcbPours": 2
+  },
+  "powerPaths": [
+    {
+      "inputNet": "VIN_IN",
+      "outputNet": "+5V",
+      "sourceMinV": 6.0,
+      "sourceMaxV": 9.0,
+      "seriesRefs": [
+        "D_REVERSE"
+      ],
+      "regulatorRef": "U_REG",
+      "assumptions": [
+        "SS34 forward drop conservatively set to 0.5 V"
+      ]
+    },
+    {
+      "inputNet": "+5V",
+      "outputNet": "+3V3",
+      "sourceMinV": 5.0,
+      "sourceMaxV": 5.25,
+      "seriesRefs": [],
+      "regulatorRef": "U_LOGIC_REG"
+    }
+  ],
+  "protectedCircuits": [
+    {
+      "fuseRef": "F_INPUT",
+      "continuousCurrentA": 1.15,
+      "surgeCurrentA": 2.2,
+      "holdDerating": 0.8,
+      "assumptions": [
+        "conservative review scenario: two motors at 0.5 A each plus 0.15 A logic",
+        "stall/start current has no measured motor datasheet"
+      ]
+    }
+  ],
+  "hbridgeUses": [
+    {
+      "driverRef": "U_DRIVER",
+      "channelsUsed": 2,
+      "perChannelRunA": 0.5,
+      "perChannelPeakA": 1.0,
+      "maxEstimatedRiseC": 60,
+      "assumptions": [
+        "conservative motor run current 0.5 A/channel",
+        "motor stall current awaits confirmation"
+      ]
+    }
+  ],
+  "regulatorUses": [
+    {
+      "regulatorRef": "U_REG",
+      "inputMaxV": 8.5,
+      "loadMaxA": 0.2,
+      "cautionRiseC": 50,
+      "blockerRiseC": 80,
+      "assumptions": [
+        "9 V input minus approximately 0.5 V SS34 drop",
+        "5 V load budget requires measurement"
+      ]
+    },
+    {
+      "regulatorRef": "U_LOGIC_REG",
+      "inputMaxV": 5.25,
+      "loadMaxA": 0.08,
+      "cautionRiseC": 50,
+      "blockerRiseC": 80
+    }
+  ],
+  "decouplingRequirements": [
+    {
+      "targetRef": "U_DRIVER",
+      "supplyNet": "VIN_PROT",
+      "returnNet": "GND",
+      "minCapacitanceUf": 0.08,
+      "maxCapacitanceUf": 0.22,
+      "maxDistanceMm": 5.0,
+      "severity": "blocker"
+    },
+    {
+      "targetRef": "U_DRIVER",
+      "supplyNet": "+5V",
+      "returnNet": "GND",
+      "minCapacitanceUf": 0.08,
+      "maxCapacitanceUf": 0.22,
+      "maxDistanceMm": 5.0,
+      "severity": "blocker"
+    },
+    {
+      "targetRef": "U_MCU",
+      "supplyNet": "+3V3",
+      "returnNet": "GND",
+      "minCapacitanceUf": 0.08,
+      "maxCapacitanceUf": 0.22,
+      "maxDistanceMm": 8.0,
+      "severity": "advisory"
+    }
+  ],
+  "bulkCapRequirements": [
+    {
+      "targetRef": "U_DRIVER",
+      "supplyNet": "VIN_PROT",
+      "returnNet": "GND",
+      "minCapacitanceUf": 220.0,
+      "maxDistanceMm": 15.0,
+      "severity": "blocker",
+      "assumptions": [
+        "dynamic motor load requires local energy storage"
+      ]
+    }
+  ],
+  "voltageDividers": [
+    {
+      "id": "SENSOR_ECHO",
+      "inputMaxV": 5.25,
+      "topOhm": 10000,
+      "bottomOhm": 20000,
+      "receiverAbsMaxV": 3.6,
+      "requiredMarginV": 0.2,
+      "locations": [
+        "R4",
+        "R5",
+        "U_MCU.11"
+      ],
+      "assumptions": [
+        "receiver VDD=3.3 V",
+        "module echo maximum follows 5 V rail"
+      ]
+    }
+  ],
+  "debugInterface": {
+    "locations": [
+      "DEBUG_IF"
+    ],
+    "requiredSignals": [
+      "VREF",
+      "GND",
+      "SWDIO",
+      "SWCLK",
+      "NRST"
+    ],
+    "presentSignals": [
+      "VREF",
+      "GND",
+      "SWDIO",
+      "SWCLK"
+    ]
+  },
+  "usability": {
+    "missingTestpointNets": [
+      "VIN_PROT",
+      "+5V",
+      "+3V3",
+      "GND"
+    ],
+    "missingSilkscreenLabels": [
+      "J1 polarity/voltage",
+      "J2/J3 motor polarity",
+      "J4/J5/J6 Pin 1 and signal voltage"
+    ],
+    "antennaKeepout": {
+      "verified": false,
+      "confidence": "medium",
+      "locations": [
+        "RADIO_IF",
+        "external radio module"
+      ],
+      "assumptions": [
+        "exact HC-05 breakout mechanics not bound"
+      ]
+    }
+  },
+  "pcb": {
+    "traceCapacity": {
+      "copperOz": 1.0,
+      "allowedRiseC": 10.0,
+      "currentMargin": 1.25
+    }
+  },
+  "groundReview": {
+    "pours": 2,
+    "islands": 0,
+    "returnPathVerified": false,
+    "powerLogicReturnSeparated": false,
+    "confidence": "medium",
+    "locations": [
+      "U_DRIVER",
+      "J1",
+      "GND pours"
+    ],
+    "assumptions": [
+      "two GND pours and stitching vias exist; detailed high-current return topology needs dedicated review"
+    ]
+  },
+  "schematicTopology": {
+    "floatingInputs": [],
+    "sameNameConflicts": [],
+    "pinPadVerified": true,
+    "hiddenPowerPinsVerified": true,
+    "confidence": "high"
+  },
+  "firmwarePins": [
+    {
+      "pin": "U_MCU.1",
+      "port": "BOOT0",
+      "net": "BOOT0",
+      "purpose": "boot mode",
+      "direction": "input"
+    },
+    {
+      "pin": "U_MCU.4",
+      "port": "NRST",
+      "net": "NRST",
+      "purpose": "reset",
+      "direction": "input"
+    },
+    {
+      "pin": "U_MCU.6",
+      "port": "PA0",
+      "net": "MOTOR_A_IN1",
+      "purpose": "motor A direction",
+      "direction": "output"
+    },
+    {
+      "pin": "U_MCU.7",
+      "port": "PA1",
+      "net": "MOTOR_A_IN2",
+      "purpose": "motor A direction",
+      "direction": "output"
+    },
+    {
+      "pin": "U_MCU.8",
+      "port": "PA2",
+      "net": "MOTOR_B_IN1",
+      "purpose": "motor B direction",
+      "direction": "output"
+    },
+    {
+      "pin": "U_MCU.9",
+      "port": "PA3",
+      "net": "MOTOR_B_IN2",
+      "purpose": "motor B direction",
+      "direction": "output"
+    },
+    {
+      "pin": "U_MCU.10",
+      "port": "PA4",
+      "net": "US_TRIG",
+      "purpose": "ultrasonic trigger",
+      "direction": "output"
+    },
+    {
+      "pin": "U_MCU.11",
+      "port": "PA5",
+      "net": "US_ECHO_3V3",
+      "purpose": "ultrasonic echo",
+      "direction": "input"
+    },
+    {
+      "pin": "U_MCU.12",
+      "port": "PA6",
+      "net": "MOTOR_A_PWM",
+      "purpose": "motor A enable/PWM",
+      "direction": "output"
+    },
+    {
+      "pin": "U_MCU.13",
+      "port": "PA7",
+      "net": "MOTOR_B_PWM",
+      "purpose": "motor B enable/PWM",
+      "direction": "output"
+    },
+    {
+      "pin": "U_MCU.14",
+      "port": "PB1",
+      "net": "STATUS_LED",
+      "purpose": "status LED",
+      "direction": "output"
+    },
+    {
+      "pin": "U_MCU.17",
+      "port": "PA9",
+      "net": "MCU_TX_TO_BT",
+      "purpose": "UART TX",
+      "direction": "output"
+    },
+    {
+      "pin": "U_MCU.18",
+      "port": "PA10",
+      "net": "BT_TX_TO_MCU",
+      "purpose": "UART RX",
+      "direction": "input"
+    },
+    {
+      "pin": "U_MCU.19",
+      "port": "PA13",
+      "net": "SWDIO",
+      "purpose": "SWD data",
+      "direction": "bidirectional"
+    },
+    {
+      "pin": "U_MCU.20",
+      "port": "PA14",
+      "net": "SWCLK",
+      "purpose": "SWD clock",
+      "direction": "input"
+    }
+  ],
+  "fixtureMetadata": {
+    "fixtureType": "synthetic-not-for-manufacturing",
+    "derivedFrom": "sanitized engineering risk structure",
+    "identityDisclosure": "project, page, object and library identifiers removed",
+    "benchmarkScope": "this fixture only"
+  }
+}
