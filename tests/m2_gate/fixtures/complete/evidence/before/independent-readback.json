@@ -1,0 +1,9 @@
+{
+  "schema": "jlceda-m2-independent-readback-evidence/1.0",
+  "stage": "before",
+  "live": true,
+  "independentVerifier": true,
+  "readbackSucceeded": true,
+  "componentCount": 6,
+  "networkCount": 4
+}

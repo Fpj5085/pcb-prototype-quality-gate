@@ -2,23 +2,28 @@
 
 > **v0.1.0-alpha · NOT FOR MANUFACTURING（不可直接制造）**
 
-**面向 AI 生成嘉立创EDA设计的 Prototype 打样前质量门。**
+**面向真实可编辑嘉立创EDA设计的独立 Prototype 打样前质量门与受控修正闭环。**
 
-这不是又一个让 AI 画 PCB 的工具。它帮助普通用户判断 AI 生成的设计是否值得打样，并且只在已经证明的白名单范围内定义受约束修正、保存重载和独立复验流程。
+这不是又一个让 AI 画 PCB 的工具。它面向的完整用户流程是：
+
+> **普通中文需求 → 真实可编辑原理图/PCB → 独立自动审核 → 白名单修正 → 保存重载复验 → 通俗样板评级**
+
+Draft 生成器是可替换的适配器，不是可信核心。项目的核心价值是独立证据模型、保守审核、受控修正策略和关注持久化的复验闭环。本 alpha 可离线运行审核核心；真实 Draft 生成和 EDA 写入仍属于需要单独审计的环境集成。
 
 [English](README.md)
 
-[安装](INSTALL.md) · [演示](docs/demo.md) · [证据结构](docs/evidence-schema.md) · [路线图](docs/roadmap.md)
+[安装](INSTALL.md) · [演示](docs/demo.md) · [证据结构](docs/evidence-schema.md) · [M2证据导入门](docs/m2-evidence-gate.md) · [可重复发布](docs/reproducible-release.md) · [路线图](docs/roadmap.md)
 
 ## 为什么需要它
 
 原理图可编辑、PCB 已布线或 `DRC=0`，只证明了一部分几何和规则检查。设计仍可能存在封装错误、稳压余量不足、热损耗过高、保护器件过小、功率线过窄、局部储能缺失、接口电平风险、回流路径不合理，或者修改在重载后消失。
 
-本 alpha 公开可解释的只读 Prototype 审核引擎、证据 Schema、可移植 Agent Skill 和脱敏评估样例。
+本 alpha 公开可解释的只读 Prototype 审核引擎、证据 Schema、可移植 Agent Skill 和脱敏评估样例。Draft 生成器返回“成功”不等于设计真实可编辑、正确或已持久保存，也不作为独立审核结论。
 
 ## v0.1.0-alpha 包含
 
 - 普通语言请求到 **Draft / Prototype / Manufacturing Release** 工作模式的治理规则；
+- 从可替换 Draft 生成器或既有可编辑设计进入独立现场读回的适配器中立交接；
 - 原理图/PCB 身份、电气、热、布线与持久化证据的归一化结构；
 - 三档确定性 Prototype 评级；
 - 不可变修正计划与白名单动作原则；
@@ -34,7 +39,26 @@
 - SI/PI/EMC 签核、热箱证据、电机堵转定型、装配适配、采购可得性、上传、下单、支付或制造；
 - 对嘉立创EDA/EasyEDA、EDA API、EasyEDA Copilot、供应商目录、器件数据或厂商数据手册的所有权。
 
-第三方草稿生成器和 EDA Bridge 仅作为适配器。其源码、二进制、扩展包、私有日志和项目证据不在本候选中。
+第三方 Draft 生成器和 EDA Bridge 仅作为可替换适配器。其源码、二进制、扩展包、私有日志和项目证据不在本候选中，其操作 ACK 也不等同于独立审核证据。
+
+## 工作流
+
+```mermaid
+flowchart LR
+  A["普通中文需求"] --> B["可替换 Draft 生成器\n或既有设计"]
+  B --> C["真实可编辑原理图 / PCB\n（环境集成）"]
+  C --> D["独立现场读回\n与证据归一化"]
+  D --> E["Prototype 规则与\n通俗样板评级"]
+  E --> F{"白名单修正？"}
+  F -- "否" --> G["解释问题与待测参数"]
+  F -- "是" --> H["不可变受控计划"]
+  H --> I["适配器写入与即时读回"]
+  I --> J["保存、关闭、重载"]
+  J --> K["独立读回与重新审核"]
+  K --> E
+```
+
+上图描述受治理的产品闭环。本可移植 alpha 仓库独立演示证据归一化、审核、评级和策略层，不捆绑 live Draft 或写入适配器。
 
 ## 评级
 
@@ -69,6 +93,19 @@ python -m unittest discover -s tests/review -p "test_*.py" -v
 python scripts/run-evals.py
 ```
 
+未来取得完整脱敏 M2 live 证据后，可在离线状态运行：
+
+```powershell
+python scripts/import_m2_evidence.py `
+  --input-dir <sanitized-input> `
+  --sha-manifest <sanitized-input>/SHA256-MANIFEST.json `
+  --output-dir <commit-ready-public-output>
+```
+
+缺证据时门状态保持 `pending`，哈希或隐私问题进入 `rejected`；完整
+BEFORE/AFTER 闭环通过后只产生一个最小、幂等的公开摘要。仓库内的正向
+门测试 fixture 为纯合成数据，不代表 M2 已取得 live 证据。
+
 输入是归一化工程证据，不是原始 EDA 项目。任何 live mutation 适配器都需要独立安全审计。
 
 本地插件安装和卸载见 [INSTALL.md](INSTALL.md)。插件不内置 MCP、工作站 wrapper 或第三方 EDA 扩展；live EDA 属于环境集成能力。
@@ -82,7 +119,7 @@ python scripts/run-evals.py
 
 ## Alpha 边界
 
-v0.1.0-alpha 主要公开审核模型、证据结构、脱敏评估样例和受控工作流。自动修复能力仅按已验证范围陈述；任何评级都不替代实物上电、测量和环境测试。
+v0.1.0-alpha 主要公开审核模型、证据结构、脱敏评估样例和受控工作流。自动修复能力仅按已验证范围陈述；任何评级都不替代实物上电、测量和环境测试。M2 BEFORE/AFTER 当前仍等待真实 EDA 与保存重载证据；AFTER 的通过结果只是离线预测，不是已完成的 live 修正声明。
 
 更多信息见：
 
@@ -94,6 +131,8 @@ v0.1.0-alpha 主要公开审核模型、证据结构、脱敏评估样例和受�
 - [证据结构](docs/evidence-schema.md)
 - [隐私与脱敏](docs/privacy.md)
 - [路线图](docs/roadmap.md)
+- [M2现场证据导入门](docs/m2-evidence-gate.md)
+- [可重复本地发布](docs/reproducible-release.md)
 - [简历表述边界](docs/resume.md)
 - [安全策略](SECURITY.md)
 - [可公开文件](PUBLIC-FILES.md)

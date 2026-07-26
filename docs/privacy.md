@@ -28,6 +28,12 @@ Each public evaluation manifest declares a `fixtureKind`, an `execution.status`,
 
 An offline forecast must not be relabeled as live evidence. The public M2 AFTER case remains `offline-successor-forecast-pending-live-evidence`, with both live-verification booleans false, until a real independently read back run is sanitized. A future live case needs an unambiguous status such as `live-save-reload-verified` and both booleans set from actual evidence.
 
+Future M2 evidence enters through the offline [M2 evidence gate](m2-evidence-gate.md).
+The importer requires exact SHA coverage, rejects private fields and paths, and
+copies only aggregate counts and verification states into one public summary.
+Raw receipts and their identifiers remain outside the repository. Positive gate
+fixtures are synthetic test inputs and carry no live status.
+
 ## Screenshot policy
 
 Screenshots are excluded by default. If a future release needs one, crop it to the single relevant design region, remove account and project navigation, strip metadata, and record the sanitization steps. A screenshot is supplementary evidence, not the machine source of truth.

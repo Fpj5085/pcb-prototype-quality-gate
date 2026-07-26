@@ -1,0 +1,19 @@
+{
+  "schema": "jlceda-m2-live-evidence-bundle/1.0",
+  "status": "complete",
+  "case": "power-distribution",
+  "before": {
+    "receipt": "evidence/before/receipt.json",
+    "saveReload": "evidence/before/save-reload.json",
+    "independentReadback": "evidence/before/independent-readback.json",
+    "drc": "evidence/before/drc.json",
+    "prototypeReview": "evidence/before/prototype-review.json"
+  },
+  "after": {
+    "receipt": "evidence/after/receipt.json",
+    "saveReload": "evidence/after/save-reload.json",
+    "independentReadback": "evidence/after/independent-readback.json",
+    "drc": "evidence/after/drc.json",
+    "prototypeReview": "evidence/after/prototype-review.json"
+  }
+}

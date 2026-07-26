@@ -1,0 +1,11 @@
+{
+  "schema": "jlceda-m2-delivery-receipt-evidence/1.0",
+  "stage": "after",
+  "source": "live-eda",
+  "live": true,
+  "verified": true,
+  "idState": "redacted",
+  "operation": "repair-delivery",
+  "operationStatus": "success",
+  "mutationCount": 1
+}

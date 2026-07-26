@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/codex-jlceda-hardware-agent/schemas/m2-live-evidence-bundle.schema.json",
+  "title": "M2 sanitized live-evidence bundle index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "status", "case", "before", "after"],
+  "properties": {
+    "schema": {
+      "const": "jlceda-m2-live-evidence-bundle/1.0"
+    },
+    "status": {
+      "enum": ["pending", "complete"]
+    },
+    "case": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "before": {
+      "$ref": "#/$defs/evidenceReferences"
+    },
+    "after": {
+      "$ref": "#/$defs/evidenceReferences"
+    }
+  },
+  "$defs": {
+    "relativeJsonPath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+\\.json$"
+    },
+    "evidenceReferences": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receipt", "saveReload", "independentReadback", "drc", "prototypeReview"],
+      "properties": {
+        "receipt": {
+          "$ref": "#/$defs/relativeJsonPath"
+        },
+        "saveReload": {
+          "$ref": "#/$defs/relativeJsonPath"
+        },
+        "independentReadback": {
+          "$ref": "#/$defs/relativeJsonPath"
+        },
+        "drc": {
+          "$ref": "#/$defs/relativeJsonPath"
+        },
+        "prototypeReview": {
+          "$ref": "#/$defs/relativeJsonPath"
+        }
+      }
+    }
+  }
+}

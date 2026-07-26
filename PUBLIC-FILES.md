@@ -2,12 +2,16 @@
 
 This is the complete intended file set for the local v0.1.0-alpha Git repository and release archive. All paths are repository-relative. Local Git metadata and the external ZIP/checksum sidecar are not part of the archive.
 
-**Total intended repository files: 94.**
+**Total intended repository files: 121.**
 
 ## Core review and command entry
 
 - `scripts/prototype-review.ps1`
 - `scripts/run-evals.py`
+- `scripts/import_m2_evidence.py`
+- `scripts/release-verify.py`
+- `scripts/update-integrity.py`
+- `scripts/build-release.py`
 - `src/review/component-profiles.json`
 - `src/review/prototype_review.py`
 
@@ -21,6 +25,10 @@ This is the complete intended file set for the local v0.1.0-alpha Git repository
 - `schemas/component-profiles.schema.json`
 - `schemas/firmware-pin-manifest.schema.json`
 - `schemas/hardware-contract.schema.json`
+- `schemas/m2-evidence-sha-manifest.schema.json`
+- `schemas/m2-live-evidence-bundle.schema.json`
+- `schemas/m2-live-evidence-document.schema.json`
+- `schemas/m2-public-evidence-summary.schema.json`
 - `schemas/pin-consistency-report.schema.json`
 - `schemas/project-snapshot.schema.json`
 - `schemas/prototype-review-input.schema.json`
@@ -72,6 +80,22 @@ This is the complete intended file set for the local v0.1.0-alpha Git repository
 - `tests/review/fixtures/synthetic-safe-input.json`
 - `tests/review/test_prototype_review.py`
 - `tests/review/test_release_runtime.py`
+- `tests/m2_gate/__init__.py`
+- `tests/m2_gate/test_import_m2_evidence.py`
+- `tests/m2_gate/fixtures/README.md`
+- `tests/m2_gate/fixtures/complete/bundle.json`
+- `tests/m2_gate/fixtures/complete/evidence/before/receipt.json`
+- `tests/m2_gate/fixtures/complete/evidence/before/save-reload.json`
+- `tests/m2_gate/fixtures/complete/evidence/before/independent-readback.json`
+- `tests/m2_gate/fixtures/complete/evidence/before/drc.json`
+- `tests/m2_gate/fixtures/complete/evidence/before/prototype-review.json`
+- `tests/m2_gate/fixtures/complete/evidence/after/receipt.json`
+- `tests/m2_gate/fixtures/complete/evidence/after/save-reload.json`
+- `tests/m2_gate/fixtures/complete/evidence/after/independent-readback.json`
+- `tests/m2_gate/fixtures/complete/evidence/after/drc.json`
+- `tests/m2_gate/fixtures/complete/evidence/after/prototype-review.json`
+- `tests/release/__init__.py`
+- `tests/release/test_release_tools.py`
 
 ## Documentation and examples
 
@@ -79,7 +103,9 @@ This is the complete intended file set for the local v0.1.0-alpha Git repository
 - `docs/demo.md`
 - `docs/evidence-schema.md`
 - `docs/limitations.md`
+- `docs/m2-evidence-gate.md`
 - `docs/privacy.md`
+- `docs/reproducible-release.md`
 - `docs/resume.md`
 - `docs/review-model.md`
 - `docs/roadmap.md`
@@ -117,6 +143,7 @@ This is the complete intended file set for the local v0.1.0-alpha Git repository
 ## Release audit detail
 
 - `release-audit/DOCS-REVIEW.md`
+- `release-audit/FILE-PROVENANCE.md`
 - `release-audit/M2-INTEGRATION-STATUS.md`
 - `release-audit/PRIVACY-SCAN-ALLOWLIST.json`
 - `release-audit/SOURCE-BOUNDARY.md`

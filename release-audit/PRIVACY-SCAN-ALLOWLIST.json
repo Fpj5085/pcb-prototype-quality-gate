@@ -1,6 +1,6 @@
 {
   "schema": "jlceda-release-privacy-allowlist/1.0",
-  "status": "suggested",
+  "status": "active",
   "principle": "Allow only documented syntax or policy vocabulary, never a concrete live value.",
   "entries": [
     {
@@ -23,7 +23,11 @@
         "SECURITY.md",
         "LICENSE-DECISION.md",
         "release-audit/*.md",
-        "skills/**/references/safety-and-privacy.md"
+        "skills/**/references/safety-and-privacy.md",
+        "docs/m2-evidence-gate.md",
+        "scripts/import_m2_evidence.py",
+        "scripts/release-verify.py",
+        "tests/m2_gate/*.py"
       ],
       "terms": [
         "token",
@@ -67,7 +71,8 @@
       "id": "symbolic-evaluation-identifiers",
       "paths": [
         "evals/**/*.json",
-        "tests/review/fixtures/*.json"
+        "tests/review/fixtures/*.json",
+        "tests/m2_gate/fixtures/**/*.json"
       ],
       "pattern": "^[A-Za-z][A-Za-z0-9_:+.-]{0,127}$",
       "allowedContext": "A human-readable synthetic eval name, reference designator, net name, or finding ID",

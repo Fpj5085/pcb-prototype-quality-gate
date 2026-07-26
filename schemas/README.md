@@ -10,4 +10,15 @@ Prototype review files use:
 - `prototype-review-output.schema.json`;
 - `component-profiles.schema.json`.
 
-The remaining schemas describe optional governed-adapter contracts. Shipping a schema does not claim that a general live mutation adapter is included or demonstrated.
+The future M2 live-evidence import gate uses:
+
+- `m2-evidence-sha-manifest.schema.json`;
+- `m2-live-evidence-bundle.schema.json`;
+- `m2-live-evidence-document.schema.json`;
+- `m2-public-evidence-summary.schema.json`.
+
+These contracts describe already-sanitized input and a minimal public output.
+The positive documents under `tests/m2_gate/fixtures/` are synthetic validation
+fixtures rather than observations from a live EDA run.
+
+The remaining schemas describe optional governed-adapter contracts. Shipping a schema or a passing synthetic gate test does not claim that a general live mutation adapter is included or demonstrated.

@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/codex-jlceda-hardware-agent/schemas/m2-live-evidence-document.schema.json",
+  "title": "M2 sanitized live-evidence document",
+  "type": "object",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/receipt"
+    },
+    {
+      "$ref": "#/$defs/saveReload"
+    },
+    {
+      "$ref": "#/$defs/independentReadback"
+    },
+    {
+      "$ref": "#/$defs/drc"
+    },
+    {
+      "$ref": "#/$defs/prototypeReview"
+    }
+  ],
+  "$defs": {
+    "stage": {
+      "enum": ["before", "after"]
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "stage", "source", "live", "verified", "idState", "operation", "operationStatus", "mutationCount"],
+      "properties": {
+        "schema": {
+          "const": "jlceda-m2-delivery-receipt-evidence/1.0"
+        },
+        "stage": {
+          "$ref": "#/$defs/stage"
+        },
+        "source": {
+          "const": "live-eda"
+        },
+        "live": {
+          "const": true
+        },
+        "verified": {
+          "const": true
+        },
+        "idState": {
+          "const": "redacted"
+        },
+        "operation": {
+          "enum": ["baseline-capture", "repair-delivery"]
+        },
+        "operationStatus": {
+          "const": "success"
+        },
+        "mutationCount": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "saveReload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "stage", "live", "saveSucceeded", "closeSucceeded", "reloadSucceeded", "postReloadReadbackSucceeded"],
+      "properties": {
+        "schema": {
+          "const": "jlceda-m2-save-reload-evidence/1.0"
+        },
+        "stage": {
+          "$ref": "#/$defs/stage"
+        },
+        "live": {
+          "const": true
+        },
+        "saveSucceeded": {
+          "const": true
+        },
+        "closeSucceeded": {
+          "const": true
+        },
+        "reloadSucceeded": {
+          "const": true
+        },
+        "postReloadReadbackSucceeded": {
+          "const": true
+        }
+      }
+    },
+    "independentReadback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "stage", "live", "independentVerifier", "readbackSucceeded", "componentCount", "networkCount"],
+      "properties": {
+        "schema": {
+          "const": "jlceda-m2-independent-readback-evidence/1.0"
+        },
+        "stage": {
+          "$ref": "#/$defs/stage"
+        },
+        "live": {
+          "const": true
+        },
+        "independentVerifier": {
+          "const": true
+        },
+        "readbackSucceeded": {
+          "const": true
+        },
+        "componentCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "networkCount": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "drc": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "stage", "live", "completed", "errorCount", "boardContainmentPassed", "connectivityPassed"],
+      "properties": {
+        "schema": {
+          "const": "jlceda-m2-drc-evidence/1.0"
+        },
+        "stage": {
+          "$ref": "#/$defs/stage"
+        },
+        "live": {
+          "const": true
+        },
+        "completed": {
+          "const": true
+        },
+        "errorCount": {
+          "const": 0
+        },
+        "boardContainmentPassed": {
+          "const": true
+        },
+        "connectivityPassed": {
+          "const": true
+        }
+      }
+    },
+    "prototypeReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "stage", "live", "completed", "rating", "blockerCount", "targetFindingStatus", "otherRiskSeverityWorsened"],
+      "properties": {
+        "schema": {
+          "const": "jlceda-m2-prototype-review-evidence/1.0"
+        },
+        "stage": {
+          "$ref": "#/$defs/stage"
+        },
+        "live": {
+          "const": true
+        },
+        "completed": {
+          "const": true
+        },
+        "rating": {
+          "enum": ["not_suitable_for_prototype", "suitable_after_corrections", "suitable_for_low_risk_prototype"]
+        },
+        "blockerCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "targetFindingStatus": {
+          "enum": ["present", "resolved"]
+        },
+        "otherRiskSeverityWorsened": {
+          "const": false
+        }
+      }
+    }
+  }
+}

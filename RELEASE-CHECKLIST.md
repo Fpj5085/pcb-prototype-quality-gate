@@ -5,6 +5,8 @@ This checklist distinguishes completed local release preparation from human deci
 ## Scope and product claims
 
 - [x] Positioning says this is a Prototype-readiness quality gate, not merely an AI PCB drawing tool.
+- [x] The user-facing loop is stated consistently: ordinary-language need → real editable schematic/PCB → independent automated review → allow-listed correction → save/reload re-verification → plain-language prototype rating.
+- [x] Draft generators are described as replaceable adapters; the independent review and bounded re-validation loop is the trusted core.
 - [x] Automatic repair claims are limited to the published allow-list status.
 - [x] M2 BEFORE/AFTER is labeled offline/pending rather than live save/reload proof.
 - [x] The car-controller `9/9` statement is limited to nine predefined/manual risk families on one 28-component fixture.
@@ -19,18 +21,21 @@ This checklist distinguishes completed local release preparation from human deci
 - [ ] **Maintainer:** record the final copyright-holder name.
 - [ ] **Maintainer:** attest authorship or Apache-2.0 relicensing rights for the review engine, schemas, tests, skill, docs and synthetic fixtures.
 - [ ] **Maintainer:** confirm no employer, client, contractor or prior repository has a conflicting claim.
+- [ ] **Maintainer:** identify AI-assisted material, confirm applicable tool terms permit publication, and approve the final human-reviewed expression.
 
 ## Functional validation
 
-- [x] Unit and release-runtime tests: 21/21.
+- [x] Complete Python suite: 37/37, including 21 Prototype/runtime, 11 M2 gate and 5 release-tool tests.
 - [x] Sanitized eval replay: 4/4.
 - [x] Python CLI smoke passed.
 - [x] PowerShell wrapper smoke passed.
 - [x] Plugin manifest validator passed.
 - [x] Skill validator passed.
-- [x] All 11 JSON Schemas compiled with a local Draft 2020-12 validator.
-- [x] Component profiles plus four review inputs and four outputs validated against public schemas.
-- [x] JSON/YAML parsing, Python syntax and Markdown relative-link checks passed.
+- [x] All 15 JSON Schemas compiled with cached Ajv 8.20.0 in offline mode.
+- [x] Twenty-two profile, Prototype and M2 documents validated against public schemas.
+- [x] JSON/YAML parsing, Python syntax and 104 Markdown relative-link checks passed.
+- [x] The deterministic M2 import gate covers success, pending, missing evidence, hash mismatch, privacy rejection and idempotence.
+- [x] Integrity generation and Git-tree ZIP construction have repeatable command entries and regression tests.
 
 ## Privacy and release hygiene
 
@@ -48,7 +53,9 @@ This checklist distinguishes completed local release preparation from human deci
 - [x] `power-distribution-after` successor closes the blocker in offline replay.
 - [x] `car-controller-adversarial` reproduces the scoped engineering risk benchmark.
 - [x] All evals include input, expected result, current manifest, manifest template, status and README.
-- [x] External M2 live evidence was checked read-only and was not promoted because it still recorded zero live EDA calls.
+- [x] The carried authoritative M2 status remains pending; this hardening run did not inspect or copy external M2 artifacts.
+- [x] M2 remains explicitly pending; offline replay and the AFTER successor do not set live EDA or save/reload verification flags.
+- [x] The positive M2 importer fixture is explicitly synthetic and cannot promote either live-verification flag.
 
 ## Integrity and local packaging
 
@@ -64,5 +71,6 @@ This checklist distinguishes completed local release preparation from human deci
 - [x] No GitHub push, release, upload or network publication was performed during preparation.
 - [ ] **Maintainer, after ownership sign-off:** choose public repository owner/name and review the local ZIP.
 - [ ] **Maintainer, after ownership sign-off:** create the public GitHub repository and publish the reviewed commit/archive.
+- [ ] **Maintainer:** make the final public-upload decision; local packaging and validation do not imply consent to publish.
 
 Unchecked human/publication items do not block this **local review candidate**. They intentionally block a public tag or upload.

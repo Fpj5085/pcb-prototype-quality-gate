@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/codex-jlceda-hardware-agent/schemas/m2-public-evidence-summary.schema.json",
+  "title": "M2 minimal public live-evidence summary",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "case", "gate", "liveEdaVerified", "liveSaveReloadVerified", "before", "after", "transition", "privacy"],
+  "properties": {
+    "schema": {
+      "const": "jlceda-m2-public-evidence-summary/1.0"
+    },
+    "case": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "gate": {
+      "const": "verified"
+    },
+    "liveEdaVerified": {
+      "const": true
+    },
+    "liveSaveReloadVerified": {
+      "const": true
+    },
+    "before": {
+      "allOf": [
+        {"$ref": "#/$defs/stageSummary"},
+        {
+          "properties": {
+            "prototypeReview": {
+              "properties": {
+                "targetFindingStatus": {"const": "present"}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "after": {
+      "allOf": [
+        {"$ref": "#/$defs/stageSummary"},
+        {
+          "properties": {
+            "prototypeReview": {
+              "properties": {
+                "rating": {"const": "suitable_for_low_risk_prototype"},
+                "blockerCount": {"const": 0},
+                "targetFindingStatus": {"const": "resolved"}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetFindingResolved", "otherRiskSeverityWorsened"],
+      "properties": {
+        "targetFindingResolved": {
+          "const": true
+        },
+        "otherRiskSeverityWorsened": {
+          "const": false
+        }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rawEvidenceCopied", "workstationPathsIncluded", "privateIdentifiersIncluded"],
+      "properties": {
+        "rawEvidenceCopied": {
+          "const": false
+        },
+        "workstationPathsIncluded": {
+          "const": false
+        },
+        "privateIdentifiersIncluded": {
+          "const": false
+        }
+      }
+    }
+  },
+  "$defs": {
+    "stageSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receiptVerified", "saveReloadVerified", "independentReadbackVerified", "designMetrics", "drc", "prototypeReview"],
+      "properties": {
+        "receiptVerified": {
+          "const": true
+        },
+        "saveReloadVerified": {
+          "const": true
+        },
+        "independentReadbackVerified": {
+          "const": true
+        },
+        "designMetrics": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["componentCount", "networkCount"],
+          "properties": {
+            "componentCount": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "networkCount": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "drc": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["completed", "errorCount", "boardContainmentPassed", "connectivityPassed"],
+          "properties": {
+            "completed": {
+              "const": true
+            },
+            "errorCount": {
+              "const": 0
+            },
+            "boardContainmentPassed": {
+              "const": true
+            },
+            "connectivityPassed": {
+              "const": true
+            }
+          }
+        },
+        "prototypeReview": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["completed", "rating", "blockerCount", "targetFindingStatus"],
+          "properties": {
+            "completed": {
+              "const": true
+            },
+            "rating": {
+              "enum": ["not_suitable_for_prototype", "suitable_after_corrections", "suitable_for_low_risk_prototype"]
+            },
+            "blockerCount": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "targetFindingStatus": {
+              "enum": ["present", "resolved"]
+            }
+          }
+        }
+      }
+    }
+  }
+}

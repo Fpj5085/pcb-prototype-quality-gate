@@ -19,8 +19,9 @@ A live EDA adapter is a separate integration surface. Do not add workstation-spe
 Requirements: Python 3.10+; the review core uses the standard library.
 
 ```powershell
-python -m unittest discover -s tests/review -p "test_*.py" -v
+python -m unittest discover -s tests -p "test_*.py" -v
 python scripts/run-evals.py
+python scripts/release-verify.py --skip-integrity
 python src/review/prototype_review.py `
   --input tests/review/fixtures/synthetic-safe-input.json `
   --profiles src/review/component-profiles.json `
@@ -28,6 +29,11 @@ python src/review/prototype_review.py `
 ```
 
 Run commands from the repository root. Generated `out/` content is not committed.
+
+See [Reproducible local release](docs/reproducible-release.md) before updating
+integrity files or constructing a ZIP. Run `scripts/update-integrity.py` only
+after functional and privacy checks pass; build the ZIP only from a clean local
+commit.
 
 ## Adding or changing a rule
 
@@ -59,6 +65,10 @@ Procurement availability and supplier identifiers are optional evidence, not sub
 Fixtures must declare whether they are synthetic, sanitized-derived, offline-forecast or live-save-reload-verified. Keep the minimum evidence needed for the assertion. Remove project identities, workstation paths, private logs, screenshots and internal transaction values.
 
 Benchmark numbers must state their denominator and scope. In particular, `9/9` means that all nine predefined manual benchmark risk families were detected on the single 28-component adversarial fixture; it is not general accuracy.
+
+Future M2 evidence must enter through the explicit, hashed and privacy-rejecting
+[M2 evidence gate](docs/m2-evidence-gate.md). Gate-test fixtures with `live: true`
+are synthetic branch coverage and must never be promoted as field evidence.
 
 ## Repair support
 

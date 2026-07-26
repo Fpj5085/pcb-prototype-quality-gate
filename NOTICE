@@ -1,9 +1,11 @@
 codex-jlceda-hardware-agent
 Copyright 2026 codex-jlceda-hardware-agent contributors
 
-This distribution contains original review rules, schemas, documentation, and
-synthetic evaluation fixtures proposed for release under Apache-2.0. Public
-distribution remains subject to the ownership gate in LICENSE-DECISION.md.
+This distribution contains project review rules, schemas, documentation, and
+synthetic or sanitized-derived evaluation fixtures proposed for release under
+Apache-2.0. Public distribution remains subject to the ownership gate in
+LICENSE-DECISION.md. The copyright-holder line above is a release-candidate
+placeholder and must be approved before publication.
 
 OpenAI and Codex, JLCEDA / 嘉立创EDA / EasyEDA, and EasyEDA Copilot are names or
 marks of their respective rights holders. This is an independent project and
@@ -16,6 +18,10 @@ No Copilot source code, binary, distribution, or extension package is included.
 Manufacturer names, product names, MPNs, and supplier identifiers may appear
 solely for interoperability and engineering-evidence citation. Manufacturer
 data-sheet PDFs, figures, and supplier catalogs are not bundled.
+
+No third-party NOTICE file, source code, executable, catalog, or documentation
+asset is incorporated into this distribution. Reference-only items and public
+conventions are listed in THIRD_PARTY.md.
 
 Prototype review results are engineering screening outputs. See
 docs/limitations.md for the boundary between software evidence and physical

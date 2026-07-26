@@ -36,6 +36,7 @@ These classes are outside the v0.1.0-alpha public candidate and must not be copi
 ## Evaluation-specific exclusions
 
 - raw M2 working artifacts and approval/ChangeSet bindings;
+- unsanitized M2 evidence inputs, raw receipts and their identifiers; only a gate-produced minimal public summary may enter a future candidate;
 - raw car-controller snapshots, screenshots and private evidence manifests;
 - any claim that converts offline/pending M2 evidence into live save/reload proof.
 

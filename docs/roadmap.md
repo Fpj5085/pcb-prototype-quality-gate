@@ -10,6 +10,8 @@ The roadmap is evidence-gated. A feature moves from planned to supported only af
 - synthetic safe and adversarial evaluation fixtures;
 - offline M2 BEFORE/AFTER successor evaluation;
 - published allow-list policy and persistence gates;
+- deterministic M2 evidence-import gate with synthetic pending/failure/success coverage;
+- reproducible integrity, privacy verification and local Git-tree ZIP tooling;
 - Codex plugin/skill structure for local review;
 - live EDA treated as an external environment integration, not a bundled universal adapter.
 

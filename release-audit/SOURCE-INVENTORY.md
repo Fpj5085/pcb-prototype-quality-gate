@@ -6,11 +6,14 @@ This inventory records how the staged v0.1.0-alpha files were assembled. It is a
 | --- | --- | --- | --- |
 | `src/review/prototype_review.py` | Original project code | Copied from the private working tree, then changed to machine-stable English ratings and repository-relative evidence output | Read-only deterministic Prototype review core |
 | `src/review/component-profiles.json` | Original project rule facts plus third-party factual citations | Local PDF filenames replaced by manufacturer/title/official-link metadata; PDFs excluded | Numeric facts must be rechecked against current official revisions |
-| `schemas/*.schema.json` | Original project schemas | Copied without live runtime state or example identifiers | Contracts only; no bridge runtime included |
+| Eight general `schemas/*.schema.json` contracts | Original project schemas | Copied without live runtime state or example identifiers | Ownership/relicensing attestation required; no bridge runtime included |
+| Prototype/profile and M2 evidence schemas | Original release-candidate work | Authored for the portable review and evidence-import surfaces | Synthetic tests only; schemas do not establish live capability |
 | `tests/review/*` | Original project tests and synthetic fixtures | Paths made repository-relative; adversarial input regenerated as a sanitized synthetic fixture | No live project identity |
 | `skills/jlceda-hardware-design/*` | Public rewrite of an original private skill | Rewritten around portable triggers, evidence gates and bounded claims | Private wrappers, approvals and machine paths removed |
 | `README*`, `docs/*`, `INSTALL.md`, `CONTRIBUTING.md`, `CHANGELOG.md` | Original public documentation | Written for the alpha candidate | Claims must match committed files and fixture status |
 | `evals/*` | Synthetic/sanitized evaluation successors | Regenerated from engineering structures; internal IDs and raw evidence excluded | BEFORE/AFTER live persistence remains pending unless explicitly recorded |
+| `scripts/import_m2_evidence.py` and `tests/m2_gate/` | Original release-candidate code and synthetic gate fixtures | Created for explicit hashed import, privacy rejection and idempotent summary generation | Synthetic positive branch is not live evidence |
+| Release verification/build scripts and tests | Original release-candidate code | Created for deterministic scanning, integrity generation and Git-tree packaging | Operates locally; no network publication action |
 | `LICENSE` | Apache License 2.0 standard text | Included as proposed root license | Applies only after ownership review passes |
 | `NOTICE`, `THIRD_PARTY.md` | Original attribution documents | Distinguish original work, reference-only dependencies and excluded artifacts | No third-party source or binaries bundled |
 

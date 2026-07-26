@@ -48,5 +48,5 @@ Schema property names and security-policy vocabulary are not concrete secrets.
 They remain scanner findings and require the narrow classifications recorded in
 `release-audit/PRIVACY-SCAN-ALLOWLIST.json`.
 
-See `release-audit/PRIVACY-SCAN-DRAFT.md` during staging and the final
-`PRIVACY-SCAN.md` plus `RELEASE-CHECKLIST.md` before a public tag.
+See [PRIVACY-SCAN.md](PRIVACY-SCAN.md) and
+[RELEASE-CHECKLIST.md](RELEASE-CHECKLIST.md) before a public tag.

@@ -19,6 +19,10 @@ The repository includes reusable JSON Schemas for the review engine and the gove
 | Pin consistency report | [`pin-consistency-report.schema.json`](../schemas/pin-consistency-report.schema.json) | Hardware/firmware binding comparison. |
 | Immutable change set | [`change-set.schema.json`](../schemas/change-set.schema.json) | Preview-only, baseline-bound change intent. |
 | Change preview | [`change-preview.schema.json`](../schemas/change-preview.schema.json) | Non-executable risk summary and review disposition. |
+| M2 SHA manifest | [`m2-evidence-sha-manifest.schema.json`](../schemas/m2-evidence-sha-manifest.schema.json) | Exact hash coverage for an explicitly supplied sanitized evidence directory. |
+| M2 bundle index | [`m2-live-evidence-bundle.schema.json`](../schemas/m2-live-evidence-bundle.schema.json) | BEFORE/AFTER references for the five required live-evidence classes. |
+| M2 evidence document | [`m2-live-evidence-document.schema.json`](../schemas/m2-live-evidence-document.schema.json) | Sanitized receipt, persistence, readback, DRC and Prototype-review attestations. |
+| M2 public summary | [`m2-public-evidence-summary.schema.json`](../schemas/m2-public-evidence-summary.schema.json) | Minimal idempotent output eligible for future public review. |
 
 The Prototype engine versions its runtime payloads with `jlceda-prototype-review-input/1.0`, `jlceda-component-profiles/1.0`, `jlceda-prototype-review/1.0` and `jlceda-prototype-review-manifest/1.0`. The first three have standalone schemas; the generated evidence manifest is covered by runtime tests and the output-file contract below.
 
@@ -96,6 +100,11 @@ A live change is complete only when evidence records:
 7. target-finding improvement with no unrelated regression.
 
 The public M2 AFTER fixture currently describes an offline successor forecast. Its manifest remains `offline-successor-forecast-pending-live-evidence` until a real environment produces the complete sequence above.
+
+The offline [M2 evidence gate](m2-evidence-gate.md) checks that future sanitized
+BEFORE/AFTER evidence is complete, manifest-covered, hash-consistent and free of
+private identifiers before emitting one minimal public summary. A passing
+synthetic gate fixture is validation of the importer rather than live EDA proof.
 
 ## Privacy rules
 

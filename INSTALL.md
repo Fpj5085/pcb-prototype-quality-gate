@@ -44,6 +44,11 @@ Or use the wrapper:
 
 Run the test and evaluation gates described in [CONTRIBUTING.md](CONTRIBUTING.md) before changing rules or profiles.
 
+The M2 evidence importer and release verification tools also use only the Python
+standard library. Their commands and trust boundaries are documented in
+[M2 evidence gate](docs/m2-evidence-gate.md) and
+[Reproducible local release](docs/reproducible-release.md).
+
 ## Local Codex plugin
 
 Codex installs plugins from a configured marketplace. The release archive is plugin source; it does not edit a user's marketplace configuration.

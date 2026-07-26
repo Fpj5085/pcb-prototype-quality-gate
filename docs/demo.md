@@ -4,6 +4,12 @@
 
 Show one narrow claim: an editable or DRC-clean AI-generated design can still fail a conservative Prototype review, and an intended correction must remain clearly separated from a verified live save/reload result.
 
+Use the product loop as orientation, not as a claim that every live step ships in this alpha:
+
+> Ordinary-language need → real editable schematic/PCB → independent automated review → allow-listed correction → save/reload re-verification → plain-language prototype rating.
+
+The Draft generator is replaceable. The independent review and bounded re-validation loop—not ownership of a particular generator—is the product's core value.
+
 The demo uses only repository fixtures and the offline review engine. It does not operate JLCEDA, install an EDA extension or claim physical validation.
 
 ## Preparation
@@ -30,7 +36,7 @@ Say:
 
 > This is not another tool whose main claim is that AI can draw a PCB. It is a quality gate that asks whether the evidence supports a low-risk prototype and what must be revalidated after a bounded correction.
 
-Point out the three ratings and the rule that `DRC=0` is necessary but insufficient.
+Point out the six-stage product loop, the three ratings and the rule that `DRC=0` is necessary but insufficient. Clarify that this repository demo starts from normalized evidence: the live Draft and EDA mutation adapters are replaceable environment integrations and are not bundled.
 
 ### 2:00–5:00 — Establish the passing control
 
@@ -66,6 +72,8 @@ Then show the manifest status. Say explicitly:
 
 > The rules predict a pass, but the public alpha still labels this as an offline forecast. A real repair claim requires immediate readback, save, close, reload, independent readback and a fresh review.
 
+Also state that M2 remains pending: neither a successful replay nor a successor fixture promotes `liveEdaVerified` or `liveSaveReloadVerified`.
+
 ### 14:00–20:00 — Why DRC=0 is not enough
 
 Open the 28-component adversarial motor-controller fixture. Show that its source evaluation had containment and DRC=0, then group the review findings into understandable risks:
@@ -97,11 +105,12 @@ Explain why the project prefers a narrow truthful allow-list over broad mutation
 
 Summarize:
 
-1. ordinary-language intent is routed into a work mode;
-2. current evidence is normalized and reviewed independently;
-3. findings are explainable and fixture-reproducible;
-4. live changes require persistence and regression proof;
-5. physical testing and Manufacturing Release remain separate gates.
+1. ordinary-language intent can enter through a replaceable Draft adapter or an existing editable design;
+2. a real schematic/PCB must be read back and normalized independently;
+3. findings and the plain-language prototype rating are explainable and fixture-reproducible;
+4. only allow-listed changes may enter a bounded repair plan;
+5. live changes require save/close/reload, independent readback and regression proof;
+6. physical testing and Manufacturing Release remain separate gates.
 
 Useful Q&A answer: the engine is useful offline today; live EDA collection is an environment integration and automatic repair support is published one verified allow-list entry at a time.
 
@@ -131,7 +140,7 @@ Expected rating: `not_suitable_for_prototype`.
 
 Expected delta: close `DECOUPLING_DISTANCE:J2:+5V`, add pass `DECOUPLING_PASS:J2:+5V`, blocker delta `-1`.
 
-The current public case is an offline successor forecast. A live claim requires exact EDA identity/readback, save/close/reload, ERC, connectivity, containment and DRC evidence recorded by the fixture manifest as `live-save-reload-verified`.
+The current public case is an offline successor forecast and M2 remains pending. A live claim requires exact EDA identity/readback, save/close/reload, ERC, connectivity, containment and DRC evidence recorded by the fixture manifest as `live-save-reload-verified`.
 
 ## 2. Adversarial case: two-motor controller
 

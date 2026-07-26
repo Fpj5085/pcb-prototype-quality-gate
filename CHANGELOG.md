@@ -1,6 +1,8 @@
-# Changelog
+# Project release history
 
-All notable changes to this project will be documented in this file. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow Semantic Versioning.
+This project-authored history records release-relevant changes. Its section
+layout is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and version labels follow Semantic Versioning conventions.
 
 ## [Unreleased]
 
@@ -24,7 +26,10 @@ Status: local release candidate; no GitHub publication is implied by this entry.
 - offline 5 V / 1 A distribution-board BEFORE/AFTER successor evaluation;
 - bounded repair allow-list and save/close/reload revalidation policy;
 - portable Codex plugin and `jlceda-hardware-design` skill structure;
-- architecture, evidence, privacy, security, limitations and demo documentation.
+- architecture, evidence, privacy, security, limitations and demo documentation;
+- deterministic M2 sanitized-evidence import gate with pending, hash, privacy and idempotence tests;
+- reproducible integrity generation, repository verification and Git-tree ZIP builder;
+- per-file provenance inventory and expanded third-party/source boundary.
 
 ### Evidence boundaries
 

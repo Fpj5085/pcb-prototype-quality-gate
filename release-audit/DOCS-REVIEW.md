@@ -12,7 +12,7 @@ Review scope: R2 documentation/product expression and R3 Codex plugin/skill pack
 - installation/removal: `INSTALL.md`;
 - contribution rules: `CONTRIBUTING.md`;
 - version history and evidence boundaries: `CHANGELOG.md`;
-- architecture, review model, evidence schema, supported repairs, limitations, privacy and roadmap under `docs/`;
+- architecture, review model, evidence schema, M2 evidence gate, reproducible release, supported repairs, limitations, privacy and roadmap under `docs/`;
 - a 20–25 minute offline demo script in `docs/demo.md`;
 - fixture-scoped Chinese and English resume wording in `docs/resume.md`;
 - ordinary-Chinese requests and expected-output examples under `examples/`.
@@ -21,9 +21,12 @@ Review scope: R2 documentation/product expression and R3 Codex plugin/skill pack
 ## Claim audit
 
 - Product position is consistently a Prototype quality gate, not a generic “AI draws PCBs” claim.
+- The full user loop is stated consistently: ordinary-language need, real editable schematic/PCB, independent review, allow-listed correction, save/reload re-verification and plain-language rating.
+- Draft generators are replaceable adapters; the independent evidence/review/persistence loop is the trusted core.
 - Third-party draft generators and EDA adapters are described as external integration boundaries.
 - Live EDA support is not bundled; the plugin manifest declares no MCP server or app.
 - M2 AFTER is consistently labeled `offline-successor-forecast-pending-live-evidence`.
+- The M2 importer's positive fixture is explicitly synthetic and cannot promote live status.
 - Automatic repair status follows `review-only`, `planned-experimental` or `prepared-not-live-verified` boundaries.
 - The car-controller benchmark states only that one 28-component fixture detected 9/9 predefined manual benchmark risk families; no general accuracy or certification claim is made.
 - DRC, save/reload and software review are not presented as physical functional proof or Manufacturing Release.
@@ -40,13 +43,15 @@ Review scope: R2 documentation/product expression and R3 Codex plugin/skill pack
 
 - Official local plugin validator: pass.
 - Official local skill quick validator: pass.
-- Repository unit tests at review time: 21/21 pass.
+- Repository unit tests at final review time: 37/37 pass.
 - Offline evaluation replay at review time: 4/4 pass.
+- M2 gate matrix: 11/11 pass.
+- Reproducible release-tool tests: 5/5 pass.
 - JSON plugin manifest parse: pass.
-- Local Markdown link scan: 0 missing repository-relative targets.
+- Local Markdown link scan: 104 links across 47 Markdown files; 0 missing repository-relative targets.
 - Plugin add/remove and marketplace command forms were checked against the installed Codex CLI help; no installation was executed.
 - UTF-8 review found no intentionally introduced mojibake in the documentation set.
-- Documentation/examples contain no workstation-specific path or username value.
+- Repository-wide deterministic privacy scan: 121 files, 0 high-risk findings.
 
 ## Human confirmations before publication
 

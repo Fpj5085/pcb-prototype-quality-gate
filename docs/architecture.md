@@ -2,7 +2,8 @@
 
 ## Goals
 
-- Turn ordinary-language hardware intent into an explicit review mode.
+- Support the governed product loop: ordinary-language need → real editable schematic/PCB → independent automated review → allow-listed correction → save/reload re-verification → plain-language prototype rating.
+- Keep Draft generation replaceable and outside the independent trust core.
 - Judge whether current EDA evidence supports a low-risk prototype.
 - Keep findings explainable, reproducible and linked to engineering evidence.
 - Permit only bounded, allow-listed repairs with persistence and regression gates.
@@ -19,7 +20,9 @@
 ```mermaid
 flowchart TB
   U["User intent"] --> R["Mode router"]
-  E["EDA / draft adapter\nuntrusted mutation producer"] --> C["Current-state collector"]
+  R --> D["Replaceable Draft generator\nor existing-design adapter"]
+  D --> E["Real editable schematic / PCB\nenvironment-owned state"]
+  E --> C["Independent current-state collector"]
   C --> N["Evidence normalizer"]
   R --> N
   N --> Q["Read-only Prototype rules"]
@@ -33,16 +36,21 @@ flowchart TB
 
 The public repository includes the router policy, normalized evidence contracts, review engine and evaluation fixtures. A live EDA adapter is an integration boundary and must be audited separately.
 
+The Draft generator can be swapped without changing the evidence contracts or review rules. Its success acknowledgement is never an input of equal trust to independent current-state readback. The core value begins at that trust boundary: normalize what actually exists, review it conservatively, constrain any repair, and require persistence plus regression evidence before updating the user-facing rating.
+
 ## Deployment profiles
 
 | Profile | Included in alpha | EDA access | Claim |
 | --- | --- | --- | --- |
 | Offline review | Yes | None | Run deterministic review and fixture replay from normalized JSON. |
 | Agent skill | Yes | None by default | Route intent, explain evidence/rating, and enforce published boundaries. |
+| Draft generation / design import | Replaceable environment integration | Adapter-specific | Produce or open a real editable design; its output must still be collected and reviewed independently. |
 | Live read-only collection | Environment integration | Adapter-specific | Produce current normalized evidence after independent adapter audit. |
 | Live bounded mutation | Experimental environment integration | Adapter-specific write access | Only for an allow-listed repair with exact baseline, compensation and persistence gates. |
 
 The plugin manifest intentionally declares no MCP server or app. This prevents a portable review release from silently depending on a workstation wrapper, port, service or third-party extension.
+
+The M2 BEFORE/AFTER fixtures currently exercise the offline review boundary only. Their AFTER rating remains a forecast until complete live EDA and save/reload evidence passes the publication gate; the architecture does not infer live verification from fixture replay.
 
 ## Components
 
@@ -55,6 +63,7 @@ The plugin manifest intentionally declares no MCP server or app. This prevents a
 7. **Bounded executor** — adapter-owned mutation surface; not shipped as a universal capability in this alpha.
 8. **Persistence verifier** — immediate readback, save/close/reload, second readback and fresh review.
 9. **Report renderer** — emits machine JSON and user-facing summaries.
+10. **Publication evidence gate** — accepts only explicit, hashed and sanitized M2 bundles and emits one minimal idempotent summary; it never discovers or reads live EDA state.
 
 The reusable schema layer is described in [Evidence schema](evidence-schema.md). Plugin installation does not make a live adapter trusted; adapter evidence must still satisfy the same contracts.
 

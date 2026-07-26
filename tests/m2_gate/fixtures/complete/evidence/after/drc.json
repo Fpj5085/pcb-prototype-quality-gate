@@ -1,0 +1,9 @@
+{
+  "schema": "jlceda-m2-drc-evidence/1.0",
+  "stage": "after",
+  "live": true,
+  "completed": true,
+  "errorCount": 0,
+  "boardContainmentPassed": true,
+  "connectivityPassed": true
+}

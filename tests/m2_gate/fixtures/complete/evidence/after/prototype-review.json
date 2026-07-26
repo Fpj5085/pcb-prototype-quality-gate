@@ -1,0 +1,10 @@
+{
+  "schema": "jlceda-m2-prototype-review-evidence/1.0",
+  "stage": "after",
+  "live": true,
+  "completed": true,
+  "rating": "suitable_for_low_risk_prototype",
+  "blockerCount": 0,
+  "targetFindingStatus": "resolved",
+  "otherRiskSeverityWorsened": false
+}
