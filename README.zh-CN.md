@@ -151,7 +151,7 @@ BEFORE/AFTER 闭环通过后只产生一个最小、幂等的公开摘要。当�
 - [`power-distribution-before`](evals/power-distribution-before/README.md)：6 器件合成fixture，唯一目标 blocker 是输出分支缺少合格本地旁路；离线评估。
 - [`power-distribution-after`](evals/power-distribution-after/README.md)：7 器件离线 successor 重放，锁定新增 100nF X7R 电容；另有独立、门验证的公开摘要记录真实保存重载闭环。
 - [`car-controller-adversarial`](evals/car-controller-adversarial/README.md)：脱敏的 28 器件fixture，板框包含和 DRC=0，但仍有多类电气/布局风险。`9/9` 只表示本fixture中预定义人工基准风险族的命中情况。
-- [`synthetic-safe`](evals/synthetic-safe/README.md)：预期通过当前审核门的合成回归fixture。
+- [`synthetic-safe`](evals/synthetic-safe/README.md)：离线合成回归fixture；工程预测通过，但实时/持久化元数据矛盾时严格样板评级保持关闭失败。
 
 ## Alpha 边界
 

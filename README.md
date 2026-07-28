@@ -161,7 +161,7 @@ For local plugin setup and removal, see [INSTALL.md](INSTALL.md). The plugin shi
 - [`power-distribution-before`](evals/power-distribution-before/README.md): six-component synthetic fixture with one intended local-bypass blocker; offline evaluation.
 - [`power-distribution-after`](evals/power-distribution-after/README.md): seven-component offline successor replay with a locked 100 nF X7R capacitor; a separate gate-verified public summary records the live save/reload closure.
 - [`car-controller-adversarial`](evals/car-controller-adversarial/README.md): sanitized 28-component fixture with containment and DRC=0, yet multiple electrical and layout risks. The `9/9` metric refers only to predefined manual benchmark risk families in this fixture.
-- [`synthetic-safe`](evals/synthetic-safe/README.md): synthetic regression fixture expected to pass the configured review gates.
+- [`synthetic-safe`](evals/synthetic-safe/README.md): offline synthetic regression whose engineering forecast passes while strict readiness stays fail-closed on contradictory live/persistence metadata.
 
 ## Repository map
 
