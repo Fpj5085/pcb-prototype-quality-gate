@@ -28,8 +28,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 3328,
-      "sha256": "27dac5c58ec8e7510c2c086e2465a2412a53fabff80ae653157e95bb250aa2ec"
+      "bytes": 3258,
+      "sha256": "ba93bbb2086f7286855bf99c8dd4dd2dc832c5eb26cd16451b1ca7c5f81cd911"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -43,8 +43,8 @@
     },
     {
       "path": "INSTALL.md",
-      "bytes": 3987,
-      "sha256": "04ddb9bebcf2bd0dd2a072fbb0d2c76b3356ac54c7500e8069eca838fb8aa1cf"
+      "bytes": 4109,
+      "sha256": "db2993b943681d2cb902d77564d1423a89cb12637b34ed3be5916f16c8c7fa56"
     },
     {
       "path": "LICENSE",
@@ -63,8 +63,8 @@
     },
     {
       "path": "PRIVACY-SCAN.md",
-      "bytes": 3990,
-      "sha256": "9778acf0e9d449794568733d8af3bb5bb73eb8411211e8474591c7b6fd3eb269"
+      "bytes": 3971,
+      "sha256": "2557ae599a0d5f70448458b0aed673cf0c44143c927366e3ec485e721c4c9004"
     },
     {
       "path": "PUBLIC-FILES.md",
@@ -74,17 +74,17 @@
     {
       "path": "README.md",
       "bytes": 13195,
-      "sha256": "a17cf5630affafed44bf5d703e688198734a6e72883bd215ec9d1c4dc51e5e6e"
+      "sha256": "db2aee79e249bab8c38531a1005e5d487e9bb6eda61b865f726589e312b4671a"
     },
     {
       "path": "README.zh-CN.md",
       "bytes": 10890,
-      "sha256": "3cb8f87db8026b44222d3a7388e9500882e6d4032b2ab9c948bdab61af6eccb4"
+      "sha256": "c8b9f5bb1b064b6c85a8cbb8fa42ba7e1a9c08098b3d69745ecdcc26e6513cdd"
     },
     {
       "path": "RELEASE-CHECKLIST.md",
-      "bytes": 5776,
-      "sha256": "fea4e52cb6994995960f170f0df8e6768a8ac070025f060f1e3909e941cb4c82"
+      "bytes": 5853,
+      "sha256": "379b8a5752d11ce4f040cf7490dfc248e5c1f066a92a9857ab594c5c6ebf342c"
     },
     {
       "path": "SECURITY.md",
@@ -93,8 +93,8 @@
     },
     {
       "path": "TEST-REPORT.md",
-      "bytes": 6826,
-      "sha256": "4b724f923b934653c8551c1e82a1f1a6ea089ff0c9640e12bf3385ae5453e6de"
+      "bytes": 7000,
+      "sha256": "1cca2dbdcfe15c9375ceb2751f12be0698956ef4c8eca9e71eff9b463dbadc73"
     },
     {
       "path": "THIRD_PARTY.md",
@@ -138,8 +138,8 @@
     },
     {
       "path": "docs/reproducible-release.md",
-      "bytes": 2060,
-      "sha256": "149b5704e3b84d507d9fc41f7d5c525f488b83de24f570526ddbe77b512511f2"
+      "bytes": 2059,
+      "sha256": "fb4a1df8bebccf851b072ed54ea6acac46fb19b4381e713451f83c90270d4bcc"
     },
     {
       "path": "docs/resume.md",
@@ -328,8 +328,8 @@
     },
     {
       "path": "release-audit/DOCS-REVIEW.md",
-      "bytes": 4390,
-      "sha256": "e45e90fb897a6782c86c3ee1f95eefacd3762e08491c91f5662ff05f0a47b86d"
+      "bytes": 4774,
+      "sha256": "65c3a1a77ec53d6e514e6bbacae494dba133ad63665e23abff81e8596832ead3"
     },
     {
       "path": "release-audit/FILE-PROVENANCE.md",

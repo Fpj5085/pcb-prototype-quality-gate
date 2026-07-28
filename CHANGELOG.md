@@ -29,7 +29,6 @@ Status: local candidate only; no remote tag or Release is created by this reposi
 
 ### Planned
 
-- record the M2 AFTER case from a real bounded save/close/reload run;
 - publish additional fixture-scoped benchmarks;
 - graduate repair families only after their public persistence and regression gates pass.
 

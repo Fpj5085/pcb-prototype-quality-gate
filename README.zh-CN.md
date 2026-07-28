@@ -54,7 +54,7 @@ DRC 校验的是几何与连接规则,**它不校验设计在电气和热学上�
 [`jlceda-prototype-review-evidence/1.0`](docs/evidence-schema.md)。该 fixture 覆盖的
 九个风险族列举于 [docs/demo.md](docs/demo.md);结论边界见文末 **Alpha 边界**。
 
-## v0.1.0-alpha 包含
+## v0.1.1-alpha 包含
 
 - 普通语言请求到 **Draft / Prototype / Manufacturing Release** 工作模式的治理规则；
 - 从可替换 Draft 生成器或既有可编辑设计进入独立现场读回的适配器中立交接；

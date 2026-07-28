@@ -61,7 +61,7 @@ risk families exercised by this fixture are enumerated in
 [docs/demo.md](docs/demo.md); see
 [What it does not claim](#what-it-does-not-claim) for the limits of this result.
 
-## What v0.1.0-alpha includes
+## What v0.1.1-alpha includes
 
 - ordinary-language routing into **Draft**, **Prototype**, and **Manufacturing Release** work modes;
 - adapter-neutral handoff from a replaceable Draft generator or an existing editable design into independent current-state review;

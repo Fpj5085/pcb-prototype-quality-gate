@@ -1,9 +1,10 @@
-# Test report — v0.1.0-alpha hardened local candidate
+# Test report — v0.1.1-alpha hardened local candidate
 
 Date: 2026-07-28
 Scope: local release candidate only. This run validated the offline runtime, the
-sanitized M2 evidence boundary and release tooling. It performed no EDA mutation,
-network publication, upload, manufacturing, ordering or payment.
+sanitized M2/M3 evidence boundary, the fail-closed local-bypass planner and release
+tooling. It performed no EDA mutation, network publication, upload, manufacturing,
+ordering or payment.
 
 ## Environment
 
@@ -21,9 +22,10 @@ tools and are not bundled dependencies.
 
 | Gate | Result |
 | --- | --- |
-| Complete Python test suite | **48/48 passed** |
+| Complete Python test suite | **55/55 passed** |
 | Prototype rule/runtime tests | **32/32 passed** |
 | M2 evidence-import gate tests | **11/11 passed** |
+| Local-bypass repair-plan tests | **7/7 passed** |
 | Reproducible release-tool tests | **5/5 passed** |
 | Sanitized evaluation replay | **4/4 passed** |
 | Python CLI smoke — complete-evidence semantic fixture | Passed; `suitable_for_low_risk_prototype` |
@@ -31,13 +33,13 @@ tools and are not bundled dependencies.
 | PowerShell parser | Passed for every published `.ps1` entry |
 | Plugin manifest validator | Passed |
 | Skill validator | Passed |
-| JSON Schema compilation | **15/15 schemas passed** with Ajv 8.20.0, Draft 2020-12 |
-| Schema instance validation | **22/22 documents passed** |
-| UTF-8 and mojibake gate | 122 text files passed |
-| JSON parsing | 53 files passed |
+| JSON Schema compilation | **16/16 schemas passed** with Ajv 8.20.0, Draft 2020-12 |
+| Schema instance validation | **24/24 documents passed** |
+| UTF-8 and mojibake gate | 130 text files passed |
+| JSON parsing | 55 files passed |
 | Restricted YAML parsing | 1 file passed |
-| Python AST syntax | 14 files passed |
-| Markdown relative links | 104 links across 47 Markdown files; 0 missing |
+| Python AST syntax | 19 files passed |
+| Markdown relative links | 111 links; 0 missing |
 | Repository privacy/release gate | Passed; 0 high-risk findings |
 
 ## M2 import matrix
@@ -65,7 +67,7 @@ included in the candidate.
 
 ## Schema instances
 
-The 22 validated documents were:
+The 24 validated documents were:
 
 - component profiles: 1;
 - Prototype inputs: 4;
@@ -73,7 +75,9 @@ The 22 validated documents were:
 - M2 SHA manifest: 1;
 - M2 bundle index: 1;
 - M2 evidence documents: 10;
-- M2 minimal public summary: 1.
+- M2 minimal public summary: 1;
+- M3 independent minimal public summary: 1;
+- immutable local-bypass repair plan: 1.
 
 The exact Ajv package came from the existing local Bridge dependency tree and
 was used read-only; the temporary generated review outputs were removed after
@@ -138,11 +142,11 @@ python scripts/release-verify.py
 WorkBuddy injects a host `sitecustomize` safe-delete hook that could not recycle
 three test temporary directories on this Windows workspace. The first full run
 therefore completed every assertion but reported three cleanup errors. Because
-the candidate uses only the Python standard library, the same 48 tests were
-rerun with `python -S`, which disables external site hooks; all 48 passed and all
+the candidate uses only the Python standard library, the complete 55-test suite was
+rerun with `python -S`, which disables external site hooks; all 55 passed and all
 temporary directories were removed. No test assertion or product code was
 changed to obtain that result.
 
-Archive build and archive-against-committed-tree verification remain intentionally
-outside this run because the candidate has uncommitted reviewed changes. No ZIP,
-upload or network publication was produced.
+Archive build and archive-against-committed-tree verification are performed only
+after the reviewed tree is committed. The resulting deterministic archive and
+sidecar remain local until a separate public-upload decision.

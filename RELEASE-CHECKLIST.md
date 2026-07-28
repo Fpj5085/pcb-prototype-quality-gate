@@ -1,4 +1,4 @@
-# v0.1.0-alpha release checklist
+# v0.1.1-alpha release checklist
 
 This checklist distinguishes completed local release preparation from human decisions and any future network publication.
 
@@ -25,15 +25,15 @@ This checklist distinguishes completed local release preparation from human deci
 
 ## Functional validation
 
-- [x] Complete Python suite: 48/48, including 32 Prototype/runtime, 11 M2 gate and 5 release-tool tests.
+- [x] Complete Python suite: 55/55, including 32 Prototype/runtime, 11 M2 gate, 7 local-bypass planner and 5 release-tool tests.
 - [x] Sanitized eval replay: 4/4.
 - [x] Python CLI smoke passed.
 - [x] PowerShell wrapper smoke passed.
 - [x] Plugin manifest validator passed.
 - [x] Skill validator passed.
-- [x] All 15 JSON Schemas compiled with cached Ajv 8.20.0 in offline mode.
-- [x] Twenty-two profile, Prototype and M2 documents validated against public schemas.
-- [x] JSON/YAML parsing, Python syntax and 104 Markdown relative-link checks passed.
+- [x] All 16 JSON Schemas compiled with cached Ajv 8.20.0 in offline mode.
+- [x] Twenty-four profile, Prototype, M2/M3 summary and repair-plan documents validated against public schemas.
+- [x] JSON/YAML parsing, Python syntax and 111 Markdown relative-link checks passed.
 - [x] The deterministic M2 import gate covers success, pending, missing evidence, hash mismatch, privacy rejection and idempotence.
 - [x] Integrity generation and Git-tree ZIP construction have repeatable command entries and regression tests.
 
@@ -68,9 +68,9 @@ This checklist distinguishes completed local release preparation from human deci
 
 ## Network publication
 
-- [x] No GitHub push, release, upload or network publication was performed during preparation.
-- [ ] **Maintainer, after ownership sign-off:** choose public repository owner/name and review the local ZIP.
-- [ ] **Maintainer, after ownership sign-off:** create the public GitHub repository and publish the reviewed commit/archive.
-- [ ] **Maintainer:** make the final public-upload decision; local packaging and validation do not imply consent to publish.
+- [x] The public repository owner/name already exists as `Fpj5085/pcb-prototype-quality-gate`; v0.1.0-alpha remains the current remote prerelease.
+- [x] No v0.1.1-alpha GitHub push, tag, Release upload or network publication was performed during preparation.
+- [ ] **Maintainer:** review the final v0.1.1-alpha commit, ZIP and SHA-256 sidecar.
+- [ ] **Maintainer:** make the separate final decision to push `main`, create tag/Release `v0.1.1-alpha`, and upload the reviewed archive.
 
 Unchecked human/publication items do not block this **local review candidate**. They intentionally block a public tag or upload.

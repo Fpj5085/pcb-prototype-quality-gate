@@ -1,13 +1,13 @@
 # Privacy, secret and release-hygiene scan
 
-Candidate: `codex-jlceda-hardware-agent` v0.1.0-alpha  
+Candidate: `pcb-prototype-quality-gate` v0.1.1-alpha
 Scope: the complete repository tree excluding local Git metadata.
 
 ## Result
 
 **Concrete high-risk findings: 0.**
 
-The deterministic final scan covers 122 public files. Every current file is also
+The deterministic final scan covers 130 public files. Every current file is also
 classified in `release-audit/FILE-PROVENANCE.md`.
 
 | Check | Result | Notes |
@@ -18,10 +18,10 @@ classified in `release-audit/FILE-PROVENANCE.md`.
 | Concrete project/page/PCB/object/library/device IDs | 0 | Public cases use descriptive synthetic references only |
 | Concrete approval/receipt/checkpoint/bundle/nonce values | 0 | Policy vocabulary is allowed; runtime values are absent |
 | Credential assignment, bearer/cookie value or private-key header | 0 | Repository-wide deterministic pattern gate passed |
-| Invalid UTF-8, replacement character or known mojibake marker | 0 | 122 text files passed |
-| Unparseable JSON | 0 | 53 public JSON files parsed |
+| Invalid UTF-8, replacement character or known mojibake marker | 0 | 130 text files passed |
+| Unparseable JSON | 0 | 55 public JSON files parsed |
 | Unparseable restricted YAML | 0 | The single host metadata file passed |
-| Missing Markdown relative links | 0 | 104 links across 47 Markdown files passed |
+| Missing Markdown relative links | 0 | 111 relative links passed |
 | Images, PDFs, extension packages, logs, archives or executables in repository | 0 | The local release ZIP is outside the repository tree |
 | Files larger than 1 MiB | 0 | No unexplained large file |
 | Symbolic links | 0 | Release inventory contains regular files only |

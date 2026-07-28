@@ -45,7 +45,7 @@ objects rather than mutable working-tree files:
 git status --short
 python scripts/build-release.py
 python scripts/release-verify.py `
-  --archive ../codex-jlceda-hardware-agent-v0.1.0-alpha.zip
+  --archive ../pcb-prototype-quality-gate-v0.1.1-alpha.zip
 ```
 
 The builder sorts paths, stores every committed blob under one top-level
