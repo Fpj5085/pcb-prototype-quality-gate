@@ -15,3 +15,7 @@ Statuses are deliberately conservative.
 `live-evidence-gate-verified` is limited to the scoped, sanitized M2 bypass-cap case represented by the minimal public summary. It does not mean the public repository bundles the EDA mutation runtime, and the alpha does not claim general component replacement or whole-board automatic repair.
 
 The portable planner is `scripts/plan-local-bypass.py`. It accepts an explicit machine review, its normalized evidence and an ordinary-language goal. It emits a deterministic `ADD_LOCAL_BYPASS_CAP` plan only when the decoupling blocker is the sole unresolved finding, all Prototype gates are explicit and passing, the target/net/distance requirement is unambiguous and no qualifying bypass already exists. Private project IDs and execution approvals are intentionally deferred to the separately audited environment adapter.
+
+## M3 independent repetition
+
+A second disposable sensor-adapter fixture independently closed `DECOUPLING_DISTANCE:J2:+5V` with the same `ADD_LOCAL_BYPASS_CAP` family. The live AFTER state persisted a locked 100 nF X7R C0805 within 3.81 mm of J2, with both pads copper-connected to `+5V` and `GND`, ERC/connectivity/containment/strict DRC passing, and a fresh low-risk Prototype rating. This evidence does not add another repair type.

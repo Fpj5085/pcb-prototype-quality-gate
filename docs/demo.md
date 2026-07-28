@@ -75,7 +75,13 @@ Then show the manifest status. Say explicitly:
 
 Also state that the fixture and the live summary are different evidence classes. The manifest links them without claiming that the synthetic input bytes came from the EDA run.
 
-### 14:00–20:00 — Why DRC=0 is not enough
+### 14:00–17:00 — M3 independent repetition
+
+Show the gate-generated M3 public summary. The independent NOT FOR MANUFACTURING fixture began with five components and exactly one blocker, `DECOUPLING_DISTANCE:J2:+5V`. The allow-listed plan locked `CL21B104KBCNNNC` (100 nF, X7R, 50 V, C0805), added it within 3.81 mm of J2, and connected both pads to real `+5V`/`GND` copper. After save/close/reload, ERC, connectivity, containment and strict PCB DRC were all clean; a fresh review returned `suitable_for_low_risk_prototype`.
+
+State the boundary: this repeats one narrow repair family on a second independent fixture. It does not establish general placement, routing or Manufacturing Release capability.
+
+### 17:00–22:00 — Why DRC=0 is not enough
 
 Open the 28-component adversarial motor-controller fixture. Show that its source evaluation had containment and DRC=0, then group the review findings into understandable risks:
 
@@ -92,7 +98,7 @@ State the benchmark exactly:
 
 Do not call this general accuracy, recall or certification.
 
-### 20:00–23:00 — Repair boundary
+### 22:00–25:00 — Repair boundary
 
 Open [Supported repairs](supported-repairs.md). Contrast:
 
@@ -102,7 +108,7 @@ Open [Supported repairs](supported-repairs.md). Contrast:
 
 Explain why the project prefers a narrow truthful allow-list over broad mutation claims.
 
-### 23:00–25:00 — Close and questions
+### 25:00–28:00 — Close and questions
 
 Summarize:
 

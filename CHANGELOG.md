@@ -6,6 +6,22 @@ and version labels follow Semantic Versioning conventions.
 
 ## [Unreleased]
 
+## [0.1.1-alpha] - 2026-07-28
+
+Status: local candidate only; no remote tag or Release is created by this repository update.
+
+### Added
+
+- independent M3 NOT FOR MANUFACTURING sensor-adapter BEFORE→`ADD_LOCAL_BYPASS_CAP`→AFTER live repetition;
+- gate-generated, privacy-minimized M3 public evidence summary;
+- persisted schematic and PCB proof for locked `CL21B104KBCNNNC` near J2, including fresh ERC, connectivity, containment and strict DRC checks.
+
+### Changed
+
+- roadmap now records M3 repetition complete while keeping the public repair allow-list limited to `ADD_LOCAL_BYPASS_CAP`;
+- repeatability wording is limited to two fixture-scoped live closures and does not imply general autonomous layout or Manufacturing Release.
+
+
 ### Added
 
 - deterministic, fail-closed `ADD_LOCAL_BYPASS_CAP` repair-plan CLI and schema;

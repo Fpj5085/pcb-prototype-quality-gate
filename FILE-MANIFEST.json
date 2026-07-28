@@ -1,11 +1,11 @@
 {
   "schema": "codex-jlceda-release-file-manifest/1.1",
-  "version": "0.1.0-alpha",
+  "version": "0.1.1-alpha",
   "candidateStatus": "local-review-candidate-not-published",
   "algorithm": "SHA-256",
   "reproducible": true,
-  "fileCount": 126,
-  "repositoryFileCountIncludingIntegrityFiles": 128,
+  "fileCount": 128,
+  "repositoryFileCountIncludingIntegrityFiles": 130,
   "selfHashExclusions": [
     "FILE-MANIFEST.json",
     "SHA256SUMS.txt"
@@ -14,7 +14,7 @@
     {
       "path": ".codex-plugin/plugin.json",
       "bytes": 1357,
-      "sha256": "99ea7dd0bd0c4de7dd5c0e2e825faeb32cc903c030a6a18abb0d53cf977fc631"
+      "sha256": "f4b5e88da620d14f98f1ef9d4626310364c97f80dde344295e3d4d10932a1733"
     },
     {
       "path": ".gitattributes",
@@ -28,8 +28,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 2592,
-      "sha256": "806413514b58d11c28f00b929524b0158baf918882d4c7e23bc79eccfbd93023"
+      "bytes": 3328,
+      "sha256": "27dac5c58ec8e7510c2c086e2465a2412a53fabff80ae653157e95bb250aa2ec"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -68,18 +68,18 @@
     },
     {
       "path": "PUBLIC-FILES.md",
-      "bytes": 5635,
-      "sha256": "17bc16e61c5c1a1156a103d01ce33a2cabc24d46d3cd377c1a43abab023753bd"
+      "bytes": 5538,
+      "sha256": "168174deafd80a84eb101f9b242353ef8d08f2998be3e0ff20778bfb42bc5edf"
     },
     {
       "path": "README.md",
-      "bytes": 12556,
-      "sha256": "58544870a1806c2f5e76ef6547a348306e8a6db42e1df4bbf53135e5aca63c16"
+      "bytes": 13195,
+      "sha256": "a17cf5630affafed44bf5d703e688198734a6e72883bd215ec9d1c4dc51e5e6e"
     },
     {
       "path": "README.zh-CN.md",
-      "bytes": 10367,
-      "sha256": "bcd18e8bdd59298aa3cb25c0fd932ee637d2b1f4c3ae6204704661cb5d1d2712"
+      "bytes": 10890,
+      "sha256": "3cb8f87db8026b44222d3a7388e9500882e6d4032b2ab9c948bdab61af6eccb4"
     },
     {
       "path": "RELEASE-CHECKLIST.md",
@@ -104,7 +104,7 @@
     {
       "path": "VERSION",
       "bytes": 12,
-      "sha256": "60ed669ba94172c5f8a7e60859a7ebba4157ddf66ae713b7ea60d3dd258479c2"
+      "sha256": "4585d07ac6b89d625e1776ad4866332545687f9fbf4dfc44b1a72f826e5e2c17"
     },
     {
       "path": "docs/architecture.md",
@@ -113,8 +113,8 @@
     },
     {
       "path": "docs/demo.md",
-      "bytes": 7335,
-      "sha256": "347ff7a99842d8401f8f7736d49f0e92f8a7ef633f92bb3ec0b74bc95a0b626b"
+      "bytes": 8042,
+      "sha256": "e84dd792c4ebc229847915996a19d57761fce22385d05a0c9a153f13ac8e9b61"
     },
     {
       "path": "docs/evidence-schema.md",
@@ -153,13 +153,13 @@
     },
     {
       "path": "docs/roadmap.md",
-      "bytes": 2862,
-      "sha256": "d0d66bcc99bb14033421cfbbde6a78aac94e224706d05a97b691db06dd4e80e5"
+      "bytes": 3036,
+      "sha256": "639d5aa595048c8d15ff0f87233a3d014b99c50bee7d35e8ce4a1224f985e3fd"
     },
     {
       "path": "docs/supported-repairs.md",
-      "bytes": 2727,
-      "sha256": "40a09901891d461b92c7671d8e3665364ed0f99c52bcf029f29d76ed69d55a27"
+      "bytes": 3163,
+      "sha256": "614c65f58eb4b51892d360c28b1c4ac22bcece37c80558dbe10c7e25287bb8c6"
     },
     {
       "path": "evals/car-controller-adversarial/README.md",
@@ -302,6 +302,16 @@
       "sha256": "070927033b27d38884e5a809962cbd10ce069d3af0af122062b717e75ce01722"
     },
     {
+      "path": "evidence/m3-independent-repetition/README.md",
+      "bytes": 978,
+      "sha256": "027f570a8f4b79cc1112f27050e54e6686a09569d7076460342c12d661613a3b"
+    },
+    {
+      "path": "evidence/m3-independent-repetition/m2-live-evidence-summary.json",
+      "bytes": 1436,
+      "sha256": "3cf3bef28780a9d1999930884dac8ba0047f01701aa4c187860de4b9ca5ed32b"
+    },
+    {
       "path": "examples/README.md",
       "bytes": 429,
       "sha256": "481821666415a8451664ab3a25c117adfa90ecd9ceafc1a87a42206474aa9511"
@@ -323,8 +333,8 @@
     },
     {
       "path": "release-audit/FILE-PROVENANCE.md",
-      "bytes": 27637,
-      "sha256": "036dfd13d7f927b4ce464d5a0b0cde2a6728a392dd896d179aad5e97a6751d53"
+      "bytes": 25563,
+      "sha256": "0315d022e11ec4058585317bd30f24fdc10cfba7b54ee48d7ab6f42a557377c2"
     },
     {
       "path": "release-audit/M2-INTEGRATION-STATUS.md",

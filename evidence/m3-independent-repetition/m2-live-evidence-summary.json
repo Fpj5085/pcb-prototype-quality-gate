@@ -1,0 +1,58 @@
+{
+  "after": {
+    "designMetrics": {
+      "componentCount": 6,
+      "networkCount": 3
+    },
+    "drc": {
+      "boardContainmentPassed": true,
+      "completed": true,
+      "connectivityPassed": true,
+      "errorCount": 0
+    },
+    "independentReadbackVerified": true,
+    "prototypeReview": {
+      "blockerCount": 0,
+      "completed": true,
+      "rating": "suitable_for_low_risk_prototype",
+      "targetFindingStatus": "resolved"
+    },
+    "receiptVerified": true,
+    "saveReloadVerified": true
+  },
+  "before": {
+    "designMetrics": {
+      "componentCount": 5,
+      "networkCount": 3
+    },
+    "drc": {
+      "boardContainmentPassed": true,
+      "completed": true,
+      "connectivityPassed": true,
+      "errorCount": 0
+    },
+    "independentReadbackVerified": true,
+    "prototypeReview": {
+      "blockerCount": 1,
+      "completed": true,
+      "rating": "not_suitable_for_prototype",
+      "targetFindingStatus": "present"
+    },
+    "receiptVerified": true,
+    "saveReloadVerified": true
+  },
+  "case": "m3-independent-sensor-adapter-bypass",
+  "gate": "verified",
+  "liveEdaVerified": true,
+  "liveSaveReloadVerified": true,
+  "privacy": {
+    "privateIdentifiersIncluded": false,
+    "rawEvidenceCopied": false,
+    "workstationPathsIncluded": false
+  },
+  "schema": "jlceda-m2-public-evidence-summary/1.0",
+  "transition": {
+    "otherRiskSeverityWorsened": false,
+    "targetFindingResolved": true
+  }
+}

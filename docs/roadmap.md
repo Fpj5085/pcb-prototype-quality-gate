@@ -2,7 +2,7 @@
 
 The roadmap is evidence-gated. A feature moves from planned to supported only after its public acceptance criteria are met.
 
-## v0.1.0-alpha — local release candidate
+## v0.1.0-alpha — published baseline
 
 - portable, deterministic Prototype review engine;
 - normalized evidence and component-profile schemas;
@@ -17,7 +17,7 @@ The roadmap is evidence-gated. A feature moves from planned to supported only af
 
 The M2 AFTER offline fixture keeps a strict `suitable_after_corrections` rating. Separately, one scoped real M2 transition has passed the existing hash/privacy evidence gate and is represented by a minimal public summary. General automatic schematic/PCB repair remains outside this milestone.
 
-## Completed proof; next: M3 repetition
+## v0.1.1-alpha local candidate — M3 repetition completed
 
 Exit criteria:
 
@@ -30,7 +30,7 @@ Exit criteria:
 7. show the one target finding closing and unrelated findings not worsening;
 8. publish only the sanitized minimum evidence.
 
-The scoped M2 case has passed these eight evidence gates. M3 must repeat the same matrix on an independent disposable fixture before any broader repeatability claim; it must not widen the mutation allow-list.
+The scoped M2 case and one independent M3 sensor-adapter repetition have now passed these eight evidence gates. M3 used the same sole repair family, `ADD_LOCAL_BYPASS_CAP`, and did not widen the mutation allow-list. The claim remains fixture-scoped: two successful live closures are evidence of repeatability for this narrow repair, not general autonomous PCB repair.
 
 ## Later alpha milestones
 

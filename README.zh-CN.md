@@ -1,6 +1,6 @@
 # codex-jlceda-hardware-agent
 
-> **v0.1.0-alpha · NOT FOR MANUFACTURING（不可直接制造）**
+> **v0.1.1-alpha 本地候选 · NOT FOR MANUFACTURING（不可直接制造）**
 
 **面向真实可编辑嘉立创EDA设计的独立 Prototype 打样前质量门与受控修正闭环。**
 
@@ -64,6 +64,9 @@ DRC 校验的是几何与连接规则,**它不校验设计在电气和热学上�
 - 保存、关闭、重载和独立读回门；
 - 5V/1A 电源分配板 BEFORE/AFTER 评估对；合成 fixture 仍用于离线重放，并另附通过隐私门的真实保存重载最小公开摘要；
 - 一个“EDA 门通过但仍不值得打样”的双电机控制器 adversarial fixture。
+
+
+- 独立 M3 传感器转接板重复验证：真实 5 器件 BEFORE 仅命中本地旁路 blocker；白名单 `ADD_LOCAL_BYPASS_CAP` 加入锁定的 100nF X7R C0805；保存重载后的 6 器件 AFTER 通过 ERC、连通性、板框包含、严格 DRC 和全新复审。
 
 ## 不宣称
 
@@ -164,6 +167,8 @@ BEFORE/AFTER 闭环通过后只产生一个最小、幂等的公开摘要。当�
 - [`power-distribution-after`](evals/power-distribution-after/README.md)：7 器件离线 successor 重放，锁定新增 100nF X7R 电容；另有独立、门验证的公开摘要记录真实保存重载闭环。
 - [`car-controller-adversarial`](evals/car-controller-adversarial/README.md)：脱敏的 28 器件fixture，板框包含和 DRC=0，但仍有多类电气/布局风险。`9/9` 只表示本fixture中预定义人工基准风险族的命中情况。
 - [`synthetic-safe`](evals/synthetic-safe/README.md)：离线合成回归fixture；工程预测通过，但实时/持久化元数据矛盾时严格样板评级保持关闭失败。
+
+- [`evidence/m3-independent-repetition`](evidence/m3-independent-repetition/README.md)：独立 M3 BEFORE→修正→AFTER 的门控最小公开证据；为兼容 v0.1.0 证据门保留旧输出文件名，case 字段明确标识 M3。
 
 ## Alpha 边界
 

@@ -1,55 +1,43 @@
 # Public file list
 
-This is the complete intended file set for the local v0.1.0-alpha Git repository and release archive. All paths are repository-relative. Local Git metadata and the external ZIP/checksum sidecar are not part of the archive.
+This is the complete intended file set for the local v0.1.1-alpha Git repository and release archive. All paths are repository-relative. Local Git metadata and the external ZIP/checksum sidecar are not part of the archive.
 
-**Total intended repository files: 128.**
+**Total intended repository files: 130.**
 
-## Core review and command entry
-
-- `scripts/prototype-review.ps1`
-- `scripts/run-evals.py`
-- `scripts/import_m2_evidence.py`
-- `scripts/plan-local-bypass.py`
-- `scripts/release-verify.py`
-- `scripts/update-integrity.py`
-- `scripts/build-release.py`
-- `src/review/component-profiles.json`
-- `src/review/prototype_review.py`
-- `src/repair/__init__.py`
-- `src/repair/local_bypass_plan.py`
-
-## Schemas
-
-- `schemas/README.md`
-- `schemas/change-preview.schema.json`
-- `schemas/change-set.schema.json`
-- `schemas/circuit-dsl.schema.json`
-- `schemas/component-lockfile.schema.json`
-- `schemas/component-profiles.schema.json`
-- `schemas/firmware-pin-manifest.schema.json`
-- `schemas/hardware-contract.schema.json`
-- `schemas/m2-evidence-sha-manifest.schema.json`
-- `schemas/m2-live-evidence-bundle.schema.json`
-- `schemas/m2-live-evidence-document.schema.json`
-- `schemas/m2-public-evidence-summary.schema.json`
-- `schemas/local-bypass-repair-plan.schema.json`
-- `schemas/pin-consistency-report.schema.json`
-- `schemas/project-snapshot.schema.json`
-- `schemas/prototype-review-input.schema.json`
-- `schemas/prototype-review-output.schema.json`
-
-## Codex plugin and skill
+## Complete inventory
 
 - `.codex-plugin/plugin.json`
-- `skills/jlceda-hardware-design/SKILL.md`
-- `skills/jlceda-hardware-design/agents/openai.yaml`
-- `skills/jlceda-hardware-design/references/review-evidence.md`
-- `skills/jlceda-hardware-design/references/safety-and-privacy.md`
-- `skills/jlceda-hardware-design/references/supported-repair-policy.md`
-- `skills/jlceda-hardware-design/references/work-modes.md`
-
-## Evaluations and tests
-
+- `.gitattributes`
+- `.gitignore`
+- `CHANGELOG.md`
+- `CONTRIBUTING.md`
+- `EXCLUDED-FILES.md`
+- `FILE-MANIFEST.json`
+- `INSTALL.md`
+- `LICENSE`
+- `LICENSE-DECISION.md`
+- `NOTICE`
+- `PRIVACY-SCAN.md`
+- `PUBLIC-FILES.md`
+- `README.md`
+- `README.zh-CN.md`
+- `RELEASE-CHECKLIST.md`
+- `SECURITY.md`
+- `SHA256SUMS.txt`
+- `TEST-REPORT.md`
+- `THIRD_PARTY.md`
+- `VERSION`
+- `docs/architecture.md`
+- `docs/demo.md`
+- `docs/evidence-schema.md`
+- `docs/limitations.md`
+- `docs/m2-evidence-gate.md`
+- `docs/privacy.md`
+- `docs/reproducible-release.md`
+- `docs/resume.md`
+- `docs/review-model.md`
+- `docs/roadmap.md`
+- `docs/supported-repairs.md`
 - `evals/car-controller-adversarial/README.md`
 - `evals/car-controller-adversarial/evidence/README.md`
 - `evals/car-controller-adversarial/evidence/status.json`
@@ -78,80 +66,73 @@ This is the complete intended file set for the local v0.1.0-alpha Git repository
 - `evals/synthetic-safe/input.json`
 - `evals/synthetic-safe/manifest.json`
 - `evals/synthetic-safe/manifest.template.json`
+- `evidence/m3-independent-repetition/README.md`
+- `evidence/m3-independent-repetition/m2-live-evidence-summary.json`
+- `examples/README.md`
+- `examples/expected-output.zh-CN.md`
+- `examples/ordinary-language-requests.zh-CN.md`
+- `release-audit/DOCS-REVIEW.md`
+- `release-audit/FILE-PROVENANCE.md`
+- `release-audit/M2-INTEGRATION-STATUS.md`
+- `release-audit/PRIVACY-SCAN-ALLOWLIST.json`
+- `release-audit/SOURCE-BOUNDARY.md`
+- `release-audit/SOURCE-INVENTORY.md`
+- `release-audit/m2-live-evidence-summary.json`
+- `schemas/README.md`
+- `schemas/change-preview.schema.json`
+- `schemas/change-set.schema.json`
+- `schemas/circuit-dsl.schema.json`
+- `schemas/component-lockfile.schema.json`
+- `schemas/component-profiles.schema.json`
+- `schemas/firmware-pin-manifest.schema.json`
+- `schemas/hardware-contract.schema.json`
+- `schemas/local-bypass-repair-plan.schema.json`
+- `schemas/m2-evidence-sha-manifest.schema.json`
+- `schemas/m2-live-evidence-bundle.schema.json`
+- `schemas/m2-live-evidence-document.schema.json`
+- `schemas/m2-public-evidence-summary.schema.json`
+- `schemas/pin-consistency-report.schema.json`
+- `schemas/project-snapshot.schema.json`
+- `schemas/prototype-review-input.schema.json`
+- `schemas/prototype-review-output.schema.json`
+- `scripts/build-release.py`
+- `scripts/import_m2_evidence.py`
+- `scripts/plan-local-bypass.py`
+- `scripts/prototype-review.ps1`
+- `scripts/release-verify.py`
+- `scripts/run-evals.py`
+- `scripts/update-integrity.py`
+- `skills/jlceda-hardware-design/SKILL.md`
+- `skills/jlceda-hardware-design/agents/openai.yaml`
+- `skills/jlceda-hardware-design/references/review-evidence.md`
+- `skills/jlceda-hardware-design/references/safety-and-privacy.md`
+- `skills/jlceda-hardware-design/references/supported-repair-policy.md`
+- `skills/jlceda-hardware-design/references/work-modes.md`
+- `src/repair/__init__.py`
+- `src/repair/local_bypass_plan.py`
+- `src/review/component-profiles.json`
+- `src/review/prototype_review.py`
 - `tests/__init__.py`
+- `tests/m2_gate/__init__.py`
+- `tests/m2_gate/fixtures/README.md`
+- `tests/m2_gate/fixtures/complete/bundle.json`
+- `tests/m2_gate/fixtures/complete/evidence/after/drc.json`
+- `tests/m2_gate/fixtures/complete/evidence/after/independent-readback.json`
+- `tests/m2_gate/fixtures/complete/evidence/after/prototype-review.json`
+- `tests/m2_gate/fixtures/complete/evidence/after/receipt.json`
+- `tests/m2_gate/fixtures/complete/evidence/after/save-reload.json`
+- `tests/m2_gate/fixtures/complete/evidence/before/drc.json`
+- `tests/m2_gate/fixtures/complete/evidence/before/independent-readback.json`
+- `tests/m2_gate/fixtures/complete/evidence/before/prototype-review.json`
+- `tests/m2_gate/fixtures/complete/evidence/before/receipt.json`
+- `tests/m2_gate/fixtures/complete/evidence/before/save-reload.json`
+- `tests/m2_gate/test_import_m2_evidence.py`
+- `tests/release/__init__.py`
+- `tests/release/test_release_tools.py`
+- `tests/repair/__init__.py`
+- `tests/repair/test_local_bypass_plan.py`
 - `tests/review/__init__.py`
 - `tests/review/fixtures/car-adversarial-input.json`
 - `tests/review/fixtures/synthetic-safe-input.json`
 - `tests/review/test_prototype_review.py`
 - `tests/review/test_release_runtime.py`
-- `tests/m2_gate/__init__.py`
-- `tests/m2_gate/test_import_m2_evidence.py`
-- `tests/m2_gate/fixtures/README.md`
-- `tests/m2_gate/fixtures/complete/bundle.json`
-- `tests/m2_gate/fixtures/complete/evidence/before/receipt.json`
-- `tests/m2_gate/fixtures/complete/evidence/before/save-reload.json`
-- `tests/m2_gate/fixtures/complete/evidence/before/independent-readback.json`
-- `tests/m2_gate/fixtures/complete/evidence/before/drc.json`
-- `tests/m2_gate/fixtures/complete/evidence/before/prototype-review.json`
-- `tests/m2_gate/fixtures/complete/evidence/after/receipt.json`
-- `tests/m2_gate/fixtures/complete/evidence/after/save-reload.json`
-- `tests/m2_gate/fixtures/complete/evidence/after/independent-readback.json`
-- `tests/m2_gate/fixtures/complete/evidence/after/drc.json`
-- `tests/m2_gate/fixtures/complete/evidence/after/prototype-review.json`
-- `tests/release/__init__.py`
-- `tests/release/test_release_tools.py`
-- `tests/repair/__init__.py`
-- `tests/repair/test_local_bypass_plan.py`
-
-## Documentation and examples
-
-- `docs/architecture.md`
-- `docs/demo.md`
-- `docs/evidence-schema.md`
-- `docs/limitations.md`
-- `docs/m2-evidence-gate.md`
-- `docs/privacy.md`
-- `docs/reproducible-release.md`
-- `docs/resume.md`
-- `docs/review-model.md`
-- `docs/roadmap.md`
-- `docs/supported-repairs.md`
-- `examples/README.md`
-- `examples/expected-output.zh-CN.md`
-- `examples/ordinary-language-requests.zh-CN.md`
-
-## Repository governance and metadata
-
-- `.gitattributes`
-- `.gitignore`
-- `CHANGELOG.md`
-- `CONTRIBUTING.md`
-- `INSTALL.md`
-- `LICENSE`
-- `LICENSE-DECISION.md`
-- `NOTICE`
-- `README.md`
-- `README.zh-CN.md`
-- `SECURITY.md`
-- `THIRD_PARTY.md`
-- `VERSION`
-
-## Release inventory and validation
-
-- `EXCLUDED-FILES.md`
-- `FILE-MANIFEST.json`
-- `PRIVACY-SCAN.md`
-- `PUBLIC-FILES.md`
-- `RELEASE-CHECKLIST.md`
-- `SHA256SUMS.txt`
-- `TEST-REPORT.md`
-
-## Release audit detail
-
-- `release-audit/DOCS-REVIEW.md`
-- `release-audit/FILE-PROVENANCE.md`
-- `release-audit/M2-INTEGRATION-STATUS.md`
-- `release-audit/m2-live-evidence-summary.json`
-- `release-audit/PRIVACY-SCAN-ALLOWLIST.json`
-- `release-audit/SOURCE-BOUNDARY.md`
-- `release-audit/SOURCE-INVENTORY.md`
