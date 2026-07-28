@@ -188,6 +188,9 @@ For local plugin setup and removal, see [INSTALL.md](INSTALL.md). The plugin shi
 - [`power-distribution-after`](evals/power-distribution-after/README.md): seven-component offline successor replay with a locked 100 nF X7R capacitor; a separate gate-verified public summary records the live save/reload closure.
 - [`car-controller-adversarial`](evals/car-controller-adversarial/README.md): sanitized 28-component fixture with containment and DRC=0, yet multiple electrical and layout risks. The `9/9` metric refers only to predefined manual benchmark risk families in this fixture.
 - [`synthetic-safe`](evals/synthetic-safe/README.md): offline synthetic regression whose engineering forecast passes while strict readiness stays fail-closed on contradictory live/persistence metadata.
+- `power-input-before/after`: original synthetic pair for input headroom, protection sizing and conservative trace capacity.
+- `sensor-interface-before/after`: original synthetic pair for level margin, local decoupling and declared return-path quality.
+- `communication-interface-before/after`: original synthetic pair for debug recovery, prototype usability, schematic topology and firmware-pin consistency.
 - [`evidence/m3-independent-repetition`](evidence/m3-independent-repetition/README.md): gate-generated minimum public evidence for the independent M3 BEFORE→repair→AFTER repetition. The legacy `m2-live-evidence-summary.json` filename is retained for v0.1.0 gate compatibility; its case field identifies M3.
 
 ## Repository map

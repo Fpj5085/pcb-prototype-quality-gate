@@ -34,7 +34,7 @@ The scoped M2 case and one independent M3 sensor-adapter repetition have now pas
 
 ## Later alpha milestones
 
-- add diverse power, sensor and interface fixtures with declared benchmark scopes;
+- [completed after v0.1.1] add three original synthetic BEFORE/AFTER benchmark pairs for power input, sensor interface and low-speed communication, each with a declared fixture-only scope;
 - expand boundary tests for confidence, missing evidence and conservative assumptions;
 - publish an adapter contract for read-only collection from multiple EDA environments;
 - validate additional addition-only repair families one at a time;

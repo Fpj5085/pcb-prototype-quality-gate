@@ -2,7 +2,7 @@
 
 This is the complete intended file set for the local v0.1.1-alpha Git repository and release archive. All paths are repository-relative. Local Git metadata and the external ZIP/checksum sidecar are not part of the archive.
 
-**Total intended repository files: 132.**
+**Total intended repository files: 151.**
 
 ## Complete inventory
 
@@ -45,6 +45,18 @@ This is the complete intended file set for the local v0.1.1-alpha Git repository
 - `evals/car-controller-adversarial/input.json`
 - `evals/car-controller-adversarial/manifest.json`
 - `evals/car-controller-adversarial/manifest.template.json`
+- `evals/communication-interface-after/expected.json`
+- `evals/communication-interface-after/input.json`
+- `evals/communication-interface-after/manifest.json`
+- `evals/communication-interface-before/expected.json`
+- `evals/communication-interface-before/input.json`
+- `evals/communication-interface-before/manifest.json`
+- `evals/power-input-after/expected.json`
+- `evals/power-input-after/input.json`
+- `evals/power-input-after/manifest.json`
+- `evals/power-input-before/expected.json`
+- `evals/power-input-before/input.json`
+- `evals/power-input-before/manifest.json`
 - `evals/power-distribution-after/README.md`
 - `evals/power-distribution-after/evidence/README.md`
 - `evals/power-distribution-after/evidence/status.json`
@@ -59,6 +71,12 @@ This is the complete intended file set for the local v0.1.1-alpha Git repository
 - `evals/power-distribution-before/input.json`
 - `evals/power-distribution-before/manifest.json`
 - `evals/power-distribution-before/manifest.template.json`
+- `evals/sensor-interface-after/expected.json`
+- `evals/sensor-interface-after/input.json`
+- `evals/sensor-interface-after/manifest.json`
+- `evals/sensor-interface-before/expected.json`
+- `evals/sensor-interface-before/input.json`
+- `evals/sensor-interface-before/manifest.json`
 - `evals/synthetic-safe/README.md`
 - `evals/synthetic-safe/evidence/README.md`
 - `evals/synthetic-safe/evidence/status.json`
@@ -136,5 +154,6 @@ This is the complete intended file set for the local v0.1.1-alpha Git repository
 - `tests/review/fixtures/car-adversarial-input.json`
 - `tests/review/fixtures/synthetic-safe-input.json`
 - `tests/review/test_component_profile_audit.py`
+- `tests/review/test_diverse_benchmarks.py`
 - `tests/review/test_prototype_review.py`
 - `tests/review/test_release_runtime.py`

@@ -61,7 +61,7 @@ class ReleaseRuntimeTests(unittest.TestCase):
         with self.assertRaisesRegex(InputValidationError, "duplicate"):
             validate_design(duplicate)
 
-    def test_all_four_eval_replays_match_expected(self):
+    def test_all_ten_eval_replays_match_expected(self):
         completed = subprocess.run(
             [sys.executable, str(EVAL_RUNNER)],
             cwd=self.temp_root,
@@ -75,7 +75,18 @@ class ReleaseRuntimeTests(unittest.TestCase):
         self.assertEqual(replay["status"], "pass")
         self.assertEqual(
             {case["id"] for case in replay["cases"]},
-            {"power-distribution-before", "power-distribution-after", "car-controller-adversarial", "synthetic-safe"},
+            {
+                "power-distribution-before",
+                "power-distribution-after",
+                "car-controller-adversarial",
+                "synthetic-safe",
+                "power-input-before",
+                "power-input-after",
+                "sensor-interface-before",
+                "sensor-interface-after",
+                "communication-interface-before",
+                "communication-interface-after",
+            },
         )
         self.assertTrue(all(case["status"] == "pass" for case in replay["cases"]))
 

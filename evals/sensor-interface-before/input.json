@@ -1,0 +1,16 @@
+{
+  "schema": "jlceda-prototype-review-input/1.0",
+  "designName": "Synthetic sensor interface benchmark before",
+  "fixtureMetadata": {"liveEdaVerified": false, "persistenceEvidenceIncluded": false, "executionStatus": "offline-synthetic-benchmark"},
+  "components": [
+    {"ref": "CTRL_S", "profile": "safe.mcu", "package": "QFN-32_GENERIC", "critical": true, "x": 10, "y": 10, "nets": ["V3_S", "GND", "SENSOR_IN"]},
+    {"ref": "C_S", "capacitanceUf": 0.1, "x": 18, "y": 10, "nets": ["V3_S", "GND"]}
+  ],
+  "nets": [{"name": "V3_S", "role": "power", "designCurrentA": 0.15, "minWidthMm": 0.5}],
+  "decouplingRequirements": [{"targetRef": "CTRL_S", "supplyNet": "V3_S", "returnNet": "GND", "minCapacitanceUf": 0.08, "maxCapacitanceUf": 0.22, "maxDistanceMm": 3.0}],
+  "voltageDividers": [{"id": "SENSOR_LEVEL", "inputMaxV": 5.25, "topOhm": 1000, "bottomOhm": 10000, "receiverAbsMaxV": 3.6, "requiredMarginV": 0.2, "locations": ["SENSOR_IN"]}],
+  "checks": {"schematicErrors": 0, "schematicWarnings": 0, "pcbDrcFindings": 0, "unroutedNets": 0, "containment": true},
+  "groundReview": {"pours": 1, "islands": 0, "returnPathVerified": false, "powerLogicReturnSeparated": true, "confidence": "high", "locations": ["SENSOR_IN"]},
+  "schematicTopology": {"floatingInputs": [], "sameNameConflicts": [], "pinPadVerified": true, "hiddenPowerPinsVerified": true, "confidence": "high"},
+  "sourceEvidence": ["original synthetic sensor-interface benchmark; no live EDA claim"]
+}

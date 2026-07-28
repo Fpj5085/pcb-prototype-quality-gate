@@ -1,0 +1,19 @@
+{
+  "schema": "jlceda-prototype-review-input/1.0",
+  "designName": "Synthetic communication interface benchmark before",
+  "fixtureMetadata": {"liveEdaVerified": false, "persistenceEvidenceIncluded": false, "executionStatus": "offline-synthetic-benchmark"},
+  "components": [
+    {"ref": "CTRL_C", "profile": "safe.mcu", "package": "QFN-32_GENERIC", "critical": true, "x": 10, "y": 10, "nets": ["V3_C", "GND", "BUS_DATA", "BUS_CLOCK", "RESET_C"]}
+  ],
+  "nets": [{"name": "V3_C", "role": "power", "designCurrentA": 0.1, "minWidthMm": 0.5}],
+  "debugInterface": {"locations": ["DEBUG_C"], "requiredSignals": ["VREF", "GND", "DBG_D", "DBG_C", "RESET"], "presentSignals": ["GND", "DBG_D", "DBG_C"]},
+  "usability": {"missingTestpointNets": ["BUS_DATA", "BUS_CLOCK"], "missingSilkscreenLabels": ["BUS_HEADER"], "antennaKeepout": {"verified": true}},
+  "checks": {"schematicErrors": 0, "schematicWarnings": 0, "pcbDrcFindings": 0, "unroutedNets": 0, "containment": true},
+  "groundReview": {"pours": 1, "islands": 0, "returnPathVerified": true, "powerLogicReturnSeparated": true, "confidence": "high"},
+  "schematicTopology": {"floatingInputs": ["CTRL_C.BUS_ALERT"], "sameNameConflicts": [], "pinPadVerified": true, "hiddenPowerPinsVerified": true, "confidence": "high"},
+  "firmwarePins": [
+    {"pin": "CTRL_C.1", "port": "IO_1", "net": "BUS_DATA", "purpose": "communication data", "direction": "bidirectional"},
+    {"pin": "CTRL_C.1", "port": "IO_1", "net": "BUS_CLOCK", "purpose": "communication clock", "direction": "output"}
+  ],
+  "sourceEvidence": ["original synthetic communication-interface benchmark; no live EDA claim"]
+}

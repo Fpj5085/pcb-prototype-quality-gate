@@ -1,0 +1,11 @@
+{
+  "schema": "jlceda-eval-manifest/1.0",
+  "id": "sensor-interface-before",
+  "title": "Synthetic sensor interface benchmark before",
+  "fixtureKind": "synthetic-benchmark",
+  "input": "input.json",
+  "expected": "expected.json",
+  "execution": {"status": "offline-synthetic-benchmark", "liveEdaVerified": false, "liveSaveReloadVerified": false, "edaWritesInThisReleaseFixture": 0},
+  "privacy": {"containsRealProjectIdentifiers": false, "containsInternalUuidsOrApprovalIds": false, "containsScreenshotsOrPrivateLogs": false, "containsBundledThirdPartyDatasheets": false},
+  "benchmarkScope": "Sensor input level margin, local decoupling and return-path declaration only."
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "jlceda-eval-expected/1.0",
+  "rating": "not_suitable_for_prototype",
+  "counts": {"pass": 2, "advisory": 5, "blocker": 2},
+  "requiredFindings": [
+    {"id": "DEBUG_SIGNALS", "severity": "advisory", "confidence": "high", "ruleFamily": "debug"},
+    {"id": "TESTPOINTS", "severity": "advisory", "confidence": "high", "ruleFamily": "usability"},
+    {"id": "SILKSCREEN", "severity": "advisory", "confidence": "high", "ruleFamily": "usability"},
+    {"id": "SCHEMATIC_TOPOLOGY", "severity": "blocker", "confidence": "high", "ruleFamily": "schematic_topology"},
+    {"id": "FIRMWARE_PIN_CONFLICT:CTRL_C.1", "severity": "blocker", "confidence": "high", "ruleFamily": "firmware"},
+    {"id": "EVIDENCE_INCOMPLETE:PERSISTENCE", "severity": "advisory", "ruleFamily": "evidence_gate"}
+  ],
+  "forbiddenFindings": ["PACKAGE_UNSUPPORTED:CTRL_C"],
+  "benchmark": {
+    "scope": "this original synthetic low-speed communication fixture only",
+    "seededRiskFamilies": 4,
+    "requiredFamilyMatches": {
+      "debug_recovery": ["DEBUG_SIGNALS"],
+      "prototype_usability": ["TESTPOINTS", "SILKSCREEN"],
+      "schematic_topology": ["SCHEMATIC_TOPOLOGY"],
+      "firmware_pin_consistency": ["FIRMWARE_PIN_CONFLICT:CTRL_C.1"]
+    },
+    "expectedMatchedFamilies": 4,
+    "generalAccuracyClaim": false
+  }
+}

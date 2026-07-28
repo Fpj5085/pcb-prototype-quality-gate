@@ -1,0 +1,24 @@
+{
+  "schema": "jlceda-eval-expected/1.0",
+  "rating": "not_suitable_for_prototype",
+  "counts": {"pass": 1, "advisory": 2, "blocker": 6},
+  "requiredFindings": [
+    {"id": "POWER_HEADROOM:REG_PWR", "severity": "blocker", "confidence": "high", "ruleFamily": "power"},
+    {"id": "FUSE_HOLD:F_PROT", "severity": "blocker", "confidence": "high", "ruleFamily": "protection"},
+    {"id": "TRACE_CAPACITY:SOURCE_PWR", "severity": "blocker", "confidence": "medium", "ruleFamily": "pcb_power"},
+    {"id": "EVIDENCE_INCOMPLETE:PERSISTENCE", "severity": "advisory", "ruleFamily": "evidence_gate"},
+    {"id": "EVIDENCE_SCOPE:OFFLINE_FORECAST", "severity": "advisory", "ruleFamily": "evidence_gate"}
+  ],
+  "forbiddenFindings": ["PACKAGE_UNSUPPORTED:REG_PWR", "ABS_MAX_INPUT:REG_PWR"],
+  "benchmark": {
+    "scope": "this original synthetic power-input fixture only",
+    "seededRiskFamilies": 3,
+    "requiredFamilyMatches": {
+      "power_headroom": ["POWER_HEADROOM:REG_PWR"],
+      "protection_sizing": ["FUSE_HOLD:F_PROT"],
+      "trace_capacity": ["TRACE_CAPACITY:SOURCE_PWR", "TRACE_CAPACITY:INPUT_PWR", "TRACE_CAPACITY:RAW_PWR", "TRACE_CAPACITY:V5_PWR"]
+    },
+    "expectedMatchedFamilies": 3,
+    "generalAccuracyClaim": false
+  }
+}

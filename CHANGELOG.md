@@ -8,6 +8,8 @@ and version labels follow Semantic Versioning conventions.
 
 ### Added
 
+- three original synthetic BEFORE/AFTER benchmark pairs for power input, sensor interface and low-speed communication, with fixture-scoped expected findings and zero-write execution metadata;
+- deterministic tests for BEFORE risk detection, AFTER engineering forecasts, input-order stability and explicit non-manufacturing/non-mutation boundaries;
 - deterministic, network-free component-profile provenance and freshness audit with an explicit reproducible as-of date;
 - fail-closed checks for missing provenance, invalid or future dates, stale sources, official HTTPS links and declared synthetic origin;
 - profile metadata and schema constraints for source type, document revision, retrieval date and review interval.

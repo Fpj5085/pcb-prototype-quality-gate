@@ -50,6 +50,18 @@ This inventory classifies every file in the public candidate. "Project-authored"
 | `evals/car-controller-adversarial/input.json` | D-sanitized-derived | Normalized adversarial input derived from a private fixture and stripped of live identity | Ownership attestation required; MPN/package strings are factual interoperability data |
 | `evals/car-controller-adversarial/manifest.json` | G-status | Project-authored status/manifest for sanitized offline replay | States live evidence is not bundled |
 | `evals/car-controller-adversarial/manifest.template.json` | S-template | Project-authored placeholder manifest | Placeholders only; no concrete live identifiers |
+| `evals/communication-interface-after/expected.json` | G-synthetic-result | Project-authored expected output for an original synthetic communication benchmark | Offline fixture-only forecast; no live or general accuracy claim |
+| `evals/communication-interface-after/input.json` | S-synthetic | Original synthetic communication-interface AFTER benchmark | Zero EDA writes; no real identifiers, vendor assets or manufacturing claim |
+| `evals/communication-interface-after/manifest.json` | S-synthetic | Project-authored zero-write execution and privacy declaration | Offline benchmark scope only |
+| `evals/communication-interface-before/expected.json` | G-synthetic-result | Project-authored expected output for an original synthetic communication benchmark | Fixture-scoped seeded-risk assertion only |
+| `evals/communication-interface-before/input.json` | S-synthetic | Original synthetic communication-interface BEFORE benchmark | Zero EDA writes; no real identifiers, vendor assets or manufacturing claim |
+| `evals/communication-interface-before/manifest.json` | S-synthetic | Project-authored zero-write execution and privacy declaration | Offline benchmark scope only |
+| `evals/power-input-after/expected.json` | G-synthetic-result | Project-authored expected output for an original synthetic power benchmark | Offline fixture-only forecast; no live or general accuracy claim |
+| `evals/power-input-after/input.json` | S-synthetic | Original synthetic power-input AFTER benchmark | Zero EDA writes; no real identifiers, vendor assets or manufacturing claim |
+| `evals/power-input-after/manifest.json` | S-synthetic | Project-authored zero-write execution and privacy declaration | Offline benchmark scope only |
+| `evals/power-input-before/expected.json` | G-synthetic-result | Project-authored expected output for an original synthetic power benchmark | Fixture-scoped seeded-risk assertion only |
+| `evals/power-input-before/input.json` | S-synthetic | Original synthetic power-input BEFORE benchmark | Zero EDA writes; no real identifiers, vendor assets or manufacturing claim |
+| `evals/power-input-before/manifest.json` | S-synthetic | Project-authored zero-write execution and privacy declaration | Offline benchmark scope only |
 | `evals/power-distribution-after/README.md` | O-public-doc | Project-authored explanation of the synthetic M2 fixture | No live result or third-party asset |
 | `evals/power-distribution-after/evidence/README.md` | O-public-doc | Project-authored explanation of the synthetic M2 fixture | No live result or third-party asset |
 | `evals/power-distribution-after/evidence/status.json` | G-status | Project-authored fixture status linked to the separate gate-generated live summary | No real M2 project identity or raw evidence; does not relabel fixture bytes as live |
@@ -64,6 +76,12 @@ This inventory classifies every file in the public candidate. "Project-authored"
 | `evals/power-distribution-before/input.json` | S-synthetic | Project-authored synthetic M2 BEFORE fixture | No real M2 project identity or raw evidence; zero EDA writes in this fixture |
 | `evals/power-distribution-before/manifest.json` | G-status | Project-authored offline-fixture manifest linked to the separate gate-generated live summary | Preserves synthetic fixture provenance while recording the reviewed summary relationship |
 | `evals/power-distribution-before/manifest.template.json` | S-template | Project-authored placeholder manifest | Placeholders only; no concrete live identifiers |
+| `evals/sensor-interface-after/expected.json` | G-synthetic-result | Project-authored expected output for an original synthetic sensor benchmark | Offline fixture-only forecast; no live or general accuracy claim |
+| `evals/sensor-interface-after/input.json` | S-synthetic | Original synthetic sensor-interface AFTER benchmark | Zero EDA writes; no real identifiers, vendor assets or manufacturing claim |
+| `evals/sensor-interface-after/manifest.json` | S-synthetic | Project-authored zero-write execution and privacy declaration | Offline benchmark scope only |
+| `evals/sensor-interface-before/expected.json` | G-synthetic-result | Project-authored expected output for an original synthetic sensor benchmark | Fixture-scoped seeded-risk assertion only |
+| `evals/sensor-interface-before/input.json` | S-synthetic | Original synthetic sensor-interface BEFORE benchmark | Zero EDA writes; no real identifiers, vendor assets or manufacturing claim |
+| `evals/sensor-interface-before/manifest.json` | S-synthetic | Project-authored zero-write execution and privacy declaration | Offline benchmark scope only |
 | `evals/synthetic-safe/README.md` | O-public-doc | Project-authored explanation of the synthetic control | No third-party asset |
 | `evals/synthetic-safe/evidence/README.md` | O-public-doc | Project-authored explanation of the synthetic control | No third-party asset |
 | `evals/synthetic-safe/evidence/status.json` | S-synthetic | Project-authored generic synthetic control data or status | No product identity, vendor library record or physical claim |
@@ -141,5 +159,6 @@ This inventory classifies every file in the public candidate. "Project-authored"
 | `tests/review/fixtures/car-adversarial-input.json` | D-sanitized-derived | Byte-identical test copy of the sanitized-derived car adversarial input | Privacy removal does not settle ownership; no live IDs/raw project |
 | `tests/review/fixtures/synthetic-safe-input.json` | S-synthetic | Byte-identical test copy of the project-authored synthetic safe input | Original synthetic data; no physical/live claim |
 | `tests/review/test_component_profile_audit.py` | O-public-test | Project-authored adversarial coverage for deterministic provenance and freshness policy | Apache-2.0 after ownership attestation; synthetic metadata only; no network access |
+| `tests/review/test_diverse_benchmarks.py` | O-public-test | Project-authored coverage for three original synthetic BEFORE/AFTER benchmark pairs | Apache-2.0 after ownership attestation; zero-write fixtures only |
 | `tests/review/test_prototype_review.py` | A-private-adapted | Project tests adapted for portable repository-relative execution | Apache-2.0 only after ownership attestation; standard library only |
 | `tests/review/test_release_runtime.py` | A-private-adapted | Project tests adapted for portable repository-relative execution | Apache-2.0 only after ownership attestation; standard library only |

@@ -23,13 +23,14 @@ tools and are not bundled dependencies.
 
 | Gate | Result |
 | --- | --- |
-| Complete Python test suite | **65/65 passed** |
+| Complete Python test suite | **69/69 passed** |
 | Prototype rule/runtime tests | **32/32 passed** |
 | Component-profile provenance/freshness tests | **10/10 passed** |
+| Diverse offline benchmark tests | **4/4 passed** |
 | M2 evidence-import gate tests | **11/11 passed** |
 | Local-bypass repair-plan tests | **7/7 passed** |
 | Reproducible release-tool tests | **5/5 passed** |
-| Sanitized evaluation replay | **4/4 passed** |
+| Sanitized/synthetic evaluation replay | **10/10 passed** |
 | Component-profile audit (`--as-of 2026-07-28`) | **11/11 fresh; 0 stale; 0 invalid** |
 | Python CLI smoke — complete-evidence semantic fixture | Passed; `suitable_for_low_risk_prototype` |
 | PowerShell wrapper smoke — M2 BEFORE | Passed; `not_suitable_for_prototype` |
@@ -102,9 +103,21 @@ validation.
 
 ## Evaluation replay
 
+The suite now includes three original synthetic BEFORE/AFTER pairs. Every BEFORE
+keeps a strict and forecast `not_suitable_for_prototype` rating. Every AFTER has
+zero engineering blockers and a `suitable_for_low_risk_prototype` engineering
+forecast, while strict current-state rating stays `suitable_after_corrections`
+because offline fixtures deliberately omit live save/reload proof.
+
 | Case | Evidence status | Rating | Pass | Advisory | Blocker |
 | --- | --- | --- | ---: | ---: | ---: |
 | `synthetic-safe` | offline synthetic unit; metadata conflicts with persistence claim | `suitable_after_corrections` | 20 | 2 | 0 |
+| `power-input-before` | original offline synthetic benchmark | `not_suitable_for_prototype` | 1 | 2 | 6 |
+| `power-input-after` | offline forecast; persistence evidence intentionally absent | `suitable_after_corrections` | 7 | 2 | 0 |
+| `sensor-interface-before` | original offline synthetic benchmark | `not_suitable_for_prototype` | 2 | 3 | 2 |
+| `sensor-interface-after` | offline forecast; persistence evidence intentionally absent | `suitable_after_corrections` | 5 | 2 | 0 |
+| `communication-interface-before` | original offline synthetic benchmark | `not_suitable_for_prototype` | 2 | 5 | 2 |
+| `communication-interface-after` | offline forecast; persistence evidence intentionally absent | `suitable_after_corrections` | 4 | 2 | 0 |
 | `power-distribution-before` | offline replay; separate live summary gate verified | `not_suitable_for_prototype` | 3 | 2 | 1 |
 | `power-distribution-after` | offline successor replay; separate live summary gate verified | `suitable_after_corrections` | 4 | 2 | 0 |
 | `car-controller-adversarial` | offline replay from sanitized-derived evidence | `not_suitable_for_prototype` | 5 | 9 | 15 |

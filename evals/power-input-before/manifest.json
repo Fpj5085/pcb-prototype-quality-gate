@@ -1,0 +1,11 @@
+{
+  "schema": "jlceda-eval-manifest/1.0",
+  "id": "power-input-before",
+  "title": "Synthetic power input benchmark before",
+  "fixtureKind": "synthetic-benchmark",
+  "input": "input.json",
+  "expected": "expected.json",
+  "execution": {"status": "offline-synthetic-benchmark", "liveEdaVerified": false, "liveSaveReloadVerified": false, "edaWritesInThisReleaseFixture": 0},
+  "privacy": {"containsRealProjectIdentifiers": false, "containsInternalUuidsOrApprovalIds": false, "containsScreenshotsOrPrivateLogs": false, "containsBundledThirdPartyDatasheets": false},
+  "benchmarkScope": "Power-input headroom, protection sizing and conservative trace-capacity rules only."
+}

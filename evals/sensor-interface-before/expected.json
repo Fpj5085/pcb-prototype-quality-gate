@@ -1,0 +1,23 @@
+{
+  "schema": "jlceda-eval-expected/1.0",
+  "rating": "not_suitable_for_prototype",
+  "counts": {"pass": 2, "advisory": 3, "blocker": 2},
+  "requiredFindings": [
+    {"id": "DECOUPLING_DISTANCE:CTRL_S:V3_S", "severity": "blocker", "confidence": "high", "ruleFamily": "decoupling"},
+    {"id": "LEVEL_MARGIN:SENSOR_LEVEL", "severity": "blocker", "confidence": "high", "ruleFamily": "interface"},
+    {"id": "GROUND_RETURN", "severity": "advisory", "confidence": "high", "ruleFamily": "ground"},
+    {"id": "EVIDENCE_INCOMPLETE:PERSISTENCE", "severity": "advisory", "ruleFamily": "evidence_gate"}
+  ],
+  "forbiddenFindings": ["PACKAGE_UNSUPPORTED:CTRL_S"],
+  "benchmark": {
+    "scope": "this original synthetic sensor-interface fixture only",
+    "seededRiskFamilies": 3,
+    "requiredFamilyMatches": {
+      "local_decoupling": ["DECOUPLING_DISTANCE:CTRL_S:V3_S"],
+      "level_margin": ["LEVEL_MARGIN:SENSOR_LEVEL"],
+      "return_path": ["GROUND_RETURN"]
+    },
+    "expectedMatchedFamilies": 3,
+    "generalAccuracyClaim": false
+  }
+}

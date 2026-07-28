@@ -1,0 +1,15 @@
+{
+  "schema": "jlceda-eval-expected/1.0",
+  "rating": "suitable_after_corrections",
+  "counts": {"pass": 4, "advisory": 2, "blocker": 0},
+  "forbiddenSeverities": ["blocker"],
+  "requiredFindings": [
+    {"id": "DEBUG_PASS", "severity": "pass", "confidence": "high", "ruleFamily": "debug"},
+    {"id": "GROUND_RETURN", "severity": "pass", "ruleFamily": "ground"},
+    {"id": "SCHEMATIC_TOPOLOGY", "severity": "pass", "ruleFamily": "schematic_topology"},
+    {"id": "EVIDENCE_INCOMPLETE:PERSISTENCE", "severity": "advisory", "ruleFamily": "evidence_gate"},
+    {"id": "EVIDENCE_SCOPE:OFFLINE_FORECAST", "severity": "advisory", "ruleFamily": "evidence_gate"}
+  ],
+  "forbiddenFindings": ["DEBUG_SIGNALS", "TESTPOINTS", "SILKSCREEN", "FIRMWARE_PIN_CONFLICT:CTRL_C.1"],
+  "claimBoundary": "Offline engineering forecast only; no live EDA or save/reload claim."
+}

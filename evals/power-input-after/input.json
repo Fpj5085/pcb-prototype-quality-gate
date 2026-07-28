@@ -1,0 +1,22 @@
+{
+  "schema": "jlceda-prototype-review-input/1.0",
+  "designName": "Synthetic power input benchmark after",
+  "fixtureMetadata": {"liveEdaVerified": false, "persistenceEvidenceIncluded": false, "executionStatus": "offline-synthetic-benchmark"},
+  "components": [
+    {"ref": "REG_PWR", "profile": "safe.regulator_5v", "package": "QFN-12_GENERIC", "critical": true, "x": 20, "y": 10, "nets": ["RAW_PWR", "V5_PWR", "GND"]},
+    {"ref": "D_PROT", "profile": "safe.diode", "package": "SMA_GENERIC", "critical": true, "x": 10, "y": 10, "nets": ["INPUT_PWR", "RAW_PWR"]},
+    {"ref": "F_PROT", "profile": "safe.fuse", "package": "FUSE_1206_GENERIC", "critical": true, "x": 5, "y": 10, "nets": ["SOURCE_PWR", "INPUT_PWR"]}
+  ],
+  "nets": [
+    {"name": "SOURCE_PWR", "role": "power", "designCurrentA": 1.0, "minWidthMm": 1.5},
+    {"name": "INPUT_PWR", "role": "power", "designCurrentA": 1.0, "minWidthMm": 1.5},
+    {"name": "RAW_PWR", "role": "power", "designCurrentA": 1.0, "minWidthMm": 1.5},
+    {"name": "V5_PWR", "role": "power", "designCurrentA": 0.4, "minWidthMm": 0.8}
+  ],
+  "powerPaths": [{"inputNet": "SOURCE_PWR", "outputNet": "V5_PWR", "sourceMinV": 7.0, "sourceMaxV": 12.0, "seriesRefs": ["D_PROT"], "regulatorRef": "REG_PWR"}],
+  "protectedCircuits": [{"fuseRef": "F_PROT", "continuousCurrentA": 1.0, "surgeCurrentA": 2.0, "holdDerating": 0.8}],
+  "regulatorUses": [{"regulatorRef": "REG_PWR", "inputMaxV": 12.0, "loadMaxA": 0.2, "cautionRiseC": 50, "blockerRiseC": 80}],
+  "pcb": {"traceCapacity": {"copperOz": 1.0, "allowedRiseC": 10.0, "currentMargin": 1.25}},
+  "checks": {"schematicErrors": 0, "schematicWarnings": 0, "pcbDrcFindings": 0, "unroutedNets": 0, "containment": true},
+  "sourceEvidence": ["original synthetic power-input benchmark; no live EDA claim"]
+}

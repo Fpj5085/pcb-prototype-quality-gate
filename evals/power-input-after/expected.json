@@ -1,0 +1,15 @@
+{
+  "schema": "jlceda-eval-expected/1.0",
+  "rating": "suitable_after_corrections",
+  "counts": {"pass": 7, "advisory": 2, "blocker": 0},
+  "forbiddenSeverities": ["blocker"],
+  "requiredFindings": [
+    {"id": "POWER_HEADROOM_PASS:REG_PWR", "severity": "pass", "ruleFamily": "power"},
+    {"id": "FUSE_PASS:F_PROT", "severity": "pass", "ruleFamily": "protection"},
+    {"id": "TRACE_PASS:SOURCE_PWR", "severity": "pass", "ruleFamily": "pcb_power"},
+    {"id": "EVIDENCE_INCOMPLETE:PERSISTENCE", "severity": "advisory", "ruleFamily": "evidence_gate"},
+    {"id": "EVIDENCE_SCOPE:OFFLINE_FORECAST", "severity": "advisory", "ruleFamily": "evidence_gate"}
+  ],
+  "forbiddenFindings": ["POWER_HEADROOM:REG_PWR", "FUSE_HOLD:F_PROT", "TRACE_CAPACITY:SOURCE_PWR"],
+  "claimBoundary": "Offline engineering forecast only; no live EDA or save/reload claim."
+}

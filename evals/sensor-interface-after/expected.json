@@ -1,0 +1,16 @@
+{
+  "schema": "jlceda-eval-expected/1.0",
+  "rating": "suitable_after_corrections",
+  "counts": {"pass": 5, "advisory": 2, "blocker": 0},
+  "forbiddenSeverities": ["blocker"],
+  "requiredFindings": [
+    {"id": "DECOUPLING_PASS:CTRL_S:V3_S", "severity": "pass", "confidence": "high", "ruleFamily": "decoupling"},
+    {"id": "LEVEL_MARGIN:SENSOR_LEVEL", "severity": "pass", "confidence": "high", "ruleFamily": "interface"},
+    {"id": "GROUND_RETURN", "severity": "pass", "confidence": "high", "ruleFamily": "ground"},
+    {"id": "SCHEMATIC_TOPOLOGY", "severity": "pass", "ruleFamily": "schematic_topology"},
+    {"id": "EVIDENCE_INCOMPLETE:PERSISTENCE", "severity": "advisory", "ruleFamily": "evidence_gate"},
+    {"id": "EVIDENCE_SCOPE:OFFLINE_FORECAST", "severity": "advisory", "ruleFamily": "evidence_gate"}
+  ],
+  "forbiddenFindings": ["DECOUPLING_DISTANCE:CTRL_S:V3_S"],
+  "claimBoundary": "Offline engineering forecast only; no live EDA or save/reload claim."
+}
