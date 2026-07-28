@@ -20,6 +20,9 @@ sys.path.insert(0, str(ENGINE_DIR))
 from prototype_review import (  # noqa: E402
     InputValidationError,
     Review,
+    RATING_FIX_FIRST,
+    RATING_SUITABLE,
+    RATING_UNSUITABLE,
     sanitize_public_value,
     validate_design,
     validate_profiles,
@@ -76,19 +79,54 @@ class ReleaseRuntimeTests(unittest.TestCase):
         )
         self.assertTrue(all(case["status"] == "pass" for case in replay["cases"]))
 
-    def test_before_after_are_explicit_offline_forecasts(self):
+    def test_before_after_keep_offline_fixtures_separate_from_verified_live_summary(self):
+        summary_path = REPO / "release-audit" / "m2-live-evidence-summary.json"
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        self.assertEqual(summary["gate"], "verified")
+        self.assertTrue(summary["liveEdaVerified"])
+        self.assertTrue(summary["liveSaveReloadVerified"])
+        self.assertFalse(summary["privacy"]["rawEvidenceCopied"])
+        self.assertFalse(summary["privacy"]["workstationPathsIncluded"])
+        self.assertFalse(summary["privacy"]["privateIdentifiersIncluded"])
+
         for case_name in ("power-distribution-before", "power-distribution-after"):
             case = EVALS / case_name
             manifest = json.loads((case / "manifest.json").read_text(encoding="utf-8"))
             design = json.loads((case / "input.json").read_text(encoding="utf-8"))
             status = json.loads((case / "evidence" / "status.json").read_text(encoding="utf-8"))
             with self.subTest(case=case_name):
-                self.assertIn("pending", manifest["execution"]["status"])
-                self.assertFalse(manifest["execution"]["liveEdaVerified"])
-                self.assertFalse(manifest["execution"]["liveSaveReloadVerified"])
+                self.assertEqual(manifest["execution"]["status"], "live-evidence-gate-verified")
+                self.assertTrue(manifest["execution"]["liveEdaVerified"])
+                self.assertTrue(manifest["execution"]["liveSaveReloadVerified"])
+                self.assertEqual(manifest["execution"]["edaWritesInThisReleaseFixture"], 0)
+                self.assertEqual(
+                    manifest["publicLiveEvidenceSummary"],
+                    "../../release-audit/m2-live-evidence-summary.json",
+                )
                 self.assertNotIn("savedReloaded", design["checks"])
                 self.assertFalse(design["fixtureMetadata"]["liveEdaVerified"])
-                self.assertFalse(status["liveEvidenceIncluded"])
+                self.assertEqual(status["status"], "verified")
+                self.assertTrue(status["liveEvidenceIncluded"])
+                self.assertEqual(
+                    status["publicSummary"],
+                    "../../../release-audit/m2-live-evidence-summary.json",
+                )
+
+    def test_m2_after_strict_rating_stays_pending_while_forecast_can_pass(self):
+        after = json.loads((EVALS / "power-distribution-after" / "input.json").read_text(encoding="utf-8"))
+        result = Review(after, self.profiles).run()
+        ids = {finding["id"] for finding in result["findings"]}
+        self.assertEqual(result["rating"], RATING_FIX_FIRST)
+        self.assertEqual(result["engineeringForecastRating"], RATING_SUITABLE)
+        self.assertIn("EVIDENCE_INCOMPLETE:PERSISTENCE", ids)
+        self.assertIn("EVIDENCE_SCOPE:OFFLINE_FORECAST", ids)
+        self.assertEqual(result["evidenceCompleteness"]["status"], "incomplete")
+
+    def test_m2_before_remains_unsuitable_even_when_evidence_only_findings_are_excluded(self):
+        before = json.loads((EVALS / "power-distribution-before" / "input.json").read_text(encoding="utf-8"))
+        result = Review(before, self.profiles).run()
+        self.assertEqual(result["rating"], RATING_UNSUITABLE)
+        self.assertEqual(result["engineeringForecastRating"], RATING_UNSUITABLE)
 
     def test_adversarial_benchmark_is_fixture_scoped_nine_of_nine(self):
         case = EVALS / "car-controller-adversarial"

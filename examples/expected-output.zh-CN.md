@@ -24,11 +24,11 @@ advisory：0
 预测 advisory：0
 
 目标变化：新增的 100nF X7R 电容满足值、网络和预测距离门，目标 blocker 关闭。
-执行状态：offline-successor-forecast-pending-live-evidence；尚未记录真实 EDA 保存、关闭、重载和独立读回。
+fixture 状态：离线 successor 重放；另有独立门禁生成的最小公开摘要记录真实保存重载、独立读回、DRC 与重新审核结论。
 实物边界：仍需人工确认和 5V/1A 负载、压降与温升测试。
 ```
 
-只有对应 manifest 更新为 `live-save-reload-verified`，且保存重载、ERC、连通性、板框、DRC 和重新审核证据齐全时，才把上述预测写成真实修正闭环。
+当前 manifest 已链接门禁生成的最小公开摘要；该摘要证明保存重载、独立读回、连通性、板框、DRC 和重新审核结论，但不把上述离线预测 fixture 本身改写成现场证据。
 
 ## 28 器件 adversarial fixture
 

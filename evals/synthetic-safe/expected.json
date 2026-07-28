@@ -1,14 +1,13 @@
 {
   "schema": "jlceda-eval-expected/1.0",
-  "rating": "suitable_for_low_risk_prototype",
+  "rating": "suitable_after_corrections",
   "counts": {
     "pass": 20,
-    "advisory": 0,
+    "advisory": 2,
     "blocker": 0
   },
   "forbiddenSeverities": [
-    "blocker",
-    "advisory"
+    "blocker"
   ],
   "requiredFindings": [
     {
@@ -38,7 +37,19 @@
     {
       "id": "SCHEMATIC_TOPOLOGY",
       "severity": "pass"
+    },
+    {
+      "id": "EVIDENCE_CONFLICT:LIVE_EDA",
+      "severity": "advisory",
+      "confidence": "high",
+      "ruleFamily": "evidence_gate"
+    },
+    {
+      "id": "EVIDENCE_CONFLICT:PERSISTENCE",
+      "severity": "advisory",
+      "confidence": "high",
+      "ruleFamily": "evidence_gate"
     }
   ],
-  "claimBoundary": "Synthetic unit coverage only; not evidence that an arbitrary physical board is safe."
+  "claimBoundary": "Synthetic unit coverage only; strict rating is downgraded because its offline metadata conflicts with savedReloaded=true."
 }

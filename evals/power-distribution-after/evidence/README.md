@@ -1,6 +1,6 @@
 # Live-evidence upgrade gate
 
-`status.json` intentionally says `pending`. The offline successor becomes a public live repair proof only after a sanitized evidence set demonstrates:
+`status.json` links to the gate-verified minimal public summary. The offline successor input remains a replay fixture; the separate live repair proof passed only after a sanitized evidence set demonstrated:
 
 1. exact BEFORE baseline and immutable addition-only plan;
 2. locked capacitor identity, value, dielectric, voltage, package and pin-to-pad mapping;

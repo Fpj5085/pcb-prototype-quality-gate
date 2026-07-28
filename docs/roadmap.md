@@ -15,9 +15,9 @@ The roadmap is evidence-gated. A feature moves from planned to supported only af
 - Codex plugin/skill structure for local review;
 - live EDA treated as an external environment integration, not a bundled universal adapter.
 
-The M2 AFTER result is an offline forecast. General automatic schematic/PCB repair is outside this milestone.
+The M2 AFTER offline fixture keeps a strict `suitable_after_corrections` rating. Separately, one scoped real M2 transition has passed the existing hash/privacy evidence gate and is represented by a minimal public summary. General automatic schematic/PCB repair remains outside this milestone.
 
-## Next: one public live bounded-repair proof
+## Completed proof; next: M3 repetition
 
 Exit criteria:
 
@@ -30,7 +30,7 @@ Exit criteria:
 7. show the one target finding closing and unrelated findings not worsening;
 8. publish only the sanitized minimum evidence.
 
-Until all eight gates pass, the repair remains `prepared-not-live-verified`.
+The scoped M2 case has passed these eight evidence gates. M3 must repeat the same matrix on an independent disposable fixture before any broader repeatability claim; it must not widen the mutation allow-list.
 
 ## Later alpha milestones
 

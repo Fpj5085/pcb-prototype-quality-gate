@@ -45,10 +45,25 @@
       "properties": {
         "schematicErrors": {"type": "integer", "minimum": 0},
         "schematicWarnings": {"type": "integer", "minimum": 0},
+        "schematicWarningDetailsAvailable": {"type": "boolean"},
+        "schematicWarningDisposition": {
+          "enum": ["unreviewed", "explained_and_accepted", "requires_correction"]
+        },
         "pcbDrcFindings": {"type": "integer", "minimum": 0},
         "unroutedNets": {"type": "integer", "minimum": 0},
         "containment": {"type": "boolean"},
         "savedReloaded": {"type": "boolean"}
+      },
+      "additionalProperties": true
+    },
+    "fixtureMetadata": {
+      "type": "object",
+      "properties": {
+        "fixtureType": {"type": "string"},
+        "executionStatus": {"type": "string"},
+        "liveEdaVerified": {"type": "boolean"},
+        "persistenceEvidenceIncluded": {"type": "boolean"},
+        "notForManufacturing": {"type": "boolean"}
       },
       "additionalProperties": true
     },

@@ -3,7 +3,7 @@
   "rating": "not_suitable_for_prototype",
   "counts": {
     "pass": 3,
-    "advisory": 0,
+    "advisory": 2,
     "blocker": 1
   },
   "requiredFindings": [
@@ -23,6 +23,18 @@
     {
       "id": "SCHEMATIC_TOPOLOGY",
       "severity": "pass"
+    },
+    {
+      "id": "EVIDENCE_INCOMPLETE:PERSISTENCE",
+      "severity": "advisory",
+      "confidence": "high",
+      "ruleFamily": "evidence_gate"
+    },
+    {
+      "id": "EVIDENCE_SCOPE:OFFLINE_FORECAST",
+      "severity": "advisory",
+      "confidence": "high",
+      "ruleFamily": "evidence_gate"
     }
   ],
   "forbiddenSeverities": [],
@@ -30,7 +42,9 @@
     "TRACE_PASS:+5V",
     "TRACE_PASS:GND",
     "DECOUPLING_DISTANCE:J2:+5V",
-    "SCHEMATIC_TOPOLOGY"
+    "SCHEMATIC_TOPOLOGY",
+    "EVIDENCE_INCOMPLETE:PERSISTENCE",
+    "EVIDENCE_SCOPE:OFFLINE_FORECAST"
   ],
-  "claimBoundary": "Offline deterministic forecast; no live EDA save/reload evidence is bundled."
+  "claimBoundary": "Offline deterministic forecast; strict current-state rating remains blocked and save/reload evidence is missing."
 }

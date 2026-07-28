@@ -15,6 +15,52 @@
         "suitable_for_low_risk_prototype"
       ]
     },
+    "engineeringForecastRating": {
+      "description": "Engineering-rule forecast with evidence-only findings excluded; never a current live prototype release rating.",
+      "enum": [
+        "not_suitable_for_prototype",
+        "suitable_after_corrections",
+        "suitable_for_low_risk_prototype"
+      ]
+    },
+    "evidenceCompleteness": {
+      "type": "object",
+      "required": [
+        "status",
+        "requiredFields",
+        "missingFields",
+        "invalidFields",
+        "contradictions",
+        "scopeLimitations",
+        "gates",
+        "allRequiredEvidencePresentAndValid",
+        "allPrototypeGatesPassed"
+      ],
+      "properties": {
+        "status": {"enum": ["complete", "incomplete", "conflicting"]},
+        "requiredFields": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "missingFields": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "invalidFields": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "contradictions": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "scopeLimitations": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "gates": {
+          "type": "object",
+          "required": ["schematicErrors", "schematicWarnings", "pcbDrcFindings", "unroutedNets", "containment", "savedReloaded"],
+          "properties": {
+            "schematicErrors": {"enum": ["pass", "fail", "missing", "invalid"]},
+            "schematicWarnings": {"enum": ["pass", "missing", "invalid", "explained", "unexplained"]},
+            "pcbDrcFindings": {"enum": ["pass", "fail", "missing", "invalid"]},
+            "unroutedNets": {"enum": ["pass", "fail", "missing", "invalid"]},
+            "containment": {"enum": ["pass", "fail", "missing", "invalid"]},
+            "savedReloaded": {"enum": ["pass", "fail", "missing", "invalid"]}
+          },
+          "additionalProperties": false
+        },
+        "allRequiredEvidencePresentAndValid": {"type": "boolean"},
+        "allPrototypeGatesPassed": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
     "counts": {
       "type": "object",
       "required": ["blocker", "advisory", "pass"],
@@ -48,7 +94,8 @@
       }
     },
     "sourceEvidence": {"type": "array", "items": {"type": "string"}},
-    "ratingPolicy": {"type": "object"}
+    "ratingPolicy": {"type": "object"},
+    "ratingAlgorithm": {"type": "object"}
   },
   "additionalProperties": true
 }

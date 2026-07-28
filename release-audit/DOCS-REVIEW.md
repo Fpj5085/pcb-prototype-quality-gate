@@ -25,9 +25,9 @@ Review scope: R2 documentation/product expression and R3 Codex plugin/skill pack
 - Draft generators are replaceable adapters; the independent evidence/review/persistence loop is the trusted core.
 - Third-party draft generators and EDA adapters are described as external integration boundaries.
 - Live EDA support is not bundled; the plugin manifest declares no MCP server or app.
-- M2 AFTER is consistently labeled `offline-successor-forecast-pending-live-evidence`.
-- The M2 importer's positive fixture is explicitly synthetic and cannot promote live status.
-- Automatic repair status follows `review-only`, `planned-experimental` or `prepared-not-live-verified` boundaries.
+- M2 AFTER remains an offline successor fixture with a strict `suitable_after_corrections` fixture rating, while a separate gate-generated summary records the sanitized real transition.
+- The M2 importer's positive unit fixture remains explicitly synthetic and cannot promote live status; the public live claim comes only from the separately reviewed gate output.
+- Automatic repair status follows `review-only`, `planned-experimental` or the narrowly scoped `live-evidence-gate-verified` M2 boundary.
 - The car-controller benchmark states only that one 28-component fixture detected 9/9 predefined manual benchmark risk families; no general accuracy or certification claim is made.
 - DRC, save/reload and software review are not presented as physical functional proof or Manufacturing Release.
 
@@ -43,7 +43,7 @@ Review scope: R2 documentation/product expression and R3 Codex plugin/skill pack
 
 - Official local plugin validator: pass.
 - Official local skill quick validator: pass.
-- Repository unit tests at final review time: 37/37 pass.
+- Repository unit tests at final review time: 48/48 pass.
 - Offline evaluation replay at review time: 4/4 pass.
 - M2 gate matrix: 11/11 pass.
 - Reproducible release-tool tests: 5/5 pass.
@@ -51,12 +51,12 @@ Review scope: R2 documentation/product expression and R3 Codex plugin/skill pack
 - Local Markdown link scan: 104 links across 47 Markdown files; 0 missing repository-relative targets.
 - Plugin add/remove and marketplace command forms were checked against the installed Codex CLI help; no installation was executed.
 - UTF-8 review found no intentionally introduced mojibake in the documentation set.
-- Repository-wide deterministic privacy scan: 121 files, 0 high-risk findings.
+- Repository-wide deterministic privacy scan: 122 files, 0 high-risk findings.
 
 ## Human confirmations before publication
 
 1. Confirm the publisher/author display name and repository URL after the public repository exists.
 2. Complete the Apache-2.0 ownership gate in `LICENSE-DECISION.md`.
 3. Review the final repository-wide privacy scan and third-party inventory.
-4. Keep M2 live status pending unless a real sanitized save/close/reload evidence set is added.
+4. Keep the public live claim limited to the gate-generated minimal M2 summary; do not publish raw receipts or relabel offline fixture bytes as live evidence.
 5. Re-run link validation after the final manifest and release-report files are generated.

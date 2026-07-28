@@ -7,9 +7,10 @@ Synthetic offline Prototype-review fixture for a NOT FOR MANUFACTURING 5 V / 1 A
 | Field | Value |
 | --- | --- |
 | Components | 6 |
-| Execution | `offline-pending-live-evidence` |
-| Live EDA verified | No |
-| Live save/reload verified | No |
+| Fixture execution | offline deterministic replay |
+| Separate live-evidence gate | `verified` |
+| Live EDA verified | Yes, via minimal public summary |
+| Live save/reload verified | Yes, via minimal public summary |
 | EDA writes represented by this fixture | 0 |
 
 The fixture intentionally contains one high-confidence blocker: `DECOUPLING_DISTANCE:J2:+5V`. A nearby 10 µF capacitor does not satisfy the configured 80–220 nF local-bypass requirement.
@@ -30,7 +31,7 @@ python scripts/run-evals.py --case power-distribution-before
 - `expected.json` — exact rating, counts and finding assertions;
 - `manifest.json` — current executable fixture status;
 - `manifest.template.json` — publication template for a future or derived case;
-- `evidence/status.json` — machine-readable statement that live evidence is pending;
-- `evidence/README.md` — minimum evidence required before a live claim.
+- `evidence/status.json` — machine-readable link to the verified minimal live-evidence summary;
+- `evidence/README.md` — public evidence boundary and source requirements.
 
-This case is an offline deterministic forecast. It is not a saved JLCEDA project and does not prove a live BEFORE board exists.
+This case input remains an offline deterministic replay and is not a raw saved EDA project. The separate gate-generated public summary records that a matching six-component live BEFORE baseline, save/reload, independent readback, clean DRC and the intended blocker were verified.

@@ -99,12 +99,13 @@ A live change is complete only when evidence records:
 6. fresh ERC/connectivity/containment/DRC and Prototype review results;
 7. target-finding improvement with no unrelated regression.
 
-The public M2 AFTER fixture currently describes an offline successor forecast. Its manifest remains `offline-successor-forecast-pending-live-evidence` until a real environment produces the complete sequence above.
+The public M2 AFTER input remains an offline successor fixture. Its manifest now links a separate gate-generated minimal summary that records the sanitized real sequence above without relabeling fixture bytes as live evidence.
 
-The offline [M2 evidence gate](m2-evidence-gate.md) checks that future sanitized
+The offline [M2 evidence gate](m2-evidence-gate.md) checks that sanitized
 BEFORE/AFTER evidence is complete, manifest-covered, hash-consistent and free of
 private identifiers before emitting one minimal public summary. A passing
-synthetic gate fixture is validation of the importer rather than live EDA proof.
+synthetic unit fixture validates the importer; the public live conclusion comes
+only from the separately reviewed gate output.
 
 ## Privacy rules
 

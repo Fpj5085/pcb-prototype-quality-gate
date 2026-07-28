@@ -31,9 +31,15 @@ Status: local release candidate; no GitHub publication is implied by this entry.
 - reproducible integrity generation, repository verification and Git-tree ZIP builder;
 - per-file provenance inventory and expanded third-party/source boundary.
 
+### Changed
+
+- Prototype readiness now fails closed when any of the six required EDA gate fields is missing, malformed or contradicted by live/persistence metadata;
+- strict current-state `rating` is separated from `engineeringForecastRating`, while the original three-value rating enum remains stable;
+- M2 AFTER and offline synthetic evals remain evidence-pending instead of presenting an offline prediction as current sample readiness.
+
 ### Evidence boundaries
 
 - the adversarial `9/9` result is limited to nine predefined human-benchmark risk families on one fixture;
-- the M2 AFTER result is an offline forecast pending real save/reload evidence;
+- the M2 AFTER engineering forecast is separate from its strict evidence-pending rating until real save/reload proof exists;
 - live EDA adapters, third-party draft generators and manufacturing workflows are not bundled;
 - no general autonomous repair or Manufacturing Release capability is claimed.

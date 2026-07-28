@@ -1,8 +1,8 @@
 # Evidence status
 
-`status.json` is the current machine-readable truth: live evidence is pending and no EDA write is represented by this public fixture.
+`status.json` is the current machine-readable truth: the separate live evidence gate passed, while no EDA write is represented by this public fixture input.
 
-A future live BEFORE evidence set should contain only sanitized minimum summaries for:
+The private source set was reduced to sanitized minimum evidence for:
 
 1. exact component/net counts and critical component identities;
 2. schematic/ERC and PCB connectivity state;

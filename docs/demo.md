@@ -38,15 +38,16 @@ Say:
 
 Point out the six-stage product loop, the three ratings and the rule that `DRC=0` is necessary but insufficient. Clarify that this repository demo starts from normalized evidence: the live Draft and EDA mutation adapters are replaceable environment integrations and are not bundled.
 
-### 2:00–5:00 — Establish the passing control
+### 2:00–5:00 — Establish the strict semantic control
 
-Run or open the `synthetic-safe` evaluation. Show:
+Run the complete-evidence semantic fixture at `tests/review/fixtures/synthetic-safe-input.json`. Show:
 
 - machine rating `suitable_for_low_risk_prototype`;
 - zero blockers and zero advisories;
+- all six required gate fields explicitly present and passed;
 - the remaining physical-test boundary.
 
-This control demonstrates that the engine is not designed to reject every board.
+This control demonstrates that the engine is not designed to reject every complete evidence set. Then contrast it with the public `evals/synthetic-safe` offline replay: its engineering forecast may pass, but contradictory offline/persistence metadata downgrades the strict rating to `suitable_after_corrections`.
 
 ### 5:00–10:00 — M2 BEFORE: one understandable blocker
 
@@ -59,7 +60,7 @@ Open the 5 V / 1 A distribution-board BEFORE fixture. Explain that it is synthet
 
 Show `DECOUPLING_DISTANCE:J2:+5V`. Walk through value range, `+5V`/`GND` pairing, geometry and revalidation. Emphasize that a nearby 10 µF capacitor does not satisfy the configured 80–220 nF local-bypass rule merely because it is a capacitor.
 
-### 10:00–14:00 — M2 AFTER: forecast, not a live claim
+### 10:00–14:00 — M2 AFTER: keep the offline fixture separate from live evidence
 
 Compare the AFTER successor:
 
@@ -70,9 +71,9 @@ Compare the AFTER successor:
 
 Then show the manifest status. Say explicitly:
 
-> The rules predict a pass, but the public alpha still labels this as an offline forecast. A real repair claim requires immediate readback, save, close, reload, independent readback and a fresh review.
+> The offline successor fixture's strict rating remains `suitable_after_corrections`; replaying fixture bytes is not live save/reload proof. Separately, the gate-generated public summary records a sanitized real transition with save/reload, independent readback, DRC and a fresh low-risk review.
 
-Also state that M2 remains pending: neither a successful replay nor a successor fixture promotes `liveEdaVerified` or `liveSaveReloadVerified`.
+Also state that the fixture and the live summary are different evidence classes. The manifest links them without claiming that the synthetic input bytes came from the EDA run.
 
 ### 14:00–20:00 — Why DRC=0 is not enough
 
@@ -95,7 +96,7 @@ Do not call this general accuracy, recall or certification.
 
 Open [Supported repairs](supported-repairs.md). Contrast:
 
-- `prepared-not-live-verified` local-bypass addition;
+- one scoped `live-evidence-gate-verified` M2 local-bypass case, with no bundled public mutation runtime;
 - `planned-experimental` bulk-cap addition;
 - report-only regulator, H-bridge, fuse and reroute items.
 
@@ -140,7 +141,7 @@ Expected rating: `not_suitable_for_prototype`.
 
 Expected delta: close `DECOUPLING_DISTANCE:J2:+5V`, add pass `DECOUPLING_PASS:J2:+5V`, blocker delta `-1`.
 
-The current public case is an offline successor forecast and M2 remains pending. A live claim requires exact EDA identity/readback, save/close/reload, ERC, connectivity, containment and DRC evidence recorded by the fixture manifest as `live-save-reload-verified`.
+The current public eval input is an offline successor fixture. Its engineering forecast may pass while its strict rating remains `suitable_after_corrections`. The separate gate-generated summary records the sanitized real save/reload, independent readback, connectivity, containment, DRC and fresh-review outcome; raw EDA identity and receipts remain outside the repository.
 
 ## 2. Adversarial case: two-motor controller
 

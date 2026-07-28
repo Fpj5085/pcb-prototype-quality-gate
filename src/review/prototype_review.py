@@ -20,6 +20,21 @@ RATING_UNSUITABLE = "not_suitable_for_prototype"
 RATING_FIX_FIRST = "suitable_after_corrections"
 RATING_SUITABLE = "suitable_for_low_risk_prototype"
 
+REQUIRED_PROTOTYPE_GATES = (
+    "schematicErrors",
+    "schematicWarnings",
+    "pcbDrcFindings",
+    "unroutedNets",
+    "containment",
+    "savedReloaded",
+)
+
+EVIDENCE_ONLY_FINDING_PREFIXES = (
+    "EVIDENCE_INCOMPLETE:",
+    "EVIDENCE_CONFLICT:",
+    "EVIDENCE_SCOPE:",
+)
+
 RATING_LABEL_ZH = {
     RATING_UNSUITABLE: "当前不适合样板",
     RATING_FIX_FIRST: "修正后适合低风险样板",
@@ -199,6 +214,17 @@ class Review:
         self.findings: list[Finding] = []
         self.components = {c["ref"]: c for c in design.get("components", [])}
         self.nets = {n["name"]: n for n in design.get("nets", [])}
+        self.evidence_completeness: dict[str, Any] = {
+            "status": "incomplete",
+            "requiredFields": list(REQUIRED_PROTOTYPE_GATES),
+            "missingFields": [],
+            "invalidFields": [],
+            "contradictions": [],
+            "scopeLimitations": [],
+            "gates": {field: "missing" for field in REQUIRED_PROTOTYPE_GATES},
+            "allRequiredEvidencePresentAndValid": False,
+            "allPrototypeGatesPassed": False,
+        }
 
     def profile(self, component: dict[str, Any]) -> dict[str, Any] | None:
         key = component.get("profile")
@@ -587,30 +613,138 @@ class Review:
                 unresolvedAssumptions=antenna.get("assumptions", []), ruleFamily="mechanical")
 
     def rule_schematic_and_pcb_gates(self) -> None:
-        checks = self.d.get("checks", {})
-        gates = [
-            ("SCHEMATIC_ERRORS", int(checks.get("schematicErrors", 0)), "原理图存在错误", "关键连接或电气规则错误可能导致功能失效。"),
-            ("PCB_DRC", int(checks.get("pcbDrcFindings", 0)), "PCB DRC 存在问题", "几何、电气间距或未布通问题尚未闭合。"),
-            ("UNROUTED", int(checks.get("unroutedNets", 0)), "PCB 存在未布通网络", "相应功能在实物上不会导通。"),
+        checks_value = self.d.get("checks", {})
+        checks = checks_value if isinstance(checks_value, dict) else {}
+        completeness = self.evidence_completeness
+        gates = completeness["gates"]
+
+        evidence_labels = {
+            "schematicErrors": ("SCHEMATIC_ERRORS", "原理图错误计数", "固定 ERC"),
+            "schematicWarnings": ("SCHEMATIC_WARNINGS", "原理图警告计数", "固定 ERC 逐项明细"),
+            "pcbDrcFindings": ("PCB_DRC", "PCB DRC 问题计数", "固定 PCB DRC"),
+            "unroutedNets": ("UNROUTED", "未布通网络计数", "PCB 连通性检查"),
+            "containment": ("CONTAINMENT", "板框包含检查", "所有 PCB 对象的板框包含检查"),
+            "savedReloaded": ("PERSISTENCE", "保存、关闭、重载及独立读回", "保存重载后的对象、网络和摘要比对"),
+        }
+
+        def incomplete(field: str, reason: str, observed: Any = None) -> None:
+            fid_suffix, label, recheck = evidence_labels[field]
+            target = completeness["missingFields"] if reason == "missing" else completeness["invalidFields"]
+            target.append(field)
+            gates[field] = "missing" if reason == "missing" else "invalid"
+            evidence = {"field": f"checks.{field}", "status": reason}
+            if reason != "missing":
+                evidence.update({"observedType": type(observed).__name__, "observedValue": observed})
+            self.add(
+                id=f"EVIDENCE_INCOMPLETE:{fid_suffix}", severity="advisory", confidence="high",
+                title=f"缺少可信的{label}证据",
+                riskZh=f"{label}未明确提供且通过时，默认值会把尚未执行的检查伪装成已通过。",
+                locations=[f"checks.{field}"], evidence=[evidence], calculation=f"checks.{field}={reason}",
+                recommendationZh=f"从当前真实 EDA 文档采集{label}，保留原始结果并明确记录字段类型。",
+                revalidation=f"保存重载后重新执行{recheck}，确认结果明确存在、类型正确且通过。",
+                unresolvedAssumptions=[], ruleFamily="evidence_gate",
+            )
+
+        count_gates = [
+            ("schematicErrors", "SCHEMATIC_ERRORS", "原理图存在错误", "关键连接或电气规则错误可能导致功能失效。"),
+            ("pcbDrcFindings", "PCB_DRC", "PCB DRC 存在问题", "几何或电气间距问题尚未闭合。"),
+            ("unroutedNets", "UNROUTED", "PCB 存在未布通网络", "相应功能在实物上不会导通。"),
         ]
-        for fid, count, title, risk in gates:
+        for field, fid, title, risk in count_gates:
+            if field not in checks:
+                incomplete(field, "missing")
+                continue
+            count = checks[field]
+            if type(count) is not int or count < 0:
+                incomplete(field, "invalid_type" if type(count) is not int else "invalid_value", count)
+                continue
+            gates[field] = "pass" if count == 0 else "fail"
             if count:
                 self.add(id=fid, severity="blocker", confidence="high", title=title, riskZh=risk, locations=[], evidence=[{"count": count}], calculation=f"count={count}",
                          recommendationZh="逐项修正并保存重载后复查。", revalidation="重新运行固定 ERC/DRC/连通性检查。", unresolvedAssumptions=[], ruleFamily="eda_gate")
-        if checks.get("containment") is False:
-            self.add(id="CONTAINMENT", severity="blocker", confidence="high", title="PCB 对象超出板框", riskZh="板外器件、焊盘或铜会造成机械和制造错误。",
-                     locations=[], evidence=[{"containment": False}], calculation="containment=false", recommendationZh="把所有对象移入板框并保留边缘净距。",
-                     revalidation="重新执行器件、焊盘、走线、过孔、铜皮和丝印包含检查。", unresolvedAssumptions=[], ruleFamily="pcb_geometry")
-        if checks.get("savedReloaded") is False:
-            self.add(id="PERSISTENCE", severity="blocker", confidence="high", title="保存重载持久性未通过", riskZh="关闭后设计可能丢失或状态不一致。", locations=[],
-                     evidence=[{"savedReloaded": False}], calculation="persistence verification failed", recommendationZh="完成保存、关闭重开和独立读回。",
-                     revalidation="保存重载后比较对象、网络和 digest。", unresolvedAssumptions=[], ruleFamily="eda_gate")
-        warnings = int(checks.get("schematicWarnings", 0))
-        if warnings:
-            self.add(id="SCHEMATIC_WARNINGS", severity="advisory", confidence="high", title="原理图警告需要逐项解释", riskZh="汇总警告可能包含悬空输入、未驱动网络或电源标记问题。",
-                     locations=[], evidence=[{"count": warnings, "detailsAvailable": checks.get("schematicWarningDetailsAvailable", False)}], calculation=f"warnings={warnings}",
-                     recommendationZh="获取逐项明细并记录修正或接受理由。", revalidation="固定 ERC 逐项复核。",
-                     unresolvedAssumptions=[] if checks.get("schematicWarningDetailsAvailable") else ["当前证据只有 warning 汇总"], ruleFamily="eda_gate")
+
+        warning_field = "schematicWarnings"
+        if warning_field not in checks:
+            incomplete(warning_field, "missing")
+        else:
+            warnings = checks[warning_field]
+            if type(warnings) is not int or warnings < 0:
+                incomplete(warning_field, "invalid_type" if type(warnings) is not int else "invalid_value", warnings)
+            elif warnings == 0:
+                gates[warning_field] = "pass"
+            else:
+                details_available = checks.get("schematicWarningDetailsAvailable") is True
+                disposition = checks.get("schematicWarningDisposition")
+                explained = details_available and disposition == "explained_and_accepted"
+                gates[warning_field] = "explained" if explained else "unexplained"
+                if not explained:
+                    self.add(id="SCHEMATIC_WARNINGS", severity="advisory", confidence="high", title="原理图警告尚未逐项解释并接受", riskZh="汇总警告可能包含悬空输入、未驱动网络或电源标记问题；只有明细存在并经受控处置后才可通过。",
+                             locations=[], evidence=[{"count": warnings, "detailsAvailable": details_available, "disposition": disposition}], calculation=f"warnings={warnings}; explained={explained}",
+                             recommendationZh="获取逐项明细，修正问题；确属可接受项时记录解释和受支持的处置状态。", revalidation="重新运行固定 ERC 并逐项核对明细与处置记录。",
+                             unresolvedAssumptions=[] if details_available else ["当前证据只有 warning 汇总"], ruleFamily="eda_gate")
+
+        for field in ("containment", "savedReloaded"):
+            if field not in checks:
+                incomplete(field, "missing")
+                continue
+            value = checks[field]
+            if type(value) is not bool:
+                incomplete(field, "invalid_type", value)
+                continue
+            gates[field] = "pass" if value else "fail"
+            if field == "containment" and value is False:
+                self.add(id="CONTAINMENT", severity="blocker", confidence="high", title="PCB 对象超出板框", riskZh="板外器件、焊盘或铜会造成机械和制造错误。",
+                         locations=[], evidence=[{"containment": False}], calculation="containment=false", recommendationZh="把所有对象移入板框并保留边缘净距。",
+                         revalidation="重新执行器件、焊盘、走线、过孔、铜皮和丝印包含检查。", unresolvedAssumptions=[], ruleFamily="pcb_geometry")
+            if field == "savedReloaded" and value is False:
+                self.add(id="PERSISTENCE", severity="blocker", confidence="high", title="保存重载持久性未通过", riskZh="关闭后设计可能丢失或状态不一致。", locations=[],
+                         evidence=[{"savedReloaded": False}], calculation="persistence verification failed", recommendationZh="完成保存、关闭重开和独立读回。",
+                         revalidation="保存重载后比较对象、网络和 digest。", unresolvedAssumptions=[], ruleFamily="eda_gate")
+
+        metadata_value = self.d.get("fixtureMetadata", {})
+        metadata = metadata_value if isinstance(metadata_value, dict) else {}
+        saved_reloaded = checks.get("savedReloaded") if type(checks.get("savedReloaded")) is bool else None
+        live_verified = metadata.get("liveEdaVerified")
+        persistence_included = metadata.get("persistenceEvidenceIncluded")
+        contradictions: list[str] = []
+        if saved_reloaded is True and live_verified is False:
+            contradictions.append("checks.savedReloaded=true 与 fixtureMetadata.liveEdaVerified=false 冲突")
+            self.add(id="EVIDENCE_CONFLICT:LIVE_EDA", severity="advisory", confidence="high", title="保存重载结论与实时 EDA 标记矛盾",
+                     riskZh="离线fixture声称已经保存重载，会把工程预测误写成当前设计已验证。", locations=["checks.savedReloaded", "fixtureMetadata.liveEdaVerified"],
+                     evidence=[{"savedReloaded": True, "liveEdaVerified": False}], calculation="savedReloaded=true AND liveEdaVerified=false",
+                     recommendationZh="把离线预测与实时审核结果分开；只在真实 EDA 保存、关闭、重载和独立读回后标记通过。",
+                     revalidation="在目标 EDA 文档完成保存重载闭环并重新采集元数据。", unresolvedAssumptions=[], ruleFamily="evidence_gate")
+        if saved_reloaded is True and persistence_included is False:
+            contradictions.append("checks.savedReloaded=true 与 fixtureMetadata.persistenceEvidenceIncluded=false 冲突")
+            self.add(id="EVIDENCE_CONFLICT:PERSISTENCE", severity="advisory", confidence="high", title="保存重载结论缺少对应持久化证据",
+                     riskZh="没有保存重载证据包时，成功标记不能证明新增或修改对象在关闭后仍存在。", locations=["checks.savedReloaded", "fixtureMetadata.persistenceEvidenceIncluded"],
+                     evidence=[{"savedReloaded": True, "persistenceEvidenceIncluded": False}], calculation="savedReloaded=true AND persistenceEvidenceIncluded=false",
+                     recommendationZh="附上保存前、重载后和独立读回的最小脱敏证据，再声明持久化通过。",
+                     revalidation="核对重载前后对象、网络和摘要一致，并验证证据清单哈希。", unresolvedAssumptions=[], ruleFamily="evidence_gate")
+        completeness["contradictions"] = contradictions
+        if live_verified is False and not contradictions:
+            completeness["scopeLimitations"].append("fixtureMetadata.liveEdaVerified=false")
+            self.add(id="EVIDENCE_SCOPE:OFFLINE_FORECAST", severity="advisory", confidence="high", title="当前结果仅是离线工程预测",
+                     riskZh="离线规则重放可说明设计意图，但不能证明当前真实 EDA 文档、PCB 状态或保存重载已经通过。", locations=["fixtureMetadata.liveEdaVerified"],
+                     evidence=[{"liveEdaVerified": False, "executionStatus": metadata.get("executionStatus")}], calculation="liveEdaVerified=false",
+                     recommendationZh="保持当前严格评级为待复验，并在真实 EDA 中完成全部六项门禁。",
+                     revalidation="从当前页面重新采集 ERC、DRC、未布通、板框及保存重载证据。", unresolvedAssumptions=[], ruleFamily="evidence_gate")
+
+        completeness["missingFields"] = sorted(set(completeness["missingFields"]))
+        completeness["invalidFields"] = sorted(set(completeness["invalidFields"]))
+        completeness["allRequiredEvidencePresentAndValid"] = not completeness["missingFields"] and not completeness["invalidFields"]
+        completeness["allPrototypeGatesPassed"] = (
+            completeness["allRequiredEvidencePresentAndValid"]
+            and all(gates[field] in {"pass", "explained"} for field in REQUIRED_PROTOTYPE_GATES)
+            and not contradictions
+            and not completeness["scopeLimitations"]
+        )
+        if contradictions:
+            completeness["status"] = "conflicting"
+        elif completeness["missingFields"] or completeness["invalidFields"] or completeness["scopeLimitations"]:
+            completeness["status"] = "incomplete"
+        else:
+            completeness["status"] = "complete"
 
     def rule_ground_and_topology(self) -> None:
         ground = self.d.get("groundReview", {})
@@ -669,27 +803,36 @@ class Review:
                          revalidation="原理图网络与固件 manifest 双向比对。", unresolvedAssumptions=[], ruleFamily="firmware")
 
     def result(self) -> dict[str, Any]:
-        blockers = [f for f in self.findings if f.severity == "blocker" and confidence_rank(f.confidence) >= confidence_rank("high")]
+        def rating_for(findings: list[Finding]) -> tuple[str, list[str]]:
+            blockers = [f for f in findings if f.severity == "blocker" and confidence_rank(f.confidence) >= confidence_rank("high")]
+            all_blockers = [f for f in findings if f.severity == "blocker"]
+            advisories = [f for f in findings if f.severity == "advisory"]
+            unresolved = sorted({x for f in findings if f.severity != "pass" for x in f.unresolvedAssumptions})
+            if blockers:
+                return RATING_UNSUITABLE, unresolved
+            if all_blockers or advisories or unresolved:
+                return RATING_FIX_FIRST, unresolved
+            return RATING_SUITABLE, unresolved
+
+        rating, unresolved = rating_for(self.findings)
+        forecast_findings = [f for f in self.findings if not f.id.startswith(EVIDENCE_ONLY_FINDING_PREFIXES)]
+        engineering_forecast_rating, _forecast_unresolved = rating_for(forecast_findings)
         all_blockers = [f for f in self.findings if f.severity == "blocker"]
         advisories = [f for f in self.findings if f.severity == "advisory"]
-        unresolved = sorted({x for f in self.findings if f.severity != "pass" for x in f.unresolvedAssumptions})
-        if blockers:
-            rating = RATING_UNSUITABLE
-        elif all_blockers or advisories or unresolved:
-            rating = RATING_FIX_FIRST
-        else:
-            rating = RATING_SUITABLE
         return {
             "schema": "jlceda-prototype-review/1.0",
             "generatedAt": datetime.now(timezone.utc).isoformat(),
             "mode": "Prototype Review",
             "designName": self.d.get("designName", "current JLCEDA design"),
             "rating": rating,
+            "engineeringForecastRating": engineering_forecast_rating,
+            "evidenceCompleteness": sanitize_public_value(self.evidence_completeness),
             "ratingAlgorithm": {
                 "highConfidenceBlocker": RATING_UNSUITABLE,
                 "advisoryOrMissingCriticalEvidence": RATING_FIX_FIRST,
                 "prototypeGatesComplete": RATING_SUITABLE,
                 "drcZeroIsSufficient": False,
+                "engineeringForecastExcludesEvidenceGateFindings": True,
             },
             "counts": {
                 "pass": sum(f.severity == "pass" for f in self.findings),
@@ -734,8 +877,6 @@ def normalize_raw_input(spec: dict[str, Any], spec_path: Path) -> dict[str, Any]
             row.update(extra)
             nets.append(row)
     checks = dict(context.get("checks", {}))
-    checks.setdefault("schematicErrors", 0)
-    checks.setdefault("schematicWarnings", context.get("schematicWarnings", 0))
     design = {
         "schema": "jlceda-prototype-review-input/1.0",
         "designName": context.get("designName", spec.get("designName", "current JLCEDA design")),
@@ -749,6 +890,10 @@ def normalize_raw_input(spec: dict[str, Any], spec_path: Path) -> dict[str, Any]
             "pcbComponents": len(pcb.get("components", [])), "pcbVias": len(pcb.get("vias", [])), "pcbPours": len(pcb.get("polygons", [])),
         },
     }
+    if "fixtureMetadata" in context:
+        design["fixtureMetadata"] = context["fixtureMetadata"]
+    elif "fixtureMetadata" in spec:
+        design["fixtureMetadata"] = spec["fixtureMetadata"]
     for key in ["powerPaths", "protectedCircuits", "hbridgeUses", "regulatorUses", "decouplingRequirements", "bulkCapRequirements", "voltageDividers", "debugInterface", "usability", "pcb", "groundReview", "schematicTopology", "firmwarePins"]:
         design[key] = context.get(key, [] if key not in {"debugInterface", "usability", "pcb", "groundReview", "schematicTopology"} else {})
     return design

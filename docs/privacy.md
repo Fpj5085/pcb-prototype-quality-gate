@@ -26,13 +26,13 @@ This repository is designed to be reviewable without publishing a workstation, p
 
 Each public evaluation manifest declares a `fixtureKind`, an `execution.status`, two explicit live-verification booleans and its EDA write count. Current examples include `synthetic-unit`, `synthetic-offline-before`, `synthetic-offline-successor` and `sanitized-adversarial-replay`.
 
-An offline forecast must not be relabeled as live evidence. The public M2 AFTER case remains `offline-successor-forecast-pending-live-evidence`, with both live-verification booleans false, until a real independently read back run is sanitized. A future live case needs an unambiguous status such as `live-save-reload-verified` and both booleans set from actual evidence.
+An offline forecast must not be relabeled as live evidence. The public M2 eval inputs remain synthetic offline fixtures even though their manifests link to a separate gate-verified live summary. `edaWritesInThisReleaseFixture` therefore remains zero, while the linked summary carries the sanitized real verification result.
 
-Future M2 evidence enters through the offline [M2 evidence gate](m2-evidence-gate.md).
+M2 evidence enters through the offline [M2 evidence gate](m2-evidence-gate.md).
 The importer requires exact SHA coverage, rejects private fields and paths, and
 copies only aggregate counts and verification states into one public summary.
-Raw receipts and their identifiers remain outside the repository. Positive gate
-fixtures are synthetic test inputs and carry no live status.
+Raw receipts and their identifiers remain outside the repository. Positive unit
+fixtures remain synthetic branch inputs and are not the source of the live claim.
 
 ## Screenshot policy
 

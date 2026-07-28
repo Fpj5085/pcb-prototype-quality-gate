@@ -2,7 +2,7 @@
 
 This is the complete intended file set for the local v0.1.0-alpha Git repository and release archive. All paths are repository-relative. Local Git metadata and the external ZIP/checksum sidecar are not part of the archive.
 
-**Total intended repository files: 121.**
+**Total intended repository files: 122.**
 
 ## Core review and command entry
 
@@ -145,6 +145,7 @@ This is the complete intended file set for the local v0.1.0-alpha Git repository
 - `release-audit/DOCS-REVIEW.md`
 - `release-audit/FILE-PROVENANCE.md`
 - `release-audit/M2-INTEGRATION-STATUS.md`
+- `release-audit/m2-live-evidence-summary.json`
 - `release-audit/PRIVACY-SCAN-ALLOWLIST.json`
 - `release-audit/SOURCE-BOUNDARY.md`
 - `release-audit/SOURCE-INVENTORY.md`

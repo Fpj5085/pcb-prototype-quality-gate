@@ -10,7 +10,13 @@
 
 - `not_suitable_for_prototype`: at least one high-confidence blocker exists.
 - `suitable_after_corrections`: no deterministic high-confidence blocker remains, but important evidence, assumptions or advisories still require work.
-- `suitable_for_low_risk_prototype`: all configured Prototype gates pass; the rating still does not prove physical function.
+- `suitable_for_low_risk_prototype`: all required current-state Prototype gates are explicitly present, correctly typed and passed, with no contradictory or offline-only evidence; the rating still does not prove physical function.
+
+`rating` is the strict current-state result. It requires explicit values for `schematicErrors`, `schematicWarnings`, `pcbDrcFindings`, `unroutedNets`, `containment` and `savedReloaded`. Missing or invalid fields create `EVIDENCE_INCOMPLETE:*`; contradictory live/persistence metadata creates `EVIDENCE_CONFLICT:*`; an explicitly offline fixture creates an evidence-scope finding. These findings prevent a low-risk rating.
+
+`engineeringForecastRating` excludes only evidence-completeness, evidence-conflict and offline-scope findings. It preserves real engineering blockers and advisories, but it is a prediction rather than a live release decision. `evidenceCompleteness` records field-level gate states, missing/invalid fields, contradictions and whether all strict gates passed. The original three-value rating enum remains unchanged.
+
+Non-zero schematic warnings pass only when detailed warning evidence exists and `schematicWarningDisposition` is explicitly `explained_and_accepted`. Merely reporting a warning count or claiming that details are available is insufficient.
 
 ## Finding structure
 
@@ -48,7 +54,7 @@ Each critical conclusion should be traceable to one or more of:
 
 Third-party PDFs are link-only and are not distributed in the repository.
 
-The normalized groups and published workflow schemas are described in [Evidence schema](evidence-schema.md). Structural validation is not truth validation: a schema-valid number still needs trustworthy provenance and operating conditions.
+The normalized groups and published workflow schemas are described in [Evidence schema](evidence-schema.md). Structural validation is not truth validation: a schema-valid number, `DRC=0`, offline replay or passing unit test still needs trustworthy current-document provenance and save/reload evidence.
 
 ## Rule families
 

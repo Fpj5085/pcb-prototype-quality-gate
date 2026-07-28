@@ -1,9 +1,9 @@
 {
   "schema": "jlceda-eval-expected/1.0",
-  "rating": "suitable_for_low_risk_prototype",
+  "rating": "suitable_after_corrections",
   "counts": {
     "pass": 4,
-    "advisory": 0,
+    "advisory": 2,
     "blocker": 0
   },
   "requiredFindings": [
@@ -23,20 +23,33 @@
     {
       "id": "SCHEMATIC_TOPOLOGY",
       "severity": "pass"
+    },
+    {
+      "id": "EVIDENCE_INCOMPLETE:PERSISTENCE",
+      "severity": "advisory",
+      "confidence": "high",
+      "ruleFamily": "evidence_gate"
+    },
+    {
+      "id": "EVIDENCE_SCOPE:OFFLINE_FORECAST",
+      "severity": "advisory",
+      "confidence": "high",
+      "ruleFamily": "evidence_gate"
     }
   ],
   "forbiddenFindings": [
     "DECOUPLING_DISTANCE:J2:+5V"
   ],
   "forbiddenSeverities": [
-    "blocker",
-    "advisory"
+    "blocker"
   ],
   "findingIdsExact": [
     "TRACE_PASS:+5V",
     "TRACE_PASS:GND",
     "DECOUPLING_PASS:J2:+5V",
-    "SCHEMATIC_TOPOLOGY"
+    "SCHEMATIC_TOPOLOGY",
+    "EVIDENCE_INCOMPLETE:PERSISTENCE",
+    "EVIDENCE_SCOPE:OFFLINE_FORECAST"
   ],
-  "claimBoundary": "Offline successor forecast only; the rating is not a live EDA closure claim."
+  "claimBoundary": "Engineering rules forecast a low-risk result, but the strict current-state rating remains pending live EDA save/reload evidence."
 }

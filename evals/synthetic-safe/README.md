@@ -2,7 +2,7 @@
 
 Generic synthetic control case used to verify that the review engine can pass a fixture satisfying its configured gates.
 
-Expected result: `suitable_for_low_risk_prototype`, with 20 passes and no blocker or advisory.
+Expected strict result: `suitable_after_corrections`, with 20 engineering passes and 2 evidence-conflict advisories because the fixture is explicitly offline while `savedReloaded=true`. Its `engineeringForecastRating` remains `suitable_for_low_risk_prototype`.
 
 ## Replay
 

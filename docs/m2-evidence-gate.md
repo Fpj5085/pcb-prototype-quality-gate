@@ -76,8 +76,9 @@ DRC state and explicit privacy booleans.
 
 ## Publication rule
 
-Current M2 eval manifests remain pending. A future release may add the generated
-summary and update public claims only after the gate returns `passed`, the summary
-receives human review, the full release scan is clean, and integrity files plus
-the local archive are regenerated. A passing synthetic unit fixture never changes
-the M2 publication status.
+The current M2 bundle passed the offline hash and privacy gate, and the generated
+minimal summary is published as `release-audit/m2-live-evidence-summary.json`.
+The synthetic eval inputs remain offline replay fixtures; their manifests link to
+the separate verified summary rather than pretending the fixture bytes came from
+EDA. Raw receipts and private source evidence remain outside this repository.
+A passing synthetic unit fixture alone never changes M2 publication status.

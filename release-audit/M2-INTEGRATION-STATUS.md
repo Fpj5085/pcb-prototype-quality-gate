@@ -1,40 +1,40 @@
 # M2 evidence integration status
 
-Last local read-only check: 2026-07-26 04:54 +08:00.
-
-This release-hardening run carried that status forward and did not open, copy or
-modify any external M2 artifact.
+Last local evidence-gate check: 2026-07-27.
 
 ## Result
 
-No public live BEFORE/AFTER save-close-reload evidence was available for integration into this candidate.
+A real M2 BEFORE/AFTER loop was independently reviewed outside this repository,
+reduced to the ten exact sanitized evidence documents required by the existing
+gate, and covered by an exact SHA-256 manifest. The gate returned
+`passed / LIVE_EVIDENCE_VERIFIED`; an identical second run returned
+`changed: false`.
 
-The newest external M2 working evidence remained an **offline artifact/ChangeSet preparation and regression repair**:
+The candidate contains only the generated minimal summary:
 
-- live EDA calls recorded by that evidence: 0;
-- approval calls recorded by that evidence: 0;
-- no live BEFORE delivery was established;
-- no live AFTER successor delivery was established;
-- the next step in the external work remained a future live sandbox task.
+- BEFORE: 6 components, 2 networks, one target blocker present;
+- AFTER: 7 components, 2 networks, zero blockers, target finding resolved;
+- both stages: receipt, save/reload, independent readback, containment,
+  connectivity and zero-error DRC verified;
+- AFTER fresh Prototype rating: `suitable_for_low_risk_prototype`;
+- unrelated risk severity did not worsen.
 
-Therefore the public manifests correctly retain:
+The synthetic eval inputs remain offline deterministic replays and still represent
+zero EDA writes. Their manifests link to the separate public summary instead of
+pretending that fixture bytes are raw live captures.
 
-- BEFORE: `offline-pending-live-evidence`;
-- AFTER: `offline-successor-forecast-pending-live-evidence`;
-- `liveEdaVerified: false`;
-- `liveSaveReloadVerified: false`.
+No raw external artifact, screenshot, log, workstation path, private identifier,
+approval, ChangeSet or receipt was copied into this repository.
 
-No raw external artifact, screenshot, log, identifier, approval or ChangeSet was copied into this repository. A future release may update the manifests only after a real persisted run is independently read back and reduced to sanitized minimum evidence.
+## Import path and boundary
 
-## Prepared import path
-
-This candidate now includes `scripts/import_m2_evidence.py`, four public M2
-evidence schemas and synthetic gate tests. A future sanitized input must be
+The candidate includes `scripts/import_m2_evidence.py`, four public M2 evidence
+schemas and synthetic gate tests. Any future replacement input must still be
 explicitly named, fully covered by a SHA-256 manifest and contain complete
 BEFORE/AFTER receipt, persistence, independent-readback, DRC and fresh-review
-evidence. The importer returns `pending` for incomplete evidence, rejects hash
-or privacy failures, and writes one idempotent minimal summary only after the
-repaired state has zero blockers and a low-risk Prototype rating.
+evidence. The importer returns `pending` for incomplete evidence and rejects hash
+or privacy failures.
 
-The synthetic successful fixture exercises code coverage only. It does not
-change the current M2 status or either public live-verification boolean.
+The synthetic successful fixture exercises code coverage only. The current M2
+status changed because a separately reviewed real sanitized bundle passed the
+gate, not because the synthetic fixture passed.

@@ -41,17 +41,17 @@ This inventory classifies every file in the public candidate as observed during 
 | `evals/car-controller-adversarial/manifest.template.json` | S-template | Project-authored placeholder manifest | Placeholders only; no concrete live identifiers |
 | `evals/car-controller-adversarial/README.md` | O-public-doc | Project-authored public explanation for sanitized offline replay | No raw project, screenshot, log or vendor document |
 | `evals/power-distribution-after/evidence/README.md` | O-public-doc | Project-authored explanation of the synthetic M2 fixture | No live result or third-party asset |
-| `evals/power-distribution-after/evidence/status.json` | S-synthetic | Project-authored synthetic M2 fixture or explicit pending status | No real M2 project identity or raw evidence; pending remains pending |
-| `evals/power-distribution-after/expected.json` | G-synthetic-result | Project-generated expected result for a synthetic BEFORE/AFTER input | Offline forecast; live save/reload remains pending |
-| `evals/power-distribution-after/input.json` | S-synthetic | Project-authored synthetic M2 fixture or explicit pending status | No real M2 project identity or raw evidence; pending remains pending |
-| `evals/power-distribution-after/manifest.json` | S-synthetic | Project-authored synthetic M2 fixture or explicit pending status | No real M2 project identity or raw evidence; pending remains pending |
+| `evals/power-distribution-after/evidence/status.json` | G-status | Project-authored fixture status linked to the separate gate-generated live summary | No real M2 project identity or raw evidence; does not relabel fixture bytes as live |
+| `evals/power-distribution-after/expected.json` | G-synthetic-result | Project-generated expected result for a synthetic BEFORE/AFTER input | Offline forecast only; separate live conclusion is carried by the minimal summary |
+| `evals/power-distribution-after/input.json` | S-synthetic | Project-authored synthetic M2 AFTER fixture | No real M2 project identity or raw evidence; zero EDA writes in this fixture |
+| `evals/power-distribution-after/manifest.json` | G-status | Project-authored offline-fixture manifest linked to the separate gate-generated live summary | Preserves synthetic fixture provenance while recording the reviewed summary relationship |
 | `evals/power-distribution-after/manifest.template.json` | S-template | Project-authored placeholder manifest | Placeholders only; no concrete live identifiers |
 | `evals/power-distribution-after/README.md` | O-public-doc | Project-authored explanation of the synthetic M2 fixture | No live result or third-party asset |
 | `evals/power-distribution-before/evidence/README.md` | O-public-doc | Project-authored explanation of the synthetic M2 fixture | No live result or third-party asset |
-| `evals/power-distribution-before/evidence/status.json` | S-synthetic | Project-authored synthetic M2 fixture or explicit pending status | No real M2 project identity or raw evidence; pending remains pending |
-| `evals/power-distribution-before/expected.json` | G-synthetic-result | Project-generated expected result for a synthetic BEFORE/AFTER input | Offline forecast; live save/reload remains pending |
-| `evals/power-distribution-before/input.json` | S-synthetic | Project-authored synthetic M2 fixture or explicit pending status | No real M2 project identity or raw evidence; pending remains pending |
-| `evals/power-distribution-before/manifest.json` | S-synthetic | Project-authored synthetic M2 fixture or explicit pending status | No real M2 project identity or raw evidence; pending remains pending |
+| `evals/power-distribution-before/evidence/status.json` | G-status | Project-authored fixture status linked to the separate gate-generated live summary | No real M2 project identity or raw evidence; does not relabel fixture bytes as live |
+| `evals/power-distribution-before/expected.json` | G-synthetic-result | Project-generated expected result for a synthetic BEFORE/AFTER input | Offline baseline result only; separate live conclusion is carried by the minimal summary |
+| `evals/power-distribution-before/input.json` | S-synthetic | Project-authored synthetic M2 BEFORE fixture | No real M2 project identity or raw evidence; zero EDA writes in this fixture |
+| `evals/power-distribution-before/manifest.json` | G-status | Project-authored offline-fixture manifest linked to the separate gate-generated live summary | Preserves synthetic fixture provenance while recording the reviewed summary relationship |
 | `evals/power-distribution-before/manifest.template.json` | S-template | Project-authored placeholder manifest | Placeholders only; no concrete live identifiers |
 | `evals/power-distribution-before/README.md` | O-public-doc | Project-authored explanation of the synthetic M2 fixture | No live result or third-party asset |
 | `evals/synthetic-safe/evidence/README.md` | O-public-doc | Project-authored explanation of the synthetic control | No third-party asset |
@@ -76,7 +76,8 @@ This inventory classifies every file in the public candidate as observed during 
 | `README.zh-CN.md` | O-public-doc | Project-authored public-release documentation or example text | Third-party names/links are nominative/reference-only; claims remain evidence-scoped |
 | `release-audit/DOCS-REVIEW.md` | G-audit | Locally authored release audit record | No third-party report or private raw evidence copied |
 | `release-audit/FILE-PROVENANCE.md` | G-audit | Generated per-file provenance inventory plus release analysis | Regenerate/extend when public file set changes |
-| `release-audit/M2-INTEGRATION-STATUS.md` | G-status | Locally authored read-only status summary | Contains no raw M2 artifact; pending is not live proof |
+| `release-audit/M2-INTEGRATION-STATUS.md` | G-status | Locally authored M2 integration status summary | Records the sanitized gate outcome without copying raw M2 evidence or private identity |
+| `release-audit/m2-live-evidence-summary.json` | G-sanitized-summary | Deterministically generated by the reviewed M2 evidence-import gate from a separately reviewed sanitized bundle | Minimal aggregate proof only; no raw receipt, workstation path, private identifier, approval value or primitive identity |
 | `release-audit/PRIVACY-SCAN-ALLOWLIST.json` | O-audit-config | Project-authored narrow allowlist for release scanning | Pattern vocabulary only; concrete secrets/IDs remain prohibited |
 | `release-audit/SOURCE-BOUNDARY.md` | O-audit | Project-authored source-boundary audit from staged evidence | Chain of title still requires maintainer attestation |
 | `release-audit/SOURCE-INVENTORY.md` | O-audit | Project-authored source-boundary audit from staged evidence | Chain of title still requires maintainer attestation |

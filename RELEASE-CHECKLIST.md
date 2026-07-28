@@ -8,7 +8,7 @@ This checklist distinguishes completed local release preparation from human deci
 - [x] The user-facing loop is stated consistently: ordinary-language need → real editable schematic/PCB → independent automated review → allow-listed correction → save/reload re-verification → plain-language prototype rating.
 - [x] Draft generators are described as replaceable adapters; the independent review and bounded re-validation loop is the trusted core.
 - [x] Automatic repair claims are limited to the published allow-list status.
-- [x] M2 BEFORE/AFTER is labeled offline/pending rather than live save/reload proof.
+- [x] M2 BEFORE/AFTER inputs remain labeled as offline fixtures and are kept separate from the gate-verified minimal live summary.
 - [x] The car-controller `9/9` statement is limited to nine predefined/manual risk families on one 28-component fixture.
 - [x] No general Manufacturing Release, certification or physical-function claim is made.
 - [x] Live EDA is described as a separately audited environment integration.
@@ -25,7 +25,7 @@ This checklist distinguishes completed local release preparation from human deci
 
 ## Functional validation
 
-- [x] Complete Python suite: 37/37, including 21 Prototype/runtime, 11 M2 gate and 5 release-tool tests.
+- [x] Complete Python suite: 48/48, including 32 Prototype/runtime, 11 M2 gate and 5 release-tool tests.
 - [x] Sanitized eval replay: 4/4.
 - [x] Python CLI smoke passed.
 - [x] PowerShell wrapper smoke passed.
@@ -48,14 +48,14 @@ This checklist distinguishes completed local release preparation from human deci
 
 ## Evaluation evidence
 
-- [x] `synthetic-safe` fixture and expected result are present.
+- [x] `synthetic-safe` offline eval is fail-closed; the separate complete-evidence semantic fixture still exercises the strict passing path.
 - [x] `power-distribution-before` fixture has one intended decoupling blocker.
-- [x] `power-distribution-after` successor closes the blocker in offline replay.
+- [x] `power-distribution-after` closes the engineering blocker in offline replay while its fixture strict rating remains `suitable_after_corrections`.
 - [x] `car-controller-adversarial` reproduces the scoped engineering risk benchmark.
 - [x] All evals include input, expected result, current manifest, manifest template, status and README.
-- [x] The carried authoritative M2 status remains pending; this hardening run did not inspect or copy external M2 artifacts.
-- [x] M2 remains explicitly pending; offline replay and the AFTER successor do not set live EDA or save/reload verification flags.
-- [x] The positive M2 importer fixture is explicitly synthetic and cannot promote either live-verification flag.
+- [x] A separately reviewed sanitized M2 bundle passed the existing hash/privacy gate; only its minimal generated summary is public.
+- [x] BEFORE/AFTER manifests link the verified live summary while preserving zero writes in each offline fixture.
+- [x] The positive M2 importer unit fixture remains explicitly synthetic and cannot by itself promote either live-verification flag.
 
 ## Integrity and local packaging
 

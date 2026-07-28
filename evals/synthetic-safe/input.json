@@ -2,57 +2,318 @@
   "schema": "jlceda-prototype-review-input/1.0",
   "designName": "合成通用安全控制板",
   "components": [
-    {"ref": "PWR_A", "profile": "safe.regulator_5v", "package": "QFN-12_GENERIC", "critical": true, "x": 10, "y": 10, "nets": ["RAW", "V5", "GND"]},
-    {"ref": "PROT_A", "profile": "safe.diode", "package": "SMA_GENERIC", "critical": true, "x": 5, "y": 10, "nets": ["INPUT", "RAW"]},
-    {"ref": "FUSE_A", "profile": "safe.fuse", "package": "FUSE_1206_GENERIC", "critical": true, "x": 2, "y": 10, "nets": ["SOURCE", "INPUT"]},
-    {"ref": "DRV_A", "profile": "safe.hbridge", "package": "HTSSOP-16_GENERIC", "critical": true, "x": 30, "y": 20, "nets": ["RAW", "GND", "LOAD1A", "LOAD1B", "LOAD2A", "LOAD2B"]},
-    {"ref": "CTRL_A", "profile": "safe.mcu", "package": "QFN-32_GENERIC", "critical": true, "x": 20, "y": 20, "nets": ["V3", "GND", "DBG_D", "DBG_C", "RESET"]},
-    {"ref": "C_FAST_RAW", "capacitanceUf": 0.1, "x": 31, "y": 20, "nets": ["RAW", "GND"]},
-    {"ref": "C_FAST_CTRL", "capacitanceUf": 0.1, "x": 21, "y": 20, "nets": ["V3", "GND"]},
-    {"ref": "C_BULK", "capacitanceUf": 470, "x": 32, "y": 20, "nets": ["RAW", "GND"]}
+    {
+      "ref": "PWR_A",
+      "profile": "safe.regulator_5v",
+      "package": "QFN-12_GENERIC",
+      "critical": true,
+      "x": 10,
+      "y": 10,
+      "nets": [
+        "RAW",
+        "V5",
+        "GND"
+      ]
+    },
+    {
+      "ref": "PROT_A",
+      "profile": "safe.diode",
+      "package": "SMA_GENERIC",
+      "critical": true,
+      "x": 5,
+      "y": 10,
+      "nets": [
+        "INPUT",
+        "RAW"
+      ]
+    },
+    {
+      "ref": "FUSE_A",
+      "profile": "safe.fuse",
+      "package": "FUSE_1206_GENERIC",
+      "critical": true,
+      "x": 2,
+      "y": 10,
+      "nets": [
+        "SOURCE",
+        "INPUT"
+      ]
+    },
+    {
+      "ref": "DRV_A",
+      "profile": "safe.hbridge",
+      "package": "HTSSOP-16_GENERIC",
+      "critical": true,
+      "x": 30,
+      "y": 20,
+      "nets": [
+        "RAW",
+        "GND",
+        "LOAD1A",
+        "LOAD1B",
+        "LOAD2A",
+        "LOAD2B"
+      ]
+    },
+    {
+      "ref": "CTRL_A",
+      "profile": "safe.mcu",
+      "package": "QFN-32_GENERIC",
+      "critical": true,
+      "x": 20,
+      "y": 20,
+      "nets": [
+        "V3",
+        "GND",
+        "DBG_D",
+        "DBG_C",
+        "RESET"
+      ]
+    },
+    {
+      "ref": "C_FAST_RAW",
+      "capacitanceUf": 0.1,
+      "x": 31,
+      "y": 20,
+      "nets": [
+        "RAW",
+        "GND"
+      ]
+    },
+    {
+      "ref": "C_FAST_CTRL",
+      "capacitanceUf": 0.1,
+      "x": 21,
+      "y": 20,
+      "nets": [
+        "V3",
+        "GND"
+      ]
+    },
+    {
+      "ref": "C_BULK",
+      "capacitanceUf": 470,
+      "x": 32,
+      "y": 20,
+      "nets": [
+        "RAW",
+        "GND"
+      ]
+    }
   ],
   "nets": [
-    {"name": "SOURCE", "role": "power", "designCurrentA": 1.0, "minWidthMm": 1.5},
-    {"name": "INPUT", "role": "power", "designCurrentA": 1.0, "minWidthMm": 1.5},
-    {"name": "RAW", "role": "power", "designCurrentA": 1.0, "minWidthMm": 1.5},
-    {"name": "V5", "role": "power", "designCurrentA": 0.4, "minWidthMm": 0.8},
-    {"name": "V3", "role": "power", "designCurrentA": 0.2, "minWidthMm": 0.5},
-    {"name": "LOAD1A", "role": "motor", "designCurrentA": 0.8, "minWidthMm": 1.2},
-    {"name": "LOAD1B", "role": "motor", "designCurrentA": 0.8, "minWidthMm": 1.2},
-    {"name": "LOAD2A", "role": "motor", "designCurrentA": 0.8, "minWidthMm": 1.2},
-    {"name": "LOAD2B", "role": "motor", "designCurrentA": 0.8, "minWidthMm": 1.2}
+    {
+      "name": "SOURCE",
+      "role": "power",
+      "designCurrentA": 1.0,
+      "minWidthMm": 1.5
+    },
+    {
+      "name": "INPUT",
+      "role": "power",
+      "designCurrentA": 1.0,
+      "minWidthMm": 1.5
+    },
+    {
+      "name": "RAW",
+      "role": "power",
+      "designCurrentA": 1.0,
+      "minWidthMm": 1.5
+    },
+    {
+      "name": "V5",
+      "role": "power",
+      "designCurrentA": 0.4,
+      "minWidthMm": 0.8
+    },
+    {
+      "name": "V3",
+      "role": "power",
+      "designCurrentA": 0.2,
+      "minWidthMm": 0.5
+    },
+    {
+      "name": "LOAD1A",
+      "role": "motor",
+      "designCurrentA": 0.8,
+      "minWidthMm": 1.2
+    },
+    {
+      "name": "LOAD1B",
+      "role": "motor",
+      "designCurrentA": 0.8,
+      "minWidthMm": 1.2
+    },
+    {
+      "name": "LOAD2A",
+      "role": "motor",
+      "designCurrentA": 0.8,
+      "minWidthMm": 1.2
+    },
+    {
+      "name": "LOAD2B",
+      "role": "motor",
+      "designCurrentA": 0.8,
+      "minWidthMm": 1.2
+    }
   ],
   "powerPaths": [
-    {"inputNet": "SOURCE", "outputNet": "V5", "sourceMinV": 7.0, "sourceMaxV": 12.0, "seriesRefs": ["PROT_A"], "regulatorRef": "PWR_A"}
+    {
+      "inputNet": "SOURCE",
+      "outputNet": "V5",
+      "sourceMinV": 7.0,
+      "sourceMaxV": 12.0,
+      "seriesRefs": [
+        "PROT_A"
+      ],
+      "regulatorRef": "PWR_A"
+    }
   ],
   "protectedCircuits": [
-    {"fuseRef": "FUSE_A", "continuousCurrentA": 1.0, "surgeCurrentA": 2.0, "holdDerating": 0.8}
+    {
+      "fuseRef": "FUSE_A",
+      "continuousCurrentA": 1.0,
+      "surgeCurrentA": 2.0,
+      "holdDerating": 0.8
+    }
   ],
   "hbridgeUses": [
-    {"driverRef": "DRV_A", "channelsUsed": 2, "perChannelRunA": 0.4, "perChannelPeakA": 1.2, "maxEstimatedRiseC": 60}
+    {
+      "driverRef": "DRV_A",
+      "channelsUsed": 2,
+      "perChannelRunA": 0.4,
+      "perChannelPeakA": 1.2,
+      "maxEstimatedRiseC": 60
+    }
   ],
   "regulatorUses": [
-    {"regulatorRef": "PWR_A", "inputMaxV": 12.0, "loadMaxA": 0.2, "cautionRiseC": 50, "blockerRiseC": 80}
+    {
+      "regulatorRef": "PWR_A",
+      "inputMaxV": 12.0,
+      "loadMaxA": 0.2,
+      "cautionRiseC": 50,
+      "blockerRiseC": 80
+    }
   ],
-  "pcb": {"traceCapacity": {"copperOz": 1.0, "allowedRiseC": 10.0, "currentMargin": 1.25}},
+  "pcb": {
+    "traceCapacity": {
+      "copperOz": 1.0,
+      "allowedRiseC": 10.0,
+      "currentMargin": 1.25
+    }
+  },
   "decouplingRequirements": [
-    {"targetRef": "DRV_A", "supplyNet": "RAW", "returnNet": "GND", "minCapacitanceUf": 0.08, "maxCapacitanceUf": 0.22, "maxDistanceMm": 3.0},
-    {"targetRef": "CTRL_A", "supplyNet": "V3", "returnNet": "GND", "minCapacitanceUf": 0.08, "maxCapacitanceUf": 0.22, "maxDistanceMm": 3.0}
+    {
+      "targetRef": "DRV_A",
+      "supplyNet": "RAW",
+      "returnNet": "GND",
+      "minCapacitanceUf": 0.08,
+      "maxCapacitanceUf": 0.22,
+      "maxDistanceMm": 3.0
+    },
+    {
+      "targetRef": "CTRL_A",
+      "supplyNet": "V3",
+      "returnNet": "GND",
+      "minCapacitanceUf": 0.08,
+      "maxCapacitanceUf": 0.22,
+      "maxDistanceMm": 3.0
+    }
   ],
   "bulkCapRequirements": [
-    {"targetRef": "DRV_A", "supplyNet": "RAW", "returnNet": "GND", "minCapacitanceUf": 220, "maxDistanceMm": 5.0}
+    {
+      "targetRef": "DRV_A",
+      "supplyNet": "RAW",
+      "returnNet": "GND",
+      "minCapacitanceUf": 220,
+      "maxDistanceMm": 5.0
+    }
   ],
   "voltageDividers": [
-    {"id": "SENSE_A", "inputMaxV": 5.25, "topOhm": 20000, "bottomOhm": 10000, "receiverAbsMaxV": 3.6, "requiredMarginV": 0.2, "locations": ["SENSE_A"]}
+    {
+      "id": "SENSE_A",
+      "inputMaxV": 5.25,
+      "topOhm": 20000,
+      "bottomOhm": 10000,
+      "receiverAbsMaxV": 3.6,
+      "requiredMarginV": 0.2,
+      "locations": [
+        "SENSE_A"
+      ]
+    }
   ],
-  "debugInterface": {"locations": ["DBG_A"], "requiredSignals": ["VREF", "GND", "DBG_D", "DBG_C", "RESET"], "presentSignals": ["VREF", "GND", "DBG_D", "DBG_C", "RESET"]},
-  "usability": {"missingTestpointNets": [], "missingSilkscreenLabels": [], "antennaKeepout": {"verified": true}},
-  "checks": {"schematicErrors": 0, "schematicWarnings": 0, "pcbDrcFindings": 0, "unroutedNets": 0, "containment": true, "savedReloaded": true},
-  "groundReview": {"pours": 2, "islands": 0, "returnPathVerified": true, "powerLogicReturnSeparated": true, "confidence": "high"},
-  "schematicTopology": {"floatingInputs": [], "sameNameConflicts": [], "pinPadVerified": true, "hiddenPowerPinsVerified": true, "confidence": "high"},
+  "debugInterface": {
+    "locations": [
+      "DBG_A"
+    ],
+    "requiredSignals": [
+      "VREF",
+      "GND",
+      "DBG_D",
+      "DBG_C",
+      "RESET"
+    ],
+    "presentSignals": [
+      "VREF",
+      "GND",
+      "DBG_D",
+      "DBG_C",
+      "RESET"
+    ]
+  },
+  "usability": {
+    "missingTestpointNets": [],
+    "missingSilkscreenLabels": [],
+    "antennaKeepout": {
+      "verified": true
+    }
+  },
+  "checks": {
+    "schematicErrors": 0,
+    "schematicWarnings": 0,
+    "pcbDrcFindings": 0,
+    "unroutedNets": 0,
+    "containment": true,
+    "savedReloaded": true
+  },
+  "groundReview": {
+    "pours": 2,
+    "islands": 0,
+    "returnPathVerified": true,
+    "powerLogicReturnSeparated": true,
+    "confidence": "high"
+  },
+  "schematicTopology": {
+    "floatingInputs": [],
+    "sameNameConflicts": [],
+    "pinPadVerified": true,
+    "hiddenPowerPinsVerified": true,
+    "confidence": "high"
+  },
   "firmwarePins": [
-    {"pin": "CTRL_A.1", "port": "IO_A", "net": "CTRL_1", "purpose": "control", "direction": "output"},
-    {"pin": "CTRL_A.2", "port": "IO_B", "net": "SENSE_1", "purpose": "sense", "direction": "input"}
+    {
+      "pin": "CTRL_A.1",
+      "port": "IO_A",
+      "net": "CTRL_1",
+      "purpose": "control",
+      "direction": "output"
+    },
+    {
+      "pin": "CTRL_A.2",
+      "port": "IO_B",
+      "net": "SENSE_1",
+      "purpose": "sense",
+      "direction": "input"
+    }
   ],
-  "sourceEvidence": ["synthetic-safe-fixture; not a current-design component-name clone"]
+  "sourceEvidence": [
+    "synthetic-safe-fixture; not a current-design component-name clone"
+  ],
+  "fixtureMetadata": {
+    "fixtureType": "synthetic-offline-unit",
+    "executionStatus": "offline-synthetic-unit",
+    "liveEdaVerified": false,
+    "persistenceEvidenceIncluded": false,
+    "notForManufacturing": true
+  }
 }

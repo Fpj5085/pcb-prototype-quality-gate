@@ -6,10 +6,11 @@
   "input": "input.json",
   "expected": "expected.json",
   "evidence": "evidence/status.json",
+  "publicLiveEvidenceSummary": "../../release-audit/m2-live-evidence-summary.json",
   "execution": {
-    "status": "offline-successor-forecast-pending-live-evidence",
-    "liveEdaVerified": false,
-    "liveSaveReloadVerified": false,
+    "status": "live-evidence-gate-verified",
+    "liveEdaVerified": true,
+    "liveSaveReloadVerified": true,
     "edaWritesInThisReleaseFixture": 0
   },
   "privacy": {

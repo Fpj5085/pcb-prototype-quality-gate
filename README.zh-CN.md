@@ -20,6 +20,40 @@ Draft 生成器是可替换的适配器，不是可信核心。项目的核心�
 
 本 alpha 公开可解释的只读 Prototype 审核引擎、证据 Schema、可移植 Agent Skill 和脱敏评估样例。Draft 生成器返回“成功”不等于设计真实可编辑、正确或已持久保存，也不作为独立审核结论。
 
+### 实例:DRC=0 不等于可以打样
+
+某商业 AI 助手(EasyEDA Copilot 1.1.5)生成的 28 器件 2WD 小车主控板,通过了全部常规检查:
+
+| 常规检查项 | 结果 |
+| --- | --- |
+| 生成器自带 PCB DRC | 0 问题 |
+| 独立复核 PCB DRC | 0 问题 |
+| 原理图 ERC 错误 | 0 |
+| 连通性 | 通过 |
+| 板框包含性 | 通过 |
+| 铺铜 / 地缝合过孔 | 2 / 50 |
+| 保存并重载 | 是 |
+
+只看这些数字,工程师会认为这块板可以直接下单。本项目的独立审核判定其
+**当前不适合样板**,并给出 5 个阻塞级工程缺陷,每一条都附带实测或计算依据:
+
+1. **R1** — U3 型号/封装身份不符,且 6 V 余量不足
+2. **R2** — F1 保护保险丝选型过小
+3. **R3** — L293D 热耗散与压降
+4. **R4** — 电源走线宽度低于电流需求
+5. **R5** — 缺少 L293D 本地去耦与储能电容
+
+另有 8 项提醒级问题,包括超声波回波余量、HC-05 引脚定义身份、SWD NRST 处理、
+稳压器电容稳定性与电机回流路径。
+
+DRC 校验的是几何与连接规则,**它不校验设计在电气和热学上是否成立**。保护选型过小、
+本地储能缺失、电源路径不足、器件身份错误——这类缺口正是本审核引擎要补上的。
+该次审核为只读:无任何改动,无制造输出。
+
+证据文件:`prototype-review-machine-evidence.json`,符合
+[`jlceda-prototype-review-evidence/1.0`](docs/evidence-schema.md)。该 fixture 覆盖的
+九个风险族列举于 [docs/demo.md](docs/demo.md);结论边界见文末 **Alpha 边界**。
+
 ## v0.1.0-alpha 包含
 
 - 普通语言请求到 **Draft / Prototype / Manufacturing Release** 工作模式的治理规则；
@@ -28,7 +62,7 @@ Draft 生成器是可替换的适配器，不是可信核心。项目的核心�
 - 三档确定性 Prototype 评级；
 - 不可变修正计划与白名单动作原则；
 - 保存、关闭、重载和独立读回门；
-- 5V/1A 电源分配板 BEFORE/AFTER 评估对；AFTER 在真实保存重载前仍标记为离线预测；
+- 5V/1A 电源分配板 BEFORE/AFTER 评估对；合成 fixture 仍用于离线重放，并另附通过隐私门的真实保存重载最小公开摘要；
 - 一个“EDA 门通过但仍不值得打样”的双电机控制器 adversarial fixture。
 
 ## 不宣称
@@ -66,9 +100,11 @@ flowchart LR
 | --- | --- |
 | `not_suitable_for_prototype` | 仍有高置信度 blocker，当前不适合样板。 |
 | `suitable_after_corrections` | 确定性问题可修正，但仍需补证或确认关键假设。 |
-| `suitable_for_low_risk_prototype` | 已通过配置的 Prototype 门；仍须实物验证。 |
+| `suitable_for_low_risk_prototype` | 六项当前状态门禁均明确存在、类型正确且通过，并且没有离线范围或证据矛盾；仍须实物验证。 |
 
 审核族包括器件身份/封装、稳压余量与热、电流保护、H 桥损耗、PCB 载流、去耦、储能、接口电平、调试、回流、拓扑、板框、DRC 和保存重载。
+
+严格 `rating` 要求 `schematicErrors`、`schematicWarnings`、`pcbDrcFindings`、`unroutedNets`、`containment`、`savedReloaded` 六项证据显式且有效。缺失或矛盾会产生稳定的 `EVIDENCE_INCOMPLETE:*` / `EVIDENCE_CONFLICT:*` finding。离线工程预测单独写入 `engineeringForecastRating`，不代表当前真实设计已经具备样板就绪证据。
 
 ## 快速开始
 
@@ -93,7 +129,7 @@ python -m unittest discover -s tests/review -p "test_*.py" -v
 python scripts/run-evals.py
 ```
 
-未来取得完整脱敏 M2 live 证据后，可在离线状态运行：
+对明确指定的完整脱敏 M2 live 证据，可在离线状态运行：
 
 ```powershell
 python scripts/import_m2_evidence.py `
@@ -103,8 +139,8 @@ python scripts/import_m2_evidence.py `
 ```
 
 缺证据时门状态保持 `pending`，哈希或隐私问题进入 `rejected`；完整
-BEFORE/AFTER 闭环通过后只产生一个最小、幂等的公开摘要。仓库内的正向
-门测试 fixture 为纯合成数据，不代表 M2 已取得 live 证据。
+BEFORE/AFTER 闭环通过后只产生一个最小、幂等的公开摘要。当前公开摘要
+已通过该门；仓库内的正向单元测试 fixture 仍只是纯合成分支覆盖。
 
 输入是归一化工程证据，不是原始 EDA 项目。任何 live mutation 适配器都需要独立安全审计。
 
@@ -113,13 +149,13 @@ BEFORE/AFTER 闭环通过后只产生一个最小、幂等的公开摘要。仓�
 ## 评估案例
 
 - [`power-distribution-before`](evals/power-distribution-before/README.md)：6 器件合成fixture，唯一目标 blocker 是输出分支缺少合格本地旁路；离线评估。
-- [`power-distribution-after`](evals/power-distribution-after/README.md)：7 器件 successor，锁定新增 100nF X7R 电容；在记录真实保存重载前只称为离线预测。
+- [`power-distribution-after`](evals/power-distribution-after/README.md)：7 器件离线 successor 重放，锁定新增 100nF X7R 电容；另有独立、门验证的公开摘要记录真实保存重载闭环。
 - [`car-controller-adversarial`](evals/car-controller-adversarial/README.md)：脱敏的 28 器件fixture，板框包含和 DRC=0，但仍有多类电气/布局风险。`9/9` 只表示本fixture中预定义人工基准风险族的命中情况。
 - [`synthetic-safe`](evals/synthetic-safe/README.md)：预期通过当前审核门的合成回归fixture。
 
 ## Alpha 边界
 
-v0.1.0-alpha 主要公开审核模型、证据结构、脱敏评估样例和受控工作流。自动修复能力仅按已验证范围陈述；任何评级都不替代实物上电、测量和环境测试。M2 BEFORE/AFTER 当前仍等待真实 EDA 与保存重载证据；AFTER 的通过结果只是离线预测，不是已完成的 live 修正声明。
+v0.1.0-alpha 主要公开审核模型、证据结构、脱敏评估样例和受控工作流。自动修复能力仅按已验证范围陈述；任何评级都不替代实物上电、测量和环境测试。M2 真实 BEFORE/AFTER 闭环仅通过门生成的最小公开摘要陈述：基线 blocker 存在、一次受控修正已交付、保存重载和独立读回通过、目标 finding 已关闭、DRC 为零且新鲜 Prototype 评级为 `suitable_for_low_risk_prototype`。评估输入文件仍是合成离线重放，不构成实物或 Manufacturing Release 声明。
 
 更多信息见：
 

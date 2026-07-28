@@ -14,12 +14,13 @@ Synthetic offline successor for the 5 V / 1 A distribution-board BEFORE fixture.
 
 | Field | Value |
 | --- | --- |
-| Execution | `offline-successor-forecast-pending-live-evidence` |
-| Live EDA verified | No |
-| Live save/reload verified | No |
+| Fixture execution | offline deterministic successor replay |
+| Separate live-evidence gate | `verified` |
+| Live EDA verified | Yes, via minimal public summary |
+| Live save/reload verified | Yes, via minimal public summary |
 | EDA writes represented by this fixture | 0 |
 
-Expected offline result: `suitable_for_low_risk_prototype`, with 0 blockers, 0 advisories and 4 passes. That result is a rule-engine forecast, not a live repair-closure claim.
+Expected strict result: `suitable_after_corrections`, with 0 blockers, 2 evidence advisories and 4 passes. The separate `engineeringForecastRating` is `suitable_for_low_risk_prototype`; it is not a live repair-closure claim.
 
 ## Replay
 
@@ -35,4 +36,4 @@ python scripts/run-evals.py --case power-distribution-after
 - `manifest.template.json` — future publication template;
 - `evidence/status.json` and `evidence/README.md` — live-evidence gate.
 
-The fixture must remain pending until a real environment proves identity, schematic/PCB persistence and fresh review without unrelated regression.
+The fixture input remains offline and keeps its fail-closed replay rating. Separately, the gate-generated public summary verifies a seven-component live AFTER state with save/reload, independent readback, clean DRC, resolved target finding, no unrelated risk-severity increase and a fresh low-risk Prototype rating.
