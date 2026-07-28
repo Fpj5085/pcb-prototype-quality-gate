@@ -120,6 +120,14 @@ python src/review/prototype_review.py `
   --output out/synthetic-safe
 ```
 
+完全离线审核锁定的器件档案来源与新鲜度。显式日期保证结果可复现；该门禁不会改变公开三档 Prototype 评级：
+
+```powershell
+python src/review/component_profile_audit.py `
+  --profiles src/review/component-profiles.json `
+  --as-of 2026-07-28
+```
+
 运行测试：
 
 ```powershell

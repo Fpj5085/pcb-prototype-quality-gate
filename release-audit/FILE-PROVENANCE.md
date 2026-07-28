@@ -116,6 +116,7 @@ This inventory classifies every file in the public candidate. "Project-authored"
 | `src/repair/__init__.py` | O-public-code | Project-authored repair package marker | Apache-2.0 after ownership attestation |
 | `src/repair/local_bypass_plan.py` | O-public-code | Project-authored fail-closed immutable repair planner | Apache-2.0 after ownership attestation; standard library only and no private integration binding |
 | `src/review/component-profiles.json` | F-factual-profile | Project-authored profile structure and thresholds with manufacturer factual citations | Official links, names, MPNs and numeric facts only; no PDF/table/figure |
+| `src/review/component_profile_audit.py` | O-public-code | Project-authored deterministic offline provenance and freshness auditor | Apache-2.0 after ownership attestation; standard library only; performs no network or EDA access |
 | `src/review/prototype_review.py` | A-private-adapted | Project review engine adapted and portabilized from a private working tree | Apache-2.0 only after authorship/relicensing attestation; standard library only |
 | `tests/__init__.py` | A-private-adapted | Project tests adapted for portable repository-relative execution | Apache-2.0 only after ownership attestation; standard library only |
 | `tests/m2_gate/__init__.py` | O-public-test | Project-authored test-package marker | Apache-2.0 after ownership attestation |
@@ -139,5 +140,6 @@ This inventory classifies every file in the public candidate. "Project-authored"
 | `tests/review/__init__.py` | A-private-adapted | Project tests adapted for portable repository-relative execution | Apache-2.0 only after ownership attestation; standard library only |
 | `tests/review/fixtures/car-adversarial-input.json` | D-sanitized-derived | Byte-identical test copy of the sanitized-derived car adversarial input | Privacy removal does not settle ownership; no live IDs/raw project |
 | `tests/review/fixtures/synthetic-safe-input.json` | S-synthetic | Byte-identical test copy of the project-authored synthetic safe input | Original synthetic data; no physical/live claim |
+| `tests/review/test_component_profile_audit.py` | O-public-test | Project-authored adversarial coverage for deterministic provenance and freshness policy | Apache-2.0 after ownership attestation; synthetic metadata only; no network access |
 | `tests/review/test_prototype_review.py` | A-private-adapted | Project tests adapted for portable repository-relative execution | Apache-2.0 only after ownership attestation; standard library only |
 | `tests/review/test_release_runtime.py` | A-private-adapted | Project tests adapted for portable repository-relative execution | Apache-2.0 only after ownership attestation; standard library only |

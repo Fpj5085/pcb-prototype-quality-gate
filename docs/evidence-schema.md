@@ -56,11 +56,17 @@ Generic rules refer to a profile key; they do not hard-code a fixture designator
 - manufacturer and exact MPN or a clearly identified generic profile;
 - expected package and pin-to-pad evidence;
 - limit value, units and operating conditions;
-- official source title and URL;
+- official source title and HTTPS URL;
 - relevant page, section or table;
-- confidence and any unresolved interpretation.
+- source type, document revision or an explicit basis when the revision is not stated;
+- retrieval date plus `reviewAfter` or bounded `maxAgeDays` freshness policy;
+- a short provenance statement, confidence and any unresolved interpretation.
 
-The repository links to source documents and does not redistribute third-party PDF files.
+Run `src/review/component_profile_audit.py` with an explicit `--as-of` date to
+check these fields without network access. Missing, invalid, future-dated or stale
+metadata fails closed. This independent release/CI gate does not alter the
+Prototype review rating enum. The repository links to source documents and does
+not redistribute third-party PDF files.
 
 ## Finding output
 

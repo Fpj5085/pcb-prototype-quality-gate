@@ -127,6 +127,16 @@ python src/review/prototype_review.py `
   --output out/synthetic-safe
 ```
 
+Audit the locked component-profile provenance and freshness entirely offline. The
+explicit date makes the result reproducible; this gate does not change the public
+three-level Prototype rating:
+
+```powershell
+python src/review/component_profile_audit.py `
+  --profiles src/review/component-profiles.json `
+  --as-of 2026-07-28
+```
+
 Run tests:
 
 ```powershell

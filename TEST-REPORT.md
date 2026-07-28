@@ -1,10 +1,11 @@
-# Test report — v0.1.1-alpha hardened local candidate
+# Test report — v0.1.1-alpha baseline and post-release hardening
 
-Date: 2026-07-28
-Scope: local release candidate only. This run validated the offline runtime, the
-sanitized M2/M3 evidence boundary, the fail-closed local-bypass planner and release
-tooling. It performed no EDA mutation, network publication, upload, manufacturing,
-ordering or payment.
+Date: 2026-07-29
+Scope: the published v0.1.1-alpha baseline plus an uncommitted post-release
+component-profile provenance/freshness enhancement. This run validated the
+offline runtime, sanitized M2/M3 evidence boundary, fail-closed local-bypass
+planner, new profile audit and release tooling. It performed no EDA mutation,
+network publication, upload, manufacturing, ordering or payment.
 
 ## Environment
 
@@ -22,12 +23,14 @@ tools and are not bundled dependencies.
 
 | Gate | Result |
 | --- | --- |
-| Complete Python test suite | **55/55 passed** |
+| Complete Python test suite | **65/65 passed** |
 | Prototype rule/runtime tests | **32/32 passed** |
+| Component-profile provenance/freshness tests | **10/10 passed** |
 | M2 evidence-import gate tests | **11/11 passed** |
 | Local-bypass repair-plan tests | **7/7 passed** |
 | Reproducible release-tool tests | **5/5 passed** |
 | Sanitized evaluation replay | **4/4 passed** |
+| Component-profile audit (`--as-of 2026-07-28`) | **11/11 fresh; 0 stale; 0 invalid** |
 | Python CLI smoke — complete-evidence semantic fixture | Passed; `suitable_for_low_risk_prototype` |
 | PowerShell wrapper smoke — M2 BEFORE | Passed; `not_suitable_for_prototype` |
 | PowerShell parser | Passed for every published `.ps1` entry |
@@ -35,12 +38,26 @@ tools and are not bundled dependencies.
 | Skill validator | Passed |
 | JSON Schema compilation | **16/16 schemas passed** with Ajv 8.20.0, Draft 2020-12 |
 | Schema instance validation | **24/24 documents passed** |
-| UTF-8 and mojibake gate | 130 text files passed |
+| UTF-8 and mojibake gate | 132 text files passed |
 | JSON parsing | 55 files passed |
 | Restricted YAML parsing | 1 file passed |
-| Python AST syntax | 19 files passed |
+| Python AST syntax | 21 files passed |
 | Markdown relative links | 111 links; 0 missing |
 | Repository privacy/release gate | Passed; 0 high-risk findings |
+
+## Component-profile provenance and freshness
+
+The new audit is an independent, deterministic release/CI gate. It requires an
+explicit `--as-of` date and performs no network or EDA access. The current profile
+set contains 6 official datasheet sources and 5 synthetic fixtures; all 11 passed
+on 2026-07-28. Adversarial tests cover missing provenance, invalid dates, future
+retrieval dates, stale sources, invalid age bounds, missing revision basis,
+official sources without HTTPS/location evidence, unclear synthetic origin and
+output determinism.
+
+The audit does not feed findings into `rating` or `engineeringForecastRating`,
+does not change the stable three-value rating enum and does not widen the sole
+public repair family `ADD_LOCAL_BYPASS_CAP`.
 
 ## M2 import matrix
 
@@ -134,6 +151,7 @@ encoding and size, as recorded in `PRIVACY-SCAN.md`.
 $env:PYTHONDONTWRITEBYTECODE = "1"
 python -S -m unittest discover -s tests -p "test_*.py" -v
 python scripts/run-evals.py
+python src/review/component_profile_audit.py --profiles src/review/component-profiles.json --as-of 2026-07-28
 python scripts/release-verify.py --skip-integrity
 python scripts/update-integrity.py
 python scripts/release-verify.py
@@ -142,8 +160,8 @@ python scripts/release-verify.py
 WorkBuddy injects a host `sitecustomize` safe-delete hook that could not recycle
 three test temporary directories on this Windows workspace. The first full run
 therefore completed every assertion but reported three cleanup errors. Because
-the candidate uses only the Python standard library, the complete 55-test suite was
-rerun with `python -S`, which disables external site hooks; all 55 passed and all
+the candidate uses only the Python standard library, the complete suite was
+rerun with `python -S`, which disables external site hooks; all 65 passed and all
 temporary directories were removed. No test assertion or product code was
 changed to obtain that result.
 

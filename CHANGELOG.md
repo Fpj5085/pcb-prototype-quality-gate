@@ -6,9 +6,20 @@ and version labels follow Semantic Versioning conventions.
 
 ## [Unreleased]
 
+### Added
+
+- deterministic, network-free component-profile provenance and freshness audit with an explicit reproducible as-of date;
+- fail-closed checks for missing provenance, invalid or future dates, stale sources, official HTTPS links and declared synthetic origin;
+- profile metadata and schema constraints for source type, document revision, retrieval date and review interval.
+
+### Compatibility
+
+- the audit is an independent release/CI gate and does not change the public three-value Prototype rating enum;
+- no EDA mutation capability or repair family was added.
+
 ## [0.1.1-alpha] - 2026-07-28
 
-Status: local candidate only; no remote tag or Release is created by this repository update.
+Status: published as a GitHub prerelease; the remote main branch and tag point to the verified release commit.
 
 ### Added
 

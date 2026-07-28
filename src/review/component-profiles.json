@@ -21,7 +21,13 @@
         "url": "https://www.advanced-monolithic.com/pdf/ds1117.pdf",
         "pageOrTable": "pages 1, 3 and package section",
         "confidence": "high",
-        "redistribution": "link-only; datasheet PDF not bundled"
+        "redistribution": "link-only; datasheet PDF not bundled",
+        "sourceType": "official_datasheet",
+        "documentRevision": "not stated",
+        "revisionBasis": "No stable revision label is encoded in the linked filename; retrieval date is locked for review.",
+        "provenanceStatement": "Numeric profile facts were transcribed from the linked manufacturer datasheet sections.",
+        "retrievedAt": "2026-07-28",
+        "maxAgeDays": 365
       }
     },
     "regulator.ams1117_3v3_generic": {
@@ -44,7 +50,13 @@
         "url": "https://www.advanced-monolithic.com/pdf/ds1117.pdf",
         "pageOrTable": "pages 1, 3 and package section",
         "confidence": "high",
-        "redistribution": "link-only; datasheet PDF not bundled"
+        "redistribution": "link-only; datasheet PDF not bundled",
+        "sourceType": "official_datasheet",
+        "documentRevision": "not stated",
+        "revisionBasis": "No stable revision label is encoded in the linked filename; retrieval date is locked for review.",
+        "provenanceStatement": "Numeric profile facts were transcribed from the linked manufacturer datasheet sections.",
+        "retrievedAt": "2026-07-28",
+        "maxAgeDays": 365
       }
     },
     "diode.ss34": {
@@ -59,7 +71,13 @@
         "url": "https://www.vishay.com/docs/88751/ss32.pdf",
         "pageOrTable": "electrical characteristics and forward-voltage curve",
         "confidence": "medium",
-        "redistribution": "link-only; datasheet PDF not bundled"
+        "redistribution": "link-only; datasheet PDF not bundled",
+        "sourceType": "official_datasheet",
+        "documentRevision": "not stated",
+        "revisionBasis": "No stable revision label is encoded in the linked filename; retrieval date is locked for review.",
+        "provenanceStatement": "Numeric profile facts were transcribed from the linked manufacturer datasheet sections.",
+        "retrievedAt": "2026-07-28",
+        "maxAgeDays": 365
       }
     },
     "fuse.mf_msmf050": {
@@ -75,7 +93,13 @@
         "url": "https://www.bourns.com/docs/product-datasheets/mfmsmf.pdf",
         "pageOrTable": "page 1, MF-MSMF050 row",
         "confidence": "high",
-        "redistribution": "link-only; datasheet PDF not bundled"
+        "redistribution": "link-only; datasheet PDF not bundled",
+        "sourceType": "official_datasheet",
+        "documentRevision": "not stated",
+        "revisionBasis": "No stable revision label is encoded in the linked filename; retrieval date is locked for review.",
+        "provenanceStatement": "Numeric profile facts were transcribed from the linked manufacturer datasheet sections.",
+        "retrievedAt": "2026-07-28",
+        "maxAgeDays": 365
       }
     },
     "hbridge.l293d": {
@@ -94,7 +118,13 @@
         "url": "https://www.ti.com/lit/ds/symlink/l293.pdf",
         "pageOrTable": "pages 4-5, absolute maximum, thermal and output voltage tables",
         "confidence": "high",
-        "redistribution": "link-only; datasheet PDF not bundled"
+        "redistribution": "link-only; datasheet PDF not bundled",
+        "sourceType": "official_datasheet",
+        "documentRevision": "not stated",
+        "revisionBasis": "No stable revision label is encoded in the linked filename; retrieval date is locked for review.",
+        "provenanceStatement": "Numeric profile facts were transcribed from the linked manufacturer datasheet sections.",
+        "retrievedAt": "2026-07-28",
+        "maxAgeDays": 365
       }
     },
     "mcu.stm32f030f4p6": {
@@ -110,7 +140,13 @@
         "url": "https://www.st.com/resource/en/datasheet/stm32f030f4.pdf",
         "pageOrTable": "pinout and absolute maximum tables",
         "confidence": "high",
-        "redistribution": "link-only; datasheet PDF not bundled"
+        "redistribution": "link-only; datasheet PDF not bundled",
+        "sourceType": "official_datasheet",
+        "documentRevision": "not stated",
+        "revisionBasis": "No stable revision label is encoded in the linked filename; retrieval date is locked for review.",
+        "provenanceStatement": "Numeric profile facts were transcribed from the linked manufacturer datasheet sections.",
+        "retrievedAt": "2026-07-28",
+        "maxAgeDays": 365
       }
     },
     "safe.regulator_5v": {
@@ -129,7 +165,12 @@
         "url": null,
         "pageOrTable": "table 1",
         "confidence": "high",
-        "redistribution": "original synthetic test data"
+        "redistribution": "original synthetic test data",
+        "sourceType": "synthetic_fixture",
+        "documentRevision": "fixture-1",
+        "provenanceStatement": "Values are original synthetic test data maintained in this repository.",
+        "retrievedAt": "2026-07-28",
+        "maxAgeDays": 3650
       }
     },
     "safe.diode": {
@@ -144,7 +185,12 @@
         "url": null,
         "pageOrTable": "table 2",
         "confidence": "high",
-        "redistribution": "original synthetic test data"
+        "redistribution": "original synthetic test data",
+        "sourceType": "synthetic_fixture",
+        "documentRevision": "fixture-1",
+        "provenanceStatement": "Values are original synthetic test data maintained in this repository.",
+        "retrievedAt": "2026-07-28",
+        "maxAgeDays": 3650
       }
     },
     "safe.fuse": {
@@ -160,7 +206,12 @@
         "url": null,
         "pageOrTable": "table 1",
         "confidence": "high",
-        "redistribution": "original synthetic test data"
+        "redistribution": "original synthetic test data",
+        "sourceType": "synthetic_fixture",
+        "documentRevision": "fixture-1",
+        "provenanceStatement": "Values are original synthetic test data maintained in this repository.",
+        "retrievedAt": "2026-07-28",
+        "maxAgeDays": 3650
       }
     },
     "safe.hbridge": {
@@ -178,7 +229,12 @@
         "url": null,
         "pageOrTable": "tables 3-5",
         "confidence": "high",
-        "redistribution": "original synthetic test data"
+        "redistribution": "original synthetic test data",
+        "sourceType": "synthetic_fixture",
+        "documentRevision": "fixture-1",
+        "provenanceStatement": "Values are original synthetic test data maintained in this repository.",
+        "retrievedAt": "2026-07-28",
+        "maxAgeDays": 3650
       }
     },
     "safe.mcu": {
@@ -194,7 +250,12 @@
         "url": null,
         "pageOrTable": "pinout",
         "confidence": "high",
-        "redistribution": "original synthetic test data"
+        "redistribution": "original synthetic test data",
+        "sourceType": "synthetic_fixture",
+        "documentRevision": "fixture-1",
+        "provenanceStatement": "Values are original synthetic test data maintained in this repository.",
+        "retrievedAt": "2026-07-28",
+        "maxAgeDays": 3650
       }
     }
   }

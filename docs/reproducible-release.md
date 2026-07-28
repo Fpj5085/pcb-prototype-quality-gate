@@ -10,11 +10,16 @@ publish or upload anything.
 $env:PYTHONDONTWRITEBYTECODE = "1"
 python -m unittest discover -s tests -p "test_*.py" -v
 python scripts/run-evals.py
+python src/review/component_profile_audit.py `
+  --profiles src/review/component-profiles.json `
+  --as-of 2026-07-28
 python scripts/release-verify.py --skip-integrity
 ```
 
-The last command checks UTF-8, JSON, the package's restricted YAML subset,
-Python syntax, Markdown links, plugin/skill structure, privacy patterns,
+The component-profile command is a deterministic, network-free provenance and
+freshness gate. It fails closed for missing, invalid, future-dated or stale
+metadata. The last command checks UTF-8, JSON, the package's restricted YAML
+subset, Python syntax, Markdown links, plugin/skill structure, privacy patterns,
 forbidden file classes, symbolic links and the 1 MiB size limit.
 
 ## 2. Integrity files

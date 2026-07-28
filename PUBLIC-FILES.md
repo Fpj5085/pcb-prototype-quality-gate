@@ -2,7 +2,7 @@
 
 This is the complete intended file set for the local v0.1.1-alpha Git repository and release archive. All paths are repository-relative. Local Git metadata and the external ZIP/checksum sidecar are not part of the archive.
 
-**Total intended repository files: 130.**
+**Total intended repository files: 132.**
 
 ## Complete inventory
 
@@ -111,6 +111,7 @@ This is the complete intended file set for the local v0.1.1-alpha Git repository
 - `src/repair/__init__.py`
 - `src/repair/local_bypass_plan.py`
 - `src/review/component-profiles.json`
+- `src/review/component_profile_audit.py`
 - `src/review/prototype_review.py`
 - `tests/__init__.py`
 - `tests/m2_gate/__init__.py`
@@ -134,5 +135,6 @@ This is the complete intended file set for the local v0.1.1-alpha Git repository
 - `tests/review/__init__.py`
 - `tests/review/fixtures/car-adversarial-input.json`
 - `tests/review/fixtures/synthetic-safe-input.json`
+- `tests/review/test_component_profile_audit.py`
 - `tests/review/test_prototype_review.py`
 - `tests/review/test_release_runtime.py`

@@ -16,15 +16,58 @@
           "supportedPackages": {"type": "array", "items": {"type": "string"}, "minItems": 1},
           "source": {
             "type": "object",
-            "required": ["manufacturer", "title", "confidence", "redistribution"],
+            "required": [
+              "manufacturer",
+              "title",
+              "confidence",
+              "redistribution",
+              "sourceType",
+              "documentRevision",
+              "provenanceStatement",
+              "retrievedAt"
+            ],
             "properties": {
               "manufacturer": {"type": "string", "minLength": 1},
               "title": {"type": "string", "minLength": 1},
               "url": {"type": ["string", "null"], "format": "uri"},
               "pageOrTable": {"type": ["string", "null"]},
               "confidence": {"enum": ["low", "medium", "high"]},
-              "redistribution": {"type": "string", "minLength": 1}
+              "redistribution": {"type": "string", "minLength": 1},
+              "sourceType": {"enum": ["official_datasheet", "synthetic_fixture"]},
+              "documentRevision": {"type": "string", "minLength": 1},
+              "revisionBasis": {"type": "string", "minLength": 1},
+              "provenanceStatement": {"type": "string", "minLength": 1},
+              "retrievedAt": {"type": "string", "format": "date"},
+              "reviewAfter": {"type": "string", "format": "date"},
+              "maxAgeDays": {"type": "integer", "minimum": 1, "maximum": 3650}
             },
+            "anyOf": [
+              {"required": ["reviewAfter"]},
+              {"required": ["maxAgeDays"]}
+            ],
+            "allOf": [
+              {
+                "if": {"properties": {"sourceType": {"const": "official_datasheet"}}, "required": ["sourceType"]},
+                "then": {
+                  "required": ["url", "pageOrTable"],
+                  "properties": {
+                    "url": {"type": "string", "pattern": "^https://"},
+                    "pageOrTable": {"type": "string", "minLength": 1}
+                  }
+                }
+              },
+              {
+                "if": {"properties": {"sourceType": {"const": "synthetic_fixture"}}, "required": ["sourceType"]},
+                "then": {
+                  "required": ["url"],
+                  "properties": {"url": {"type": "null"}}
+                }
+              },
+              {
+                "if": {"properties": {"documentRevision": {"const": "not stated"}}, "required": ["documentRevision"]},
+                "then": {"required": ["revisionBasis"]}
+              }
+            ],
             "additionalProperties": true
           }
         },

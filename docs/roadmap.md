@@ -17,7 +17,7 @@ The roadmap is evidence-gated. A feature moves from planned to supported only af
 
 The M2 AFTER offline fixture keeps a strict `suitable_after_corrections` rating. Separately, one scoped real M2 transition has passed the existing hash/privacy evidence gate and is represented by a minimal public summary. General automatic schematic/PCB repair remains outside this milestone.
 
-## v0.1.1-alpha local candidate — M3 repetition completed
+## v0.1.1-alpha — published; M3 repetition completed
 
 Exit criteria:
 
@@ -38,7 +38,7 @@ The scoped M2 case and one independent M3 sensor-adapter repetition have now pas
 - expand boundary tests for confidence, missing evidence and conservative assumptions;
 - publish an adapter contract for read-only collection from multiple EDA environments;
 - validate additional addition-only repair families one at a time;
-- improve component-profile provenance and freshness checks;
+- [completed after v0.1.1] add deterministic offline component-profile provenance and freshness checks with an explicit as-of date;
 - add reproducible report localization without changing machine enums.
 
 ## Longer-term research

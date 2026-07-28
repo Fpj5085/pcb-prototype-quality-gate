@@ -4,8 +4,8 @@
   "candidateStatus": "local-review-candidate-not-published",
   "algorithm": "SHA-256",
   "reproducible": true,
-  "fileCount": 128,
-  "repositoryFileCountIncludingIntegrityFiles": 130,
+  "fileCount": 130,
+  "repositoryFileCountIncludingIntegrityFiles": 132,
   "selfHashExclusions": [
     "FILE-MANIFEST.json",
     "SHA256SUMS.txt"
@@ -28,8 +28,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 3258,
-      "sha256": "ba93bbb2086f7286855bf99c8dd4dd2dc832c5eb26cd16451b1ca7c5f81cd911"
+      "bytes": 3849,
+      "sha256": "4e0256a82ff3a37864dd348ff850481466c4e245f667429da93960dc230daadb"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -68,18 +68,18 @@
     },
     {
       "path": "PUBLIC-FILES.md",
-      "bytes": 5538,
-      "sha256": "168174deafd80a84eb101f9b242353ef8d08f2998be3e0ff20778bfb42bc5edf"
+      "bytes": 5629,
+      "sha256": "f1c7f111bd6ee7663799d43516fbd3fda026497667932fc660f2d36647151482"
     },
     {
       "path": "README.md",
-      "bytes": 13195,
-      "sha256": "db2aee79e249bab8c38531a1005e5d487e9bb6eda61b865f726589e312b4671a"
+      "bytes": 13527,
+      "sha256": "5cf6053249334d30a94aa96b9c7ae5d7e7f319ce17d5aea6bb41b04cd4872781"
     },
     {
       "path": "README.zh-CN.md",
-      "bytes": 10890,
-      "sha256": "c8b9f5bb1b064b6c85a8cbb8fa42ba7e1a9c08098b3d69745ecdcc26e6513cdd"
+      "bytes": 11178,
+      "sha256": "2924b57a1ce1e7577528884239679190c3a11dbe7d27b314412382ecfed287b6"
     },
     {
       "path": "RELEASE-CHECKLIST.md",
@@ -93,8 +93,8 @@
     },
     {
       "path": "TEST-REPORT.md",
-      "bytes": 7000,
-      "sha256": "1cca2dbdcfe15c9375ceb2751f12be0698956ef4c8eca9e71eff9b463dbadc73"
+      "bytes": 8124,
+      "sha256": "81b063da9262af15d61d3192c73c967b410f2a5bec421e516fc297bac8eac533"
     },
     {
       "path": "THIRD_PARTY.md",
@@ -118,8 +118,8 @@
     },
     {
       "path": "docs/evidence-schema.md",
-      "bytes": 7441,
-      "sha256": "5d9e6259e2c92831fa135fb3cdbb36f70fc4f89ec342a09d0a7c7c09f72b47e3"
+      "bytes": 7909,
+      "sha256": "00e4a5bc4ad69846576b91e98b1961a810795fd25c31f3ffcd9dd113695460c6"
     },
     {
       "path": "docs/limitations.md",
@@ -138,8 +138,8 @@
     },
     {
       "path": "docs/reproducible-release.md",
-      "bytes": 2059,
-      "sha256": "fb4a1df8bebccf851b072ed54ea6acac46fb19b4381e713451f83c90270d4bcc"
+      "bytes": 2341,
+      "sha256": "af9e159d0efac0d97bd86d4221007ecdddc95ab9345415590da77285fd0af2b5"
     },
     {
       "path": "docs/resume.md",
@@ -153,8 +153,8 @@
     },
     {
       "path": "docs/roadmap.md",
-      "bytes": 3036,
-      "sha256": "639d5aa595048c8d15ff0f87233a3d014b99c50bee7d35e8ce4a1224f985e3fd"
+      "bytes": 3102,
+      "sha256": "6f74205ef783c5da5b0df4d8894d89c9495ccd6d9046644f4e372aae98a2bda7"
     },
     {
       "path": "docs/supported-repairs.md",
@@ -333,8 +333,8 @@
     },
     {
       "path": "release-audit/FILE-PROVENANCE.md",
-      "bytes": 25563,
-      "sha256": "0315d022e11ec4058585317bd30f24fdc10cfba7b54ee48d7ab6f42a557377c2"
+      "bytes": 26038,
+      "sha256": "2b6cee49cb6719026f2cea3268210467a3e3e37641539e57a83ee7edf6194bf8"
     },
     {
       "path": "release-audit/M2-INTEGRATION-STATUS.md",
@@ -388,8 +388,8 @@
     },
     {
       "path": "schemas/component-profiles.schema.json",
-      "bytes": 1355,
-      "sha256": "d93eb12b52d044210e51f754e2bce1e505bb2a193bb489177bc711f905404fb4"
+      "bytes": 3160,
+      "sha256": "dd7543b05cf12e94a2138052402de730cba7dd19dc06d54c7bc814aa61f9839f"
     },
     {
       "path": "schemas/firmware-pin-manifest.schema.json",
@@ -523,8 +523,13 @@
     },
     {
       "path": "src/review/component-profiles.json",
-      "bytes": 6204,
-      "sha256": "25febe6ec5ddaf9580032792134e200abc2638f5a4724ff03329c0c5539e3c11"
+      "bytes": 9856,
+      "sha256": "bbdd6ae73adcf4ead6ca85380e51c3e05520482a38094db77c51892da8776bdb"
+    },
+    {
+      "path": "src/review/component_profile_audit.py",
+      "bytes": 11837,
+      "sha256": "be7240b0b69741f2487444fe3b003842cca0964b40ea41e5941271008e154845"
     },
     {
       "path": "src/review/prototype_review.py",
@@ -640,6 +645,11 @@
       "path": "tests/review/fixtures/synthetic-safe-input.json",
       "bytes": 4235,
       "sha256": "73b20a25d1ed35e44a9728ebfae3a7219c820edd54fef8105690957773ff65dc"
+    },
+    {
+      "path": "tests/review/test_component_profile_audit.py",
+      "bytes": 6978,
+      "sha256": "bd2fc6fbdb1f6c821e8f7a8fe14f3f73be2a4dd4f71bb51fb2a24316499cc48e"
     },
     {
       "path": "tests/review/test_prototype_review.py",
