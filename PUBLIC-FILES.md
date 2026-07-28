@@ -2,18 +2,21 @@
 
 This is the complete intended file set for the local v0.1.0-alpha Git repository and release archive. All paths are repository-relative. Local Git metadata and the external ZIP/checksum sidecar are not part of the archive.
 
-**Total intended repository files: 122.**
+**Total intended repository files: 128.**
 
 ## Core review and command entry
 
 - `scripts/prototype-review.ps1`
 - `scripts/run-evals.py`
 - `scripts/import_m2_evidence.py`
+- `scripts/plan-local-bypass.py`
 - `scripts/release-verify.py`
 - `scripts/update-integrity.py`
 - `scripts/build-release.py`
 - `src/review/component-profiles.json`
 - `src/review/prototype_review.py`
+- `src/repair/__init__.py`
+- `src/repair/local_bypass_plan.py`
 
 ## Schemas
 
@@ -29,6 +32,7 @@ This is the complete intended file set for the local v0.1.0-alpha Git repository
 - `schemas/m2-live-evidence-bundle.schema.json`
 - `schemas/m2-live-evidence-document.schema.json`
 - `schemas/m2-public-evidence-summary.schema.json`
+- `schemas/local-bypass-repair-plan.schema.json`
 - `schemas/pin-consistency-report.schema.json`
 - `schemas/project-snapshot.schema.json`
 - `schemas/prototype-review-input.schema.json`
@@ -96,6 +100,8 @@ This is the complete intended file set for the local v0.1.0-alpha Git repository
 - `tests/m2_gate/fixtures/complete/evidence/after/prototype-review.json`
 - `tests/release/__init__.py`
 - `tests/release/test_release_tools.py`
+- `tests/repair/__init__.py`
+- `tests/repair/test_local_bypass_plan.py`
 
 ## Documentation and examples
 

@@ -93,6 +93,7 @@ This inventory classifies every file in the public candidate as observed during 
 | `schemas/m2-live-evidence-bundle.schema.json` | O-public-schema | Project-authored evidence-gate schema created for this candidate | Apache-2.0 after ownership attestation; JSON Schema vocabulary is reference-only |
 | `schemas/m2-live-evidence-document.schema.json` | O-public-schema | Project-authored evidence-gate schema created for this candidate | Apache-2.0 after ownership attestation; JSON Schema vocabulary is reference-only |
 | `schemas/m2-public-evidence-summary.schema.json` | O-public-schema | Project-authored minimal-public-summary schema created for this candidate | Apache-2.0 after ownership attestation; contains no vendor API schema |
+| `schemas/local-bypass-repair-plan.schema.json` | O-public-schema | Project-authored fail-closed repair-plan schema | Apache-2.0 after ownership attestation; contains no live project identity or vendor API schema |
 | `schemas/pin-consistency-report.schema.json` | C-private-copied | Project schema copied from the private working tree | No upstream marker found; explicit Apache-2.0 relicensing attestation required |
 | `schemas/project-snapshot.schema.json` | C-private-copied | Project schema copied from the private working tree | No upstream marker found; explicit Apache-2.0 relicensing attestation required |
 | `schemas/prototype-review-input.schema.json` | O-public-schema | Project-authored runtime schema created for the release candidate | Apache-2.0 after ownership attestation; JSON Schema vocabulary is reference-only |
@@ -100,6 +101,7 @@ This inventory classifies every file in the public candidate as observed during 
 | `schemas/README.md` | O-public-doc | Project-authored public explanation of project schemas | JSON Schema name/meta-schema URI are reference-only |
 | `scripts/build-release.py` | O-public-code | Project-authored deterministic local archive builder created for this candidate | Apache-2.0 after ownership attestation; Git and Python are user-provided |
 | `scripts/import_m2_evidence.py` | O-public-code | Project-authored deterministic M2 sanitized-evidence import gate | Apache-2.0 after ownership attestation; copies only a minimal summary |
+| `scripts/plan-local-bypass.py` | O-public-code | Thin project-authored CLI for the deterministic local-bypass planner | Apache-2.0 after ownership attestation; standard library only and no live adapter |
 | `scripts/prototype-review.ps1` | O-public-code | Thin project-authored release wrapper for repository-relative offline use | Apache-2.0 after ownership attestation; PowerShell is user-provided |
 | `scripts/release-verify.py` | O-public-code | Project-authored repository/privacy/integrity verifier created for this candidate | Apache-2.0 after ownership attestation; standard library only |
 | `scripts/run-evals.py` | O-public-code | Project-authored deterministic eval runner created for the release candidate | Apache-2.0 after ownership attestation; Python is user-provided |
@@ -114,6 +116,8 @@ This inventory classifies every file in the public candidate as observed during 
 | `skills/jlceda-hardware-design/SKILL.md` | R-public-rewrite | Public rewrite of project governance skill or host metadata | Private wrappers/runtime bindings excluded; host names are interoperability only |
 | `src/review/component-profiles.json` | F-factual-profile | Project-authored profile structure and thresholds with manufacturer factual citations | Official links, names, MPNs and numeric facts only; no PDF/table/figure |
 | `src/review/prototype_review.py` | A-private-adapted | Project review engine adapted and portabilized from a private working tree | Apache-2.0 only after authorship/relicensing attestation; standard library only |
+| `src/repair/__init__.py` | O-public-code | Project-authored repair package marker | Apache-2.0 after ownership attestation |
+| `src/repair/local_bypass_plan.py` | O-public-code | Project-authored fail-closed immutable repair planner | Apache-2.0 after ownership attestation; standard library only and no private integration binding |
 | `TEST-REPORT.md` | G-audit | Locally generated release-validation summary | Regenerate or update after final tests/scans; no external report copied |
 | `tests/__init__.py` | A-private-adapted | Project tests adapted for portable repository-relative execution | Apache-2.0 only after ownership attestation; standard library only |
 | `tests/m2_gate/__init__.py` | O-public-test | Project-authored test-package marker | Apache-2.0 after ownership attestation |
@@ -132,6 +136,8 @@ This inventory classifies every file in the public candidate as observed during 
 | `tests/m2_gate/test_import_m2_evidence.py` | O-public-test | Project-authored evidence-gate tests and synthetic mutation cases | Apache-2.0 after ownership attestation; standard library only |
 | `tests/release/__init__.py` | O-public-test | Project-authored test-package marker | Apache-2.0 after ownership attestation |
 | `tests/release/test_release_tools.py` | O-public-test | Project-authored deterministic release-tooling tests | Apache-2.0 after ownership attestation; examples use reserved synthetic values |
+| `tests/repair/__init__.py` | O-public-test | Project-authored test-package marker | Apache-2.0 after ownership attestation |
+| `tests/repair/test_local_bypass_plan.py` | O-public-test | Project-authored adversarial tests for the local-bypass plan gate | Apache-2.0 after ownership attestation; synthetic inputs only |
 | `tests/review/__init__.py` | A-private-adapted | Project tests adapted for portable repository-relative execution | Apache-2.0 only after ownership attestation; standard library only |
 | `tests/review/fixtures/car-adversarial-input.json` | D-sanitized-derived | Byte-identical test copy of the sanitized-derived car adversarial input | Privacy removal does not settle ownership; no live IDs/raw project |
 | `tests/review/fixtures/synthetic-safe-input.json` | S-synthetic | Byte-identical test copy of the project-authored synthetic safe input | Original synthetic data; no physical/live claim |

@@ -4,8 +4,8 @@
   "candidateStatus": "local-review-candidate-not-published",
   "algorithm": "SHA-256",
   "reproducible": true,
-  "fileCount": 120,
-  "repositoryFileCountIncludingIntegrityFiles": 122,
+  "fileCount": 126,
+  "repositoryFileCountIncludingIntegrityFiles": 128,
   "selfHashExclusions": [
     "FILE-MANIFEST.json",
     "SHA256SUMS.txt"
@@ -28,8 +28,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 2360,
-      "sha256": "45e2a848b7d46fbbf51f178b9294b817090a7a6f67ddc941203299f6e7a91d34"
+      "bytes": 2592,
+      "sha256": "806413514b58d11c28f00b929524b0158baf918882d4c7e23bc79eccfbd93023"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -68,18 +68,18 @@
     },
     {
       "path": "PUBLIC-FILES.md",
-      "bytes": 5418,
-      "sha256": "ed0243d82f9a11755536c073f8ceebf6f542dc161c37892ea56344359a3106eb"
+      "bytes": 5635,
+      "sha256": "17bc16e61c5c1a1156a103d01ce33a2cabc24d46d3cd377c1a43abab023753bd"
     },
     {
       "path": "README.md",
-      "bytes": 11826,
-      "sha256": "033b235d757ad807e218651859ca76bef32e4d0c601a0e1c2f27aa7fc51ebdf7"
+      "bytes": 12556,
+      "sha256": "58544870a1806c2f5e76ef6547a348306e8a6db42e1df4bbf53135e5aca63c16"
     },
     {
       "path": "README.zh-CN.md",
-      "bytes": 9737,
-      "sha256": "fcfbe92778e62dd07f147161b342008780c4e820374673e01540a4fc124524eb"
+      "bytes": 10367,
+      "sha256": "bcd18e8bdd59298aa3cb25c0fd932ee637d2b1f4c3ae6204704661cb5d1d2712"
     },
     {
       "path": "RELEASE-CHECKLIST.md",
@@ -158,8 +158,8 @@
     },
     {
       "path": "docs/supported-repairs.md",
-      "bytes": 2174,
-      "sha256": "bf63c4c6224032cf0e2419e20b0aef0d194f6a49ab25d4646f19cea50dcae473"
+      "bytes": 2727,
+      "sha256": "40a09901891d461b92c7671d8e3665364ed0f99c52bcf029f29d76ed69d55a27"
     },
     {
       "path": "evals/car-controller-adversarial/README.md",
@@ -323,8 +323,8 @@
     },
     {
       "path": "release-audit/FILE-PROVENANCE.md",
-      "bytes": 26559,
-      "sha256": "962661c9439925ac65a7ffbffabb13e959c112878ceb3c79a75d871f2e634847"
+      "bytes": 27637,
+      "sha256": "036dfd13d7f927b4ce464d5a0b0cde2a6728a392dd896d179aad5e97a6751d53"
     },
     {
       "path": "release-audit/M2-INTEGRATION-STATUS.md",
@@ -353,8 +353,8 @@
     },
     {
       "path": "schemas/README.md",
-      "bytes": 1246,
-      "sha256": "a61f30335a5425f1dfab881e5bc849749b8ae09def9f52d99de751131a00ab88"
+      "bytes": 1463,
+      "sha256": "d947ea53f78b133d555ff7ee2f25a8124a561d8a2e75fa9723c3a8ac760c1df0"
     },
     {
       "path": "schemas/change-preview.schema.json",
@@ -390,6 +390,11 @@
       "path": "schemas/hardware-contract.schema.json",
       "bytes": 3005,
       "sha256": "ba81c10d6c3e6f535689f8d67af13a264c5028968776cea61ffae4180a492f88"
+    },
+    {
+      "path": "schemas/local-bypass-repair-plan.schema.json",
+      "bytes": 2673,
+      "sha256": "29edb7140a89f0b8a45caf43657c2ccfe3435c3fa41d225b75d70eccaf39cc3e"
     },
     {
       "path": "schemas/m2-evidence-sha-manifest.schema.json",
@@ -442,6 +447,11 @@
       "sha256": "90b0d9cb973e1244bafc4a3c69608be1e3bc5785b99228468d031e568fd2f792"
     },
     {
+      "path": "scripts/plan-local-bypass.py",
+      "bytes": 229,
+      "sha256": "5edfc782ad66d13bc789b986511e8af6366ba3fd6471d7cb8259c06d43ad5e95"
+    },
+    {
       "path": "scripts/prototype-review.ps1",
       "bytes": 500,
       "sha256": "582d6626e74d67242db6dd3be22889ca2e099594248318b6cae51901de30c414"
@@ -490,6 +500,16 @@
       "path": "skills/jlceda-hardware-design/references/work-modes.md",
       "bytes": 873,
       "sha256": "22ebf5159143e54590f73962d68c40a741a3bf4819254db36c4327b092b17302"
+    },
+    {
+      "path": "src/repair/__init__.py",
+      "bytes": 49,
+      "sha256": "98d4fb57e8da39fb3b91f60550069c662deaae7241dd30612febc327a3b6b19e"
+    },
+    {
+      "path": "src/repair/local_bypass_plan.py",
+      "bytes": 8781,
+      "sha256": "a26a710820cf9f248af02080fbe7ca197cd9f52e21d7416f11400592a64cd3a8"
     },
     {
       "path": "src/review/component-profiles.json",
@@ -585,6 +605,16 @@
       "path": "tests/release/test_release_tools.py",
       "bytes": 4037,
       "sha256": "1b313b9e57459fe1b09d7701901cef7fe4d594478c8c184df82f353882ced2f1"
+    },
+    {
+      "path": "tests/repair/__init__.py",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "tests/repair/test_local_bypass_plan.py",
+      "bytes": 4841,
+      "sha256": "3acaa4e8995364d9d8ddb345a88ee3d8ce4a0615e3fbe13410c53585cc14a677"
     },
     {
       "path": "tests/review/__init__.py",

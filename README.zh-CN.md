@@ -138,6 +138,18 @@ python scripts/import_m2_evidence.py `
   --output-dir <commit-ready-public-output>
 ```
 
+生成当前唯一公开白名单修正计划（离线运行，不需要项目 UUID）：
+
+```powershell
+python scripts/plan-local-bypass.py `
+  --review out/before/machine-review.json `
+  --evidence normalized-before.json `
+  --goal "在输出接口附近加入100nF本地旁路电容并重新复验" `
+  --output out/local-bypass-repair-plan.json
+```
+
+计划器只接受唯一、高置信度的 `DECOUPLING_DISTANCE:*` blocker；六项当前状态门必须明确通过，目标网络必须唯一，且现场不得已有合格旁路。输出锁定器件与复验门，私有 target 绑定留给独立审计的现场适配层。
+
 缺证据时门状态保持 `pending`，哈希或隐私问题进入 `rejected`；完整
 BEFORE/AFTER 闭环通过后只产生一个最小、幂等的公开摘要。当前公开摘要
 已通过该门；仓库内的正向单元测试 fixture 仍只是纯合成分支覆盖。

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.jlceda.invalid/schemas/local-bypass-repair-plan-1.0.json",
+  "title": "Immutable local bypass capacitor repair plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "status", "repairType", "sourceFinding", "ordinaryLanguageGoal", "target", "componentLock", "placementConstraint", "connectionIntent", "adapterBinding", "executionPolicy", "revalidationGates", "planId"],
+  "properties": {
+    "schema": {"const": "pcb-prototype-quality-gate-repair-plan/1.0"},
+    "status": {"const": "immutable-preview"},
+    "repairType": {"const": "ADD_LOCAL_BYPASS_CAP"},
+    "sourceFinding": {"type": "string", "pattern": "^DECOUPLING_DISTANCE:[A-Za-z][A-Za-z0-9_-]{0,31}:[^:]{1,64}$"},
+    "ordinaryLanguageGoal": {"type": "string", "minLength": 1, "maxLength": 1000},
+    "target": {"type": "object", "additionalProperties": false, "required": ["componentRef", "supplyNet", "returnNet"], "properties": {"componentRef": {"type": "string"}, "supplyNet": {"type": "string"}, "returnNet": {"type": "string"}}},
+    "componentLock": {"type": "object", "additionalProperties": false, "required": ["manufacturer", "mpn", "value", "capacitanceUf", "dielectric", "voltageRating", "package", "supplier", "supplierPartNumber", "pinToPad"], "properties": {"manufacturer": {"const": "Samsung Electro-Mechanics"}, "mpn": {"const": "CL21B104KBCNNNC"}, "value": {"const": "100nF"}, "capacitanceUf": {"const": 0.1}, "dielectric": {"const": "X7R"}, "voltageRating": {"const": "50V"}, "package": {"const": "C0805"}, "supplier": {"const": "LCSC"}, "supplierPartNumber": {"const": "C1711"}, "pinToPad": {"const": {"1": "1", "2": "2"}}}},
+    "placementConstraint": {"type": "object", "additionalProperties": false, "required": ["referenceComponent", "maxDistanceMm", "requireShortSupplyReturnLoop"], "properties": {"referenceComponent": {"type": "string"}, "maxDistanceMm": {"type": "number", "exclusiveMinimum": 0, "maximum": 20}, "requireShortSupplyReturnLoop": {"const": true}}},
+    "connectionIntent": {"type": "object", "additionalProperties": false, "required": ["1", "2"], "properties": {"1": {"type": "string"}, "2": {"type": "string"}}},
+    "adapterBinding": {"const": {"requiredAtExecution": true, "publicPlanContainsPrivateIds": false}},
+    "executionPolicy": {"const": {"additionOnly": true, "singleSchematicMutation": true, "singlePcbMutation": true, "receiptOwnedRollbackOnly": true}},
+    "revalidationGates": {"type": "array", "minItems": 7, "uniqueItems": true, "items": {"type": "string"}},
+    "planId": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}
+

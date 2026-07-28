@@ -10,6 +10,12 @@ Prototype review files use:
 - `prototype-review-output.schema.json`;
 - `component-profiles.schema.json`.
 
+The only current public repair-plan contract is:
+
+- `local-bypass-repair-plan.schema.json` for fail-closed, immutable
+  `ADD_LOCAL_BYPASS_CAP` planning. It contains no live project identity or
+  executable approval.
+
 The future M2 live-evidence import gate uses:
 
 - `m2-evidence-sha-manifest.schema.json`;

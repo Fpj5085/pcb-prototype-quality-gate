@@ -6,6 +6,11 @@ and version labels follow Semantic Versioning conventions.
 
 ## [Unreleased]
 
+### Added
+
+- deterministic, fail-closed `ADD_LOCAL_BYPASS_CAP` repair-plan CLI and schema;
+- tests for missing evidence, failed gates, multiple/unknown findings, uncertain networks, existing bypass rejection and idempotent output.
+
 ### Planned
 
 - record the M2 AFTER case from a real bounded save/close/reload run;

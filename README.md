@@ -154,6 +154,21 @@ fixture remains synthetic branch coverage and carries no live claim.
 
 The input is normalized engineering evidence, not a raw EDA project. A live adapter must be independently audited before it is used for mutation.
 
+Build the only public allow-listed repair plan (offline and without private IDs):
+
+```powershell
+python scripts/plan-local-bypass.py `
+  --review out/before/machine-review.json `
+  --evidence normalized-before.json `
+  --goal "Add a 100 nF local bypass near the output and re-verify" `
+  --output out/local-bypass-repair-plan.json
+```
+
+The planner accepts only one high-confidence `DECOUPLING_DISTANCE:*` blocker
+with complete passing current-state gates, unambiguous target networks and no
+already-qualified bypass. It locks the verified capacitor and revalidation
+gates while leaving private target binding to an audited environment adapter.
+
 For local plugin setup and removal, see [INSTALL.md](INSTALL.md). The plugin ships no MCP server, workstation wrapper or third-party EDA extension; live EDA is an environment integration.
 
 ## Evaluation fixtures
@@ -173,6 +188,7 @@ For local plugin setup and removal, see [INSTALL.md](INSTALL.md). The plugin shi
 - `release-audit/` — publication inventory and scan results.
 - `examples/` — ordinary-Chinese requests and expected output boundaries.
 - `scripts/import_m2_evidence.py` — offline, explicit and privacy-rejecting M2 evidence gate.
+- `scripts/plan-local-bypass.py` — deterministic `ADD_LOCAL_BYPASS_CAP` plan gate.
 - `scripts/release-verify.py`, `update-integrity.py`, `build-release.py` — reproducible local verification and packaging.
 
 ## Security and privacy
