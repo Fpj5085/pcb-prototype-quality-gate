@@ -18,10 +18,10 @@ This checklist distinguishes completed local release preparation from human deci
 - [x] Apache-2.0 text, license decision, NOTICE and third-party boundary are present.
 - [x] Third-party Copilot source/binary/extension, data-sheet PDFs and supplier catalogs are excluded.
 - [x] Original review code, schemas, skill and docs are separated from reference-only third parties.
-- [ ] **Maintainer:** record the final copyright-holder name.
-- [ ] **Maintainer:** attest authorship or Apache-2.0 relicensing rights for the review engine, schemas, tests, skill, docs and synthetic fixtures.
-- [ ] **Maintainer:** confirm no employer, client, contractor or prior repository has a conflicting claim.
-- [ ] **Maintainer:** identify AI-assisted material, confirm applicable tool terms permit publication, and approve the final human-reviewed expression.
+- [x] **Maintainer:** record the final copyright-holder name. *(2026-07-28: `Copyright 2026 Fpj5085` in LICENSE and NOTICE.)*
+- [x] **Maintainer:** attest authorship or Apache-2.0 relicensing rights for the review engine, schemas, tests, skill, docs and synthetic fixtures. *(2026-07-28: attested in LICENSE-DECISION.md.)*
+- [x] **Maintainer:** confirm no employer, client, contractor or prior repository has a conflicting claim. *(2026-07-28: confirmed, entirely self-developed.)*
+- [x] **Maintainer:** identify AI-assisted material, confirm applicable tool terms permit publication, and approve the final human-reviewed expression. *(2026-07-28: tool terms permit publication and commercial use; maintainer reviewed and approved the released expression, and elected not to add a repository-level AI-assistance notice.)*
 
 ## Functional validation
 

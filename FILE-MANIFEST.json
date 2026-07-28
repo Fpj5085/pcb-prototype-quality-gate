@@ -48,18 +48,18 @@
     },
     {
       "path": "LICENSE",
-      "bytes": 11360,
-      "sha256": "aac73b3148f6d1d7111dbca32099f68d26c644c6813ae1e4f05f6579aa2663fe"
+      "bytes": 11340,
+      "sha256": "64923c09ce8f9fb7b1d2b82f46deba8abfbe7b3d490d02e4ade4363707da1073"
     },
     {
       "path": "LICENSE-DECISION.md",
-      "bytes": 6357,
-      "sha256": "10f92b993c68768636767fd649c0dccbd3f13b181ded4fcc93ad524422aac0fc"
+      "bytes": 6985,
+      "sha256": "4ecf010c242a88127976145a75990f10e8de8a83738b7593f1098bbc803ac4fc"
     },
     {
       "path": "NOTICE",
-      "bytes": 1450,
-      "sha256": "65e369da71acefb35af26cbfdf30475957d9376c971971ec42b1a447845691e6"
+      "bytes": 1215,
+      "sha256": "93844e32d4a2bb5020c17fcab3afe3b859932a4ad7523cc1e33725eb1e0b1a65"
     },
     {
       "path": "PRIVACY-SCAN.md",
@@ -83,8 +83,8 @@
     },
     {
       "path": "RELEASE-CHECKLIST.md",
-      "bytes": 5423,
-      "sha256": "15327962a6e897b1715d1ad29c07efffc2e6430c06f261b7e93042c55fc4e52e"
+      "bytes": 5776,
+      "sha256": "fea4e52cb6994995960f170f0df8e6768a8ac070025f060f1e3909e941cb4c82"
     },
     {
       "path": "SECURITY.md",

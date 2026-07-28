@@ -1,11 +1,8 @@
 codex-jlceda-hardware-agent
-Copyright 2026 codex-jlceda-hardware-agent contributors
+Copyright 2026 Fpj5085
 
 This distribution contains project review rules, schemas, documentation, and
-synthetic or sanitized-derived evaluation fixtures proposed for release under
-Apache-2.0. Public distribution remains subject to the ownership gate in
-LICENSE-DECISION.md. The copyright-holder line above is a release-candidate
-placeholder and must be approved before publication.
+synthetic or sanitized-derived evaluation fixtures released under Apache-2.0.
 
 OpenAI and Codex, JLCEDA / 嘉立创EDA / EasyEDA, and EasyEDA Copilot are names or
 marks of their respective rights holders. This is an independent project and

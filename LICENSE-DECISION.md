@@ -16,9 +16,23 @@ release owner should compare it with the official Apache source before a public
 tag. The project `NOTICE` supplies project-level attribution and an independence
 statement; it does not import a third-party NOTICE file.
 
-The `Apache-2.0` value in package metadata expresses this proposed release
-license. It is not evidence that the current contributor label owns every
-staged file. The ownership gate below remains binding.
+The `Apache-2.0` value in package metadata expresses the release license.
+
+## Ownership attestation (resolved 2026-07-28)
+
+The maintainer **Fpj5085** attests, for v0.1.0-alpha:
+
+- authorship of, or the right to relicense under Apache-2.0, the review engine,
+  schemas, component profiles, tests, skill, documentation, release tooling and
+  synthetic or sanitized-derived evaluation fixtures staged in this repository;
+- the work is entirely self-developed and no employer, client, contractor or
+  prior repository holds a conflicting claim to it;
+- the copyright holder of record is `Copyright 2026 Fpj5085`, as stated in
+  `LICENSE` and `NOTICE`;
+- Apache-2.0 is the chosen release license.
+
+The ownership gate is therefore satisfied. The explicit exclusions below remain
+binding: they define what this license does **not** cover.
 
 ## Source and ownership findings
 
