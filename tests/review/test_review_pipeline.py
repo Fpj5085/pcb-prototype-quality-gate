@@ -2,7 +2,7 @@ import hashlib
 import json
 import subprocess
 import sys
-import tempfile
+from tests import ArchivedTemporaryDirectory
 import unittest
 from pathlib import Path
 
@@ -51,7 +51,7 @@ def adapter_envelope(design):
 
 class ReviewPipelineTests(unittest.TestCase):
     def test_pipeline_reviews_without_eda_or_mutation(self):
-        with tempfile.TemporaryDirectory(dir=REPO) as name:
+        with ArchivedTemporaryDirectory() as name:
             output = Path(name) / "run"
             completed = subprocess.run(
                 [sys.executable, str(SCRIPT), "--input", str(FIXTURE), "--profiles", str(PROFILES), "--output", str(output)],
@@ -73,7 +73,7 @@ class ReviewPipelineTests(unittest.TestCase):
 
     def test_pipeline_consumes_validated_read_only_adapter_envelope(self):
         design = json.loads(FIXTURE.read_text(encoding="utf-8"))
-        with tempfile.TemporaryDirectory(dir=REPO) as name:
+        with ArchivedTemporaryDirectory() as name:
             root = Path(name)
             input_path = root / "input.json"
             evidence_path = root / "adapter.json"
@@ -93,7 +93,7 @@ class ReviewPipelineTests(unittest.TestCase):
         design = json.loads(FIXTURE.read_text(encoding="utf-8"))
         envelope = adapter_envelope(design)
         envelope["normalizedDesign"] = {**design, "designName": "tampered"}
-        with tempfile.TemporaryDirectory(dir=REPO) as name:
+        with ArchivedTemporaryDirectory() as name:
             root = Path(name)
             input_path = root / "input.json"
             evidence_path = root / "adapter.json"
@@ -107,7 +107,7 @@ class ReviewPipelineTests(unittest.TestCase):
             self.assertIn("normalizedDesignSha256", completed.stderr)
 
     def test_pipeline_requires_ready_health_when_health_evidence_is_supplied(self):
-        with tempfile.TemporaryDirectory(dir=REPO) as name:
+        with ArchivedTemporaryDirectory() as name:
             root = Path(name)
             health_path = root / "health.json"
             health_path.write_text(json.dumps(health_receipt("blocked"), ensure_ascii=False), encoding="utf-8")
@@ -119,7 +119,7 @@ class ReviewPipelineTests(unittest.TestCase):
             self.assertIn("upstream_5xx", completed.stderr)
 
     def test_pipeline_records_ready_health_without_granting_eda_access(self):
-        with tempfile.TemporaryDirectory(dir=REPO) as name:
+        with ArchivedTemporaryDirectory() as name:
             root = Path(name)
             health_path = root / "health.json"
             health_path.write_text(json.dumps(health_receipt(), ensure_ascii=False), encoding="utf-8")
@@ -134,7 +134,7 @@ class ReviewPipelineTests(unittest.TestCase):
             self.assertEqual(run["trustBoundary"]["edaWrites"], 0)
 
     def test_pipeline_rejects_unpaired_repair_arguments(self):
-        with tempfile.TemporaryDirectory(dir=REPO) as name:
+        with ArchivedTemporaryDirectory() as name:
             output = Path(name) / "run"
             completed = subprocess.run(
                 [sys.executable, str(SCRIPT), "--input", str(FIXTURE), "--output", str(output), "--goal", "修正"],

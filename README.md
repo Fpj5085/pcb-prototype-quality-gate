@@ -1,6 +1,6 @@
 # codex-jlceda-hardware-agent
 
-> **v0.1.1-alpha local candidate · NOT FOR MANUFACTURING**
+> **v0.1.2-alpha local candidate · NOT FOR MANUFACTURING**
 
 **An independent prototype-readiness quality gate and bounded repair loop for editable JLCEDA designs.**
 
@@ -61,7 +61,7 @@ risk families exercised by this fixture are enumerated in
 [docs/demo.md](docs/demo.md); see
 [What it does not claim](#what-it-does-not-claim) for the limits of this result.
 
-## What v0.1.1-alpha includes
+## What v0.1.2-alpha includes
 
 - ordinary-language routing into **Draft**, **Prototype**, and **Manufacturing Release** work modes;
 - adapter-neutral handoff from a replaceable Draft generator or an existing editable design into independent current-state review;
@@ -71,7 +71,10 @@ risk families exercised by this fixture are enumerated in
 - save/close/reload and independent readback as mandatory persistence gates;
 - a 5 V / 1 A distribution-board BEFORE/AFTER evaluation pair whose synthetic fixtures remain offline replays, plus a separately gated minimal public summary of the verified live save/reload loop;
 - an independent M3 sensor-adapter repetition: a real five-component BEFORE state produced one local-bypass blocker, one allow-listed `ADD_LOCAL_BYPASS_CAP` plan added a locked 100 nF X7R C0805, and the saved/reloaded six-component AFTER state passed ERC, connectivity, containment, strict DRC and fresh review;
-- an adversarial two-motor controller fixture where EDA gates pass but engineering blockers remain.
+- an adversarial two-motor controller fixture where EDA gates pass but engineering blockers remain;
+- deterministic component-profile provenance/freshness auditing and fail-closed normalized-input safety checks;
+- three additional synthetic BEFORE/AFTER benchmark pairs covering power input, sensor interfaces and low-speed communication;
+- an adapter-neutral offline Pipeline plus strict read-only Adapter Envelope and health contracts that accept no partial evidence and grant no EDA write authority.
 
 ## What it does not claim
 
@@ -134,7 +137,7 @@ three-level Prototype rating:
 ```powershell
 python src/review/component_profile_audit.py `
   --profiles src/review/component-profiles.json `
-  --as-of 2026-07-28
+  --as-of 2026-07-29
 ```
 
 Run tests:

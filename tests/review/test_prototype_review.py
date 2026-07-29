@@ -1,7 +1,7 @@
 import copy
 import json
 import sys
-import tempfile
+from tests import ArchivedTemporaryDirectory
 import unittest
 from pathlib import Path
 
@@ -180,7 +180,7 @@ class PrototypeReviewTests(unittest.TestCase):
         )
 
     def test_raw_normalization_preserves_missing_gate_evidence(self):
-        with tempfile.TemporaryDirectory() as temp_name:
+        with ArchivedTemporaryDirectory() as temp_name:
             temp = Path(temp_name)
             (temp / "schematic.json").write_text("{}", encoding="utf-8")
             (temp / "pcb.json").write_text(

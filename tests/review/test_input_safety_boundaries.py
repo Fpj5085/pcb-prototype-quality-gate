@@ -1,7 +1,7 @@
 import copy
 import json
 import sys
-import tempfile
+from tests import ArchivedTemporaryDirectory
 import unittest
 from pathlib import Path
 
@@ -43,7 +43,7 @@ class InputSafetyBoundaryTests(unittest.TestCase):
 
     def test_json_reader_rejects_nan_and_infinity_tokens(self):
         for token in ("NaN", "Infinity", "-Infinity"):
-            with self.subTest(token=token), tempfile.TemporaryDirectory() as temp_name:
+            with self.subTest(token=token), ArchivedTemporaryDirectory() as temp_name:
                 path = Path(temp_name) / "input.json"
                 path.write_text('{"value": ' + token + "}\n", encoding="utf-8")
                 with self.assertRaisesRegex(InputValidationError, "non-standard JSON numeric constant"):

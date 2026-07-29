@@ -2,7 +2,7 @@ import copy
 import json
 import subprocess
 import sys
-import tempfile
+from tests import ArchivedTemporaryDirectory
 import unittest
 from pathlib import Path
 
@@ -66,7 +66,7 @@ class LocalBypassPlanTests(unittest.TestCase):
             build_plan(review(), case, "修正")
 
     def test_cli_writes_plan_and_rejects_bad_input_without_traceback(self):
-        with tempfile.TemporaryDirectory(dir=REPO) as name:
+        with ArchivedTemporaryDirectory() as name:
             root = Path(name); rp = root / "review.json"; ep = root / "evidence.json"; out = root / "plan.json"
             rp.write_text(json.dumps(review()), encoding="utf-8"); ep.write_text(json.dumps(evidence()), encoding="utf-8")
             ok = subprocess.run([sys.executable, str(REPO / "scripts" / "plan-local-bypass.py"), "--review", str(rp), "--evidence", str(ep), "--goal", "修正J2旁路", "--output", str(out)], text=True, encoding="utf-8", capture_output=True)

@@ -1,6 +1,6 @@
 # Public file list
 
-This is the complete intended file set for the local v0.1.1-alpha Git repository and release archive. All paths are repository-relative. Local Git metadata and the external ZIP/checksum sidecar are not part of the archive.
+This is the complete intended file set for the local v0.1.2-alpha Git repository and release archive. All paths are repository-relative. Local Git metadata and the external ZIP/checksum sidecar are not part of the archive.
 
 **Total intended repository files: 165.**
 

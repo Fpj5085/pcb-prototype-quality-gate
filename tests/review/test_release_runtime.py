@@ -3,7 +3,7 @@ import json
 import re
 import subprocess
 import sys
-import tempfile
+from tests import ArchivedTemporaryDirectory
 import unittest
 from pathlib import Path
 
@@ -34,15 +34,12 @@ class ReleaseRuntimeTests(unittest.TestCase):
     def setUpClass(cls):
         cls.profiles = json.loads((ENGINE_DIR / "component-profiles.json").read_text(encoding="utf-8"))
         cls.safe = json.loads((HERE / "fixtures" / "synthetic-safe-input.json").read_text(encoding="utf-8"))
-        cls.temp_root = REPO / ".test-tmp"
-        cls.temp_root.mkdir(exist_ok=True)
+        cls.temporary = ArchivedTemporaryDirectory(prefix="release-runtime-")
+        cls.temp_root = Path(cls.temporary.name)
 
     @classmethod
     def tearDownClass(cls):
-        try:
-            cls.temp_root.rmdir()
-        except OSError:
-            pass
+        cls.temporary.cleanup()
 
     def test_all_json_schemas_parse(self):
         schema_paths = sorted(SCHEMAS.glob("*.schema.json"))
@@ -201,7 +198,7 @@ class ReleaseRuntimeTests(unittest.TestCase):
         self.assertEqual(sanitize_public_value(design["screenshots"])[0], "screen.png")
         self.assertEqual(sanitize_public_value(design["screenshots"])[1]["path"], "detail.png")
 
-        with tempfile.TemporaryDirectory(dir=self.temp_root) as temp_name:
+        with ArchivedTemporaryDirectory() as temp_name:
             temp = Path(temp_name)
             input_path = temp / "input.json"
             output = temp / "out"
@@ -236,7 +233,7 @@ class ReleaseRuntimeTests(unittest.TestCase):
             self.assertTrue(all(not Path(row["path"]).is_absolute() for row in manifest["files"]))
 
     def test_cli_runs_from_an_unrelated_working_directory_with_default_profiles(self):
-        with tempfile.TemporaryDirectory(dir=self.temp_root) as temp_name:
+        with ArchivedTemporaryDirectory() as temp_name:
             temp = Path(temp_name)
             output = temp / "portable-output"
             completed = subprocess.run(
@@ -264,7 +261,7 @@ class ReleaseRuntimeTests(unittest.TestCase):
     def test_cli_rejects_duplicate_component_refs_without_traceback(self):
         design = copy.deepcopy(self.safe)
         design["components"].append(copy.deepcopy(design["components"][0]))
-        with tempfile.TemporaryDirectory(dir=self.temp_root) as temp_name:
+        with ArchivedTemporaryDirectory() as temp_name:
             temp = Path(temp_name)
             input_path = temp / "invalid.json"
             input_path.write_text(json.dumps(design, ensure_ascii=False), encoding="utf-8")

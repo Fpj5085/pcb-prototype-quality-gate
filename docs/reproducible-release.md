@@ -12,7 +12,7 @@ python -m unittest discover -s tests -p "test_*.py" -v
 python scripts/run-evals.py
 python src/review/component_profile_audit.py `
   --profiles src/review/component-profiles.json `
-  --as-of 2026-07-28
+  --as-of 2026-07-29
 python scripts/release-verify.py --skip-integrity
 ```
 
@@ -50,7 +50,7 @@ objects rather than mutable working-tree files:
 git status --short
 python scripts/build-release.py
 python scripts/release-verify.py `
-  --archive ../pcb-prototype-quality-gate-v0.1.1-alpha.zip
+  --archive ../pcb-prototype-quality-gate-v0.1.2-alpha.zip
 ```
 
 The builder sorts paths, stores every committed blob under one top-level

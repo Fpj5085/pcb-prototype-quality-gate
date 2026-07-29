@@ -3,7 +3,7 @@ import json
 import shutil
 import subprocess
 import sys
-import tempfile
+from tests import ArchivedTemporaryDirectory
 import time
 import unittest
 from pathlib import Path
@@ -49,7 +49,7 @@ def write_manifest(input_dir: Path) -> Path:
 
 class M2EvidenceImportGateTests(unittest.TestCase):
     def setUp(self):
-        self.temporary = tempfile.TemporaryDirectory()
+        self.temporary = ArchivedTemporaryDirectory()
         self.root = Path(self.temporary.name)
         self.input_dir = self.root / "sanitized-input"
         self.output_dir = self.root / "public-output"
@@ -127,7 +127,8 @@ class M2EvidenceImportGateTests(unittest.TestCase):
         self.assertFalse(self.output_dir.exists())
 
     def test_missing_required_evidence_returns_pending(self):
-        (self.input_dir / "evidence" / "after" / "drc.json").unlink()
+        target = self.input_dir / "evidence" / "after" / "drc.json"
+        target.rename(self.root / "withheld-drc.json")
         completed, result = self.run_gate()
         self.assertEqual(completed.returncode, 3)
         self.assertEqual(result["gate"], "pending")
@@ -212,9 +213,12 @@ class M2EvidenceImportGateTests(unittest.TestCase):
             ("accessToken", "private-token-value", "PRIVATE_FIELD"),
         )
         source = FIXTURE / "evidence" / "after" / "receipt.json"
-        for key, value, expected_code in variants:
+        for index, (key, value, expected_code) in enumerate(variants):
             with self.subTest(key=key):
-                shutil.rmtree(self.input_dir)
+                if self.input_dir.exists():
+                    self.input_dir.rename(self.root / f"archived-input-{index}")
+                if self.output_dir.exists():
+                    self.output_dir.rename(self.root / f"archived-output-{index}")
                 shutil.copytree(FIXTURE, self.input_dir)
                 target = self.input_dir / "evidence" / "after" / "receipt.json"
                 document = read_json(source)

@@ -1,11 +1,11 @@
-# Test report — v0.1.1-alpha baseline and post-release hardening
+# Test report — v0.1.2-alpha local candidate
 
 Date: 2026-07-29
-Scope: the published v0.1.1-alpha baseline plus local post-release hardening for
+Scope: the v0.1.2-alpha local candidate, based on the published v0.1.1-alpha baseline plus hardening for
 component-profile provenance, diverse offline benchmarks, normalized-input
 safety boundaries, the adapter-neutral offline pipeline entry, the fail-closed read-only adapter evidence envelope, its offline-only explicit-capture assembler and its offline health gate for external adapter failures. This run validated the offline runtime, sanitized M2/M3
 evidence boundary, fail-closed local-bypass planner, profile audit and release
-tooling. It performed no EDA mutation, network publication, upload,
+tooling. Separate environment qualification completed a guided read-only review on an independent second NOT FOR MANUFACTURING fixture with four state reads, zero EDA writes and a low-risk Prototype rating; raw project identities and receipts remain outside this public candidate. The packaged test run itself performed no EDA mutation, network publication, upload,
 manufacturing, ordering or payment.
 
 ## Environment
@@ -24,7 +24,7 @@ tools and are not bundled dependencies.
 
 | Gate | Result |
 | --- | --- |
-| Complete Python test suite | **104/104 passed** |
+| Complete Python test suite | **105/105 passed** |
 | Prototype rule/runtime tests | **32/32 passed** |
 | Normalized-input safety-boundary tests | **13/13 passed** |
 | Component-profile provenance/freshness tests | **10/10 passed** |
@@ -35,9 +35,9 @@ tools and are not bundled dependencies.
 | Read-only envelope exporter tests | **4/4 passed** |
 | Read-only adapter health gate tests | **6/6 passed** |
 | Adapter-neutral pipeline tests | **6/6 passed** |
-| Reproducible release-tool tests | **5/5 passed** |
+| Reproducible release-tool and no-delete archive tests | **6/6 passed** |
 | Sanitized/synthetic evaluation replay | **10/10 passed** |
-| Component-profile audit (`--as-of 2026-07-28`) | **11/11 fresh; 0 stale; 0 invalid** |
+| Component-profile audit (`--as-of 2026-07-29`) | **11/11 fresh; 0 stale; 0 invalid** |
 | Python CLI smoke — complete-evidence semantic fixture | Passed; `suitable_for_low_risk_prototype` |
 | PowerShell wrapper smoke — M2 BEFORE | Passed; `not_suitable_for_prototype` |
 | PowerShell parser | Passed for every published `.ps1` entry |
@@ -45,11 +45,11 @@ tools and are not bundled dependencies.
 | Skill validator | Passed |
 | JSON Schema parsing/runtime coverage | **17/17 schemas parsed**; health and envelope contracts covered by Python validators |
 | Previously published Schema instance validation baseline | **24/24 documents passed** |
-| UTF-8 and mojibake gate | 158 text files passed |
-| JSON parsing | 74 files passed |
+| UTF-8 and mojibake gate | 165 text files passed |
+| JSON parsing | 75 files passed |
 | Restricted YAML parsing | 1 file passed |
-| Python AST syntax | 27 files passed |
-| Markdown relative links | 116 links; 0 missing |
+| Python AST syntax | 33 files passed |
+| Markdown relative links | 122 links; 0 missing |
 | Repository privacy/release gate | Passed; 165 files; 0 high-risk findings; 163 manifest / 164 checksum entries |
 
 ## Component-profile provenance and freshness
@@ -57,7 +57,7 @@ tools and are not bundled dependencies.
 The new audit is an independent, deterministic release/CI gate. It requires an
 explicit `--as-of` date and performs no network or EDA access. The current profile
 set contains 6 official datasheet sources and 5 synthetic fixtures; all 11 passed
-on 2026-07-28. Adversarial tests cover missing provenance, invalid dates, future
+on 2026-07-29. Adversarial tests cover missing provenance, invalid dates, future
 retrieval dates, stale sources, invalid age bounds, missing revision basis,
 official sources without HTTPS/location evidence, unclear synthetic origin and
 output determinism.
@@ -181,21 +181,23 @@ encoding and size, as recorded in `PRIVACY-SCAN.md`.
 
 ```powershell
 $env:PYTHONDONTWRITEBYTECODE = "1"
-python -S -m unittest discover -s tests -p "test_*.py" -v
+$env:WORKBUDDY_TEST_ARCHIVE_ROOT = "<external-test-archive>"
+python -m unittest discover -s tests -p "test_*.py" -v
 python scripts/run-evals.py
-python src/review/component_profile_audit.py --profiles src/review/component-profiles.json --as-of 2026-07-28
+python src/review/component_profile_audit.py --profiles src/review/component-profiles.json --as-of 2026-07-29
 python scripts/release-verify.py --skip-integrity
 python scripts/update-integrity.py
 python scripts/release-verify.py
 ```
 
-WorkBuddy injects a host `sitecustomize` safe-delete hook that could not recycle
-three test temporary directories on this Windows workspace. The first full run
-therefore completed every assertion but reported three cleanup errors. Because
-the candidate uses only the Python standard library, the complete suite was
-rerun with `python -S`, which disables external site hooks; the current full
-suite passed and all temporary directories were removed. No test assertion or product code was
-changed to obtain that result.
+The Windows host safe-delete policy rejected recursive cleanup of standard
+`TemporaryDirectory` workspaces. The candidate test harness now creates all
+mutable test workspaces under an explicit external archive root and moves each
+completed workspace into its `archived/` area by same-volume rename. It performs
+no recursive cleanup, preserves failed-test evidence, and has an explicit
+rename/content-preservation/idempotence regression test. The full suite passed
+with the host policy active; no product rule or expected engineering result was
+weakened.
 
 Archive build and archive-against-committed-tree verification are performed only
 after the reviewed tree is committed. The resulting deterministic archive and

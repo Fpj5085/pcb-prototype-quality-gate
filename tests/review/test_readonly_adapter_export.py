@@ -1,7 +1,7 @@
 import json
 import subprocess
 import sys
-import tempfile
+from tests import ArchivedTemporaryDirectory
 import unittest
 from pathlib import Path
 
@@ -22,7 +22,7 @@ class ReadonlyAdapterExportTests(unittest.TestCase):
         }
 
     def test_cli_builds_complete_envelope_and_derives_design_digest(self):
-        with tempfile.TemporaryDirectory(dir=REPO) as name:
+        with ArchivedTemporaryDirectory() as name:
             root = Path(name)
             design = root / "design.json"
             capture = root / "capture.json"
@@ -41,7 +41,7 @@ class ReadonlyAdapterExportTests(unittest.TestCase):
             self.assertNotIn("design.json", json.dumps(envelope, ensure_ascii=False))
 
     def test_complete_export_rejects_capture_with_partial_or_extra_fields(self):
-        with tempfile.TemporaryDirectory(dir=REPO) as name:
+        with ArchivedTemporaryDirectory() as name:
             root = Path(name)
             design = root / "design.json"
             capture = root / "capture.json"
@@ -57,7 +57,7 @@ class ReadonlyAdapterExportTests(unittest.TestCase):
             self.assertIn("keys mismatch", completed.stderr)
 
     def test_cli_builds_failed_envelope_without_partial_state(self):
-        with tempfile.TemporaryDirectory(dir=REPO) as name:
+        with ArchivedTemporaryDirectory() as name:
             output = Path(name) / "failed.json"
             completed = subprocess.run(
                 [sys.executable, str(SCRIPT), "--status", "unknown", "--error-class", "timeout_unknown", "--message", "readback timed out", "--adapter-name", "fixture", "--adapter-version", "1", "--output", str(output)],
@@ -71,7 +71,7 @@ class ReadonlyAdapterExportTests(unittest.TestCase):
             self.assertEqual(envelope["errors"][0]["class"], "timeout_unknown")
 
     def test_cli_rejects_unknown_failure_class(self):
-        with tempfile.TemporaryDirectory(dir=REPO) as name:
+        with ArchivedTemporaryDirectory() as name:
             completed = subprocess.run(
                 [sys.executable, str(SCRIPT), "--status", "failed", "--error-class", "made-up", "--message", "bad", "--adapter-name", "fixture", "--adapter-version", "1", "--output", str(Path(name) / "out.json")],
                 cwd=REPO, text=True, encoding="utf-8", capture_output=True, check=False,

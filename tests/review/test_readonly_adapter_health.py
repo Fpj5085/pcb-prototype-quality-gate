@@ -1,7 +1,7 @@
 import json
 import subprocess
 import sys
-import tempfile
+from tests import ArchivedTemporaryDirectory
 import unittest
 from pathlib import Path
 
@@ -27,7 +27,7 @@ def receipt(status="ready"):
 
 class ReadonlyAdapterHealthTests(unittest.TestCase):
     def run_cli(self, payload, *extra):
-        with tempfile.TemporaryDirectory(dir=REPO) as name:
+        with ArchivedTemporaryDirectory() as name:
             path = Path(name) / "health.json"
             path.write_text(json.dumps(payload), encoding="utf-8")
             return subprocess.run([sys.executable, str(SCRIPT), "--input", str(path), *extra], cwd=REPO, text=True, encoding="utf-8", capture_output=True, check=False)

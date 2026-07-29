@@ -1,7 +1,7 @@
 import importlib.util
 import json
 import subprocess
-import tempfile
+from tests import ArchivedTemporaryDirectory
 import unittest
 from pathlib import Path
 
@@ -24,8 +24,19 @@ release_build = load_script("build-release.py")
 
 
 class ReleaseToolTests(unittest.TestCase):
+    def test_archived_temporary_directory_renames_and_cleanup_is_idempotent(self):
+        temporary = ArchivedTemporaryDirectory(prefix="archive-contract-")
+        active = Path(temporary.name)
+        marker = active / "marker.txt"
+        marker.write_text("preserve\n", encoding="utf-8")
+        archived = temporary.cleanup()
+        self.assertIsNotNone(archived)
+        self.assertFalse(active.exists())
+        self.assertEqual((archived / "marker.txt").read_text(encoding="utf-8"), "preserve\n")
+        self.assertEqual(temporary.cleanup(), archived)
+
     def test_integrity_update_is_idempotent(self):
-        with tempfile.TemporaryDirectory() as temp_name:
+        with ArchivedTemporaryDirectory() as temp_name:
             root = Path(temp_name)
             (root / "VERSION").write_text("0.1.0-alpha\n", encoding="utf-8")
             (root / "README.md").write_text("# Example\n", encoding="utf-8")
@@ -41,7 +52,7 @@ class ReleaseToolTests(unittest.TestCase):
             self.assertEqual(sums_first, (root / "SHA256SUMS.txt").read_bytes())
 
     def test_privacy_gate_rejects_constructed_private_values(self):
-        with tempfile.TemporaryDirectory() as temp_name:
+        with ArchivedTemporaryDirectory() as temp_name:
             root = Path(temp_name)
             private_path = "C:" + "\\" + "Users" + "\\" + "example" + "\\" + "secret.txt"
             private_uuid = "12345678" + "-1234-4abc-8def-" + "1234567890ab"
@@ -63,7 +74,7 @@ class ReleaseToolTests(unittest.TestCase):
         self.assertEqual(errors, [])
 
     def test_deterministic_zip_matches_committed_tree(self):
-        with tempfile.TemporaryDirectory() as temp_name:
+        with ArchivedTemporaryDirectory() as temp_name:
             root = Path(temp_name) / "sample-plugin"
             root.mkdir()
             subprocess.run(["git", "init", "-b", "main"], cwd=root, check=True, capture_output=True)

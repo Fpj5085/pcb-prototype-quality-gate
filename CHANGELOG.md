@@ -4,7 +4,9 @@ This project-authored history records release-relevant changes. Its section
 layout is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and version labels follow Semantic Versioning conventions.
 
-## [Unreleased]
+## [0.1.2-alpha] - 2026-07-29
+
+Status: local release candidate; no push, tag, GitHub Release or upload is implied.
 
 ### Added
 
@@ -24,6 +26,12 @@ and version labels follow Semantic Versioning conventions.
 
 - the audit is an independent release/CI gate and does not change the public three-value Prototype rating enum;
 - no EDA mutation capability or repair family was added.
+
+### Evidence boundaries
+
+- separate environment qualification completed a guided read-only review on an independent second NOT FOR MANUFACTURING fixture with zero EDA writes;
+- raw project identities, runtime receipts and Bridge implementation remain private environment evidence and are not bundled in this public candidate;
+- this qualification does not constitute Manufacturing Release or physical-board validation.
 
 ## [0.1.1-alpha] - 2026-07-28
 

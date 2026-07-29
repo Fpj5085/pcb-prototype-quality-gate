@@ -1,10 +1,12 @@
 # Installation and removal
 
-v0.1.1-alpha has three usable surfaces:
+v0.1.2-alpha has five usable surfaces:
 
 1. the offline Prototype review CLI, which runs without JLCEDA;
 2. the fail-closed `ADD_LOCAL_BYPASS_CAP` repair-plan CLI, which emits an immutable public plan without private EDA IDs;
-3. a Codex plugin/skill that explains the governed workflow and invokes the offline review when normalized evidence is available.
+3. the adapter-neutral offline review Pipeline;
+4. the strict read-only Adapter Envelope assembler and health validator for separately audited environment integrations;
+5. a Codex plugin/skill that explains the governed workflow and invokes the offline review when normalized evidence is available.
 
 Live EDA collection or mutation requires a separately installed and audited environment adapter. This repository does not bundle one and does not install any workstation service.
 
@@ -13,7 +15,7 @@ Live EDA collection or mutation requires a separately installed and audited envi
 After extracting the local release package, compare its digest with the published candidate checksum:
 
 ```powershell
-Get-FileHash ./pcb-prototype-quality-gate-v0.1.1-alpha.zip -Algorithm SHA256
+Get-FileHash ./pcb-prototype-quality-gate-v0.1.2-alpha.zip -Algorithm SHA256
 ```
 
 Then compare repository files with `SHA256SUMS.txt` before running them.

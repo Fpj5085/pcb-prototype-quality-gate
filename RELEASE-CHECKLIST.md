@@ -1,4 +1,4 @@
-# v0.1.1-alpha release checklist
+# v0.1.2-alpha release checklist
 
 This checklist distinguishes completed local release preparation from human decisions and any future network publication.
 
@@ -12,6 +12,7 @@ This checklist distinguishes completed local release preparation from human deci
 - [x] The car-controller `9/9` statement is limited to nine predefined/manual risk families on one 28-component fixture.
 - [x] No general Manufacturing Release, certification or physical-function claim is made.
 - [x] Live EDA is described as a separately audited environment integration.
+- [x] A second independent NOT FOR MANUFACTURING fixture completed the guided read-only environment qualification with zero EDA writes; raw identities and receipts remain outside the public candidate.
 
 ## Source and licensing
 
@@ -25,15 +26,16 @@ This checklist distinguishes completed local release preparation from human deci
 
 ## Functional validation
 
-- [x] Complete Python suite: 55/55, including 32 Prototype/runtime, 11 M2 gate, 7 local-bypass planner and 5 release-tool tests.
-- [x] Sanitized eval replay: 4/4.
+- [x] Complete Python suite: 105/105, covering Prototype/runtime, M2 evidence import, local-bypass planning, profile audit, input safety, diverse benchmarks, read-only adapter contracts, health gate, Pipeline, no-delete test-workspace archival and release tooling.
+- [x] Sanitized/synthetic eval replay: 10/10.
+- [x] Component-profile audit: 11/11 fresh, 0 stale, 0 invalid at the locked as-of date.
 - [x] Python CLI smoke passed.
 - [x] PowerShell wrapper smoke passed.
 - [x] Plugin manifest validator passed.
 - [x] Skill validator passed.
-- [x] All 16 JSON Schemas compiled with cached Ajv 8.20.0 in offline mode.
+- [x] All 17 JSON Schemas parsed; health and envelope contracts are additionally covered by strict Python validators.
 - [x] Twenty-four profile, Prototype, M2/M3 summary and repair-plan documents validated against public schemas.
-- [x] JSON/YAML parsing, Python syntax and 111 Markdown relative-link checks passed.
+- [x] JSON/YAML parsing, Python syntax and 122 Markdown relative-link checks passed.
 - [x] The deterministic M2 import gate covers success, pending, missing evidence, hash mismatch, privacy rejection and idempotence.
 - [x] Integrity generation and Git-tree ZIP construction have repeatable command entries and regression tests.
 
@@ -42,7 +44,7 @@ This checklist distinguishes completed local release preparation from human deci
 - [x] Concrete username, absolute path, UUID, internal runtime ID and credential findings are zero.
 - [x] No private logs, screenshots, conversations, raw EDA projects or machine state are included.
 - [x] No PDF, EDA extension, executable, unexplained archive or file over 1 MiB is included in the repository.
-- [x] Temporary output and Python bytecode caches were removed before manifest generation.
+- [x] Test workspaces were moved by rename into an external archive; temporary output and Python bytecode caches are absent from the candidate tree.
 - [x] Allow-listed long hexadecimal values are only documented SHA-256 file digests.
 - [x] Public file list, excluded-file list, privacy scan and test report are present.
 
@@ -68,9 +70,9 @@ This checklist distinguishes completed local release preparation from human deci
 
 ## Network publication
 
-- [x] The public repository owner/name already exists as `Fpj5085/pcb-prototype-quality-gate`; v0.1.0-alpha remains the current remote prerelease.
-- [x] No v0.1.1-alpha GitHub push, tag, Release upload or network publication was performed during preparation.
-- [ ] **Maintainer:** review the final v0.1.1-alpha commit, ZIP and SHA-256 sidecar.
-- [ ] **Maintainer:** make the separate final decision to push `main`, create tag/Release `v0.1.1-alpha`, and upload the reviewed archive.
+- [x] Public repository `Fpj5085/pcb-prototype-quality-gate` and published prerelease `v0.1.1-alpha` remain unchanged.
+- [x] No v0.1.2-alpha GitHub push, tag, Release upload or network publication was performed during preparation.
+- [ ] **Maintainer:** review the final v0.1.2-alpha commit, ZIP and SHA-256 sidecar.
+- [ ] **Maintainer:** make the separate final decision to push the reviewed commit, create tag/Release `v0.1.2-alpha`, and upload the reviewed archive.
 
 Unchecked human/publication items do not block this **local review candidate**. They intentionally block a public tag or upload.

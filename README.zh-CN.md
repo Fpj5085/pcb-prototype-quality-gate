@@ -1,6 +1,6 @@
 # codex-jlceda-hardware-agent
 
-> **v0.1.1-alpha 本地候选 · NOT FOR MANUFACTURING（不可直接制造）**
+> **v0.1.2-alpha 本地候选 · NOT FOR MANUFACTURING（不可直接制造）**
 
 **面向真实可编辑嘉立创EDA设计的独立 Prototype 打样前质量门与受控修正闭环。**
 
@@ -54,7 +54,7 @@ DRC 校验的是几何与连接规则,**它不校验设计在电气和热学上�
 [`jlceda-prototype-review-evidence/1.0`](docs/evidence-schema.md)。该 fixture 覆盖的
 九个风险族列举于 [docs/demo.md](docs/demo.md);结论边界见文末 **Alpha 边界**。
 
-## v0.1.1-alpha 包含
+## v0.1.2-alpha 包含
 
 - 普通语言请求到 **Draft / Prototype / Manufacturing Release** 工作模式的治理规则；
 - 从可替换 Draft 生成器或既有可编辑设计进入独立现场读回的适配器中立交接；
@@ -63,8 +63,10 @@ DRC 校验的是几何与连接规则,**它不校验设计在电气和热学上�
 - 不可变修正计划与白名单动作原则；
 - 保存、关闭、重载和独立读回门；
 - 5V/1A 电源分配板 BEFORE/AFTER 评估对；合成 fixture 仍用于离线重放，并另附通过隐私门的真实保存重载最小公开摘要；
-- 一个“EDA 门通过但仍不值得打样”的双电机控制器 adversarial fixture。
-
+- 一个“EDA 门通过但仍不值得打样”的双电机控制器 adversarial fixture；
+- 确定性的组件资料来源/时效审计，以及对非法数值和不完整计算输入的 fail-closed 安全检查；
+- 电源输入、传感器接口和低速通信三组新增 synthetic BEFORE/AFTER 基准；
+- 适配器中立的离线 Pipeline，以及不接受部分证据、不授予 EDA 写权限的严格只读 Adapter Envelope 和健康门。
 
 - 独立 M3 传感器转接板重复验证：真实 5 器件 BEFORE 仅命中本地旁路 blocker；白名单 `ADD_LOCAL_BYPASS_CAP` 加入锁定的 100nF X7R C0805；保存重载后的 6 器件 AFTER 通过 ERC、连通性、板框包含、严格 DRC 和全新复审。
 
@@ -125,7 +127,7 @@ python src/review/prototype_review.py `
 ```powershell
 python src/review/component_profile_audit.py `
   --profiles src/review/component-profiles.json `
-  --as-of 2026-07-28
+  --as-of 2026-07-29
 ```
 
 运行测试：
