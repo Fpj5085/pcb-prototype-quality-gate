@@ -40,6 +40,7 @@ from readonly_adapter_contract import (  # noqa: E402
     adapter_summary,
     validate_adapter_envelope,
 )
+from readonly_adapter_health import health_summary, validate_health_probe  # noqa: E402
 
 
 PIPELINE_SCHEMA = "pcb-prototype-quality-gate-pipeline-run/1.1"
@@ -60,10 +61,14 @@ def run_pipeline(
     repair_evidence_path: Path | None = None,
     goal: str | None = None,
     adapter_evidence_path: Path | None = None,
+    health_evidence_path: Path | None = None,
 ) -> dict[str, Any]:
-    """Run adapter validation, normalization, independent review and repair planning."""
+    """Run adapter health gate, validation, normalization, review and planning."""
     raw = read_json(input_path)
     adapter = None
+    health = None
+    if health_evidence_path is not None:
+        health = validate_health_probe(read_json(health_evidence_path))
     if adapter_evidence_path is not None:
         adapter = validate_adapter_envelope(read_json(adapter_evidence_path))
         if adapter["normalizedDesign"] != raw:
@@ -88,11 +93,13 @@ def run_pipeline(
             "edaAccess": False,
             "edaWrites": 0,
             "approval": "not-requested",
+            "environmentHealth": "validated-read-only" if health is not None else "not-probed",
         },
         "inputs": {
             "design": _relative_or_name(input_path, REPO),
             "profiles": _relative_or_name(profiles_path, REPO),
             **({"adapterEvidence": _relative_or_name(adapter_evidence_path, REPO), "adapter": adapter_summary(adapter)} if adapter is not None else {}),
+            **({"healthEvidence": _relative_or_name(health_evidence_path, REPO), "health": health_summary(health)} if health is not None else {}),
         },
         "review": {
             "rating": result["rating"],
@@ -135,6 +142,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--repair-evidence", type=Path)
     parser.add_argument("--goal")
     parser.add_argument("--adapter-evidence", type=Path, help="validated read-only adapter envelope; must contain the exact --input JSON")
+    parser.add_argument("--health-evidence", type=Path, help="validated external adapter health receipt; ready is required")
     args = parser.parse_args(argv)
     try:
         run = run_pipeline(
@@ -144,6 +152,7 @@ def main(argv: list[str] | None = None) -> int:
             repair_evidence_path=args.repair_evidence,
             goal=args.goal,
             adapter_evidence_path=args.adapter_evidence,
+            health_evidence_path=args.health_evidence,
         )
     except (OSError, json.JSONDecodeError, InputValidationError, RepairPlanError, KeyError, TypeError, ValueError) as exc:
         print(

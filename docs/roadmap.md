@@ -38,6 +38,8 @@ The scoped M2 case and one independent M3 sensor-adapter repetition have now pas
 - [completed after v0.1.1] reject non-finite/boolean numeric inputs, malformed optional containers, missing calculation operands and invalid confidence/range values; cap finding confidence at source confidence and retain declared assumptions in output;
 - [completed locally] add an adapter-neutral offline pipeline entry that normalizes input, runs independent review and emits a zero-write pipeline receipt; live adapter execution remains external;
 - [completed locally] publish a formal, fail-closed read-only adapter evidence envelope and consume it from the offline pipeline; live Bridge collection remains separately audited;
+- [completed locally] add an offline-only envelope assembler that accepts only explicit sanitized capture facts, derives the normalized-design digest, and emits no partial state; the environment-owned live exporter remains separately audited;
+- [completed locally] add an offline read-only adapter health gate that classifies 502/timeouts/window ambiguity/write signals fail-closed; it does not replace the environment-owned live exporter;
 - validate additional addition-only repair families one at a time;
 - [completed after v0.1.1] add deterministic offline component-profile provenance and freshness checks with an explicit as-of date;
 - add reproducible report localization without changing machine enums.

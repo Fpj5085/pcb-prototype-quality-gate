@@ -16,7 +16,9 @@ and version labels follow Semantic Versioning conventions.
 - fail-closed normalized-input validation for non-finite numbers, boolean-as-number values, missing calculation operands, inverted physical ranges and malformed optional containers;
 - profile-bounded finding confidence and top-level retention of explicitly declared assumptions, including assumptions attached to passing rules;
 - adapter-neutral offline pipeline entry for normalized input → independent review → optional immutable repair-plan preview, with explicit zero-write receipt and regression coverage;
-- strict fail-closed read-only adapter evidence envelope with target fingerprints, schematic/PCB digests, canonical design digest, persistence proof and allow-listed failure states; failed or unknown envelopes cannot carry partial capture/design evidence, and the pipeline can consume complete envelopes without EDA access.
+- strict fail-closed read-only adapter evidence envelope with target fingerprints, schematic/PCB digests, canonical design digest, persistence proof and allow-listed failure states; failed or unknown envelopes cannot carry partial capture/design evidence, and the pipeline can consume complete envelopes without EDA access;
+- offline-only read-only envelope assembler that accepts explicit sanitized capture facts, derives the normalized-design digest and emits no partial state;
+- fail-closed offline health gate for external read-only adapters, classifying 502/timeouts, malformed protocol, no or ambiguous windows, and any write signal before live evidence collection.
 
 ### Compatibility
 

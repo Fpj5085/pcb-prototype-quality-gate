@@ -3,7 +3,7 @@
 Date: 2026-07-29
 Scope: the published v0.1.1-alpha baseline plus local post-release hardening for
 component-profile provenance, diverse offline benchmarks, normalized-input
-safety boundaries, the adapter-neutral offline pipeline entry and the fail-closed read-only adapter evidence envelope. This run validated the offline runtime, sanitized M2/M3
+safety boundaries, the adapter-neutral offline pipeline entry, the fail-closed read-only adapter evidence envelope, its offline-only explicit-capture assembler and its offline health gate for external adapter failures. This run validated the offline runtime, sanitized M2/M3
 evidence boundary, fail-closed local-bypass planner, profile audit and release
 tooling. It performed no EDA mutation, network publication, upload,
 manufacturing, ordering or payment.
@@ -24,7 +24,7 @@ tools and are not bundled dependencies.
 
 | Gate | Result |
 | --- | --- |
-| Complete Python test suite | **92/92 passed** |
+| Complete Python test suite | **104/104 passed** |
 | Prototype rule/runtime tests | **32/32 passed** |
 | Normalized-input safety-boundary tests | **13/13 passed** |
 | Component-profile provenance/freshness tests | **10/10 passed** |
@@ -32,7 +32,9 @@ tools and are not bundled dependencies.
 | M2 evidence-import gate tests | **11/11 passed** |
 | Local-bypass repair-plan tests | **7/7 passed** |
 | Read-only adapter contract tests | **6/6 passed** |
-| Adapter-neutral pipeline tests | **4/4 passed** |
+| Read-only envelope exporter tests | **4/4 passed** |
+| Read-only adapter health gate tests | **6/6 passed** |
+| Adapter-neutral pipeline tests | **6/6 passed** |
 | Reproducible release-tool tests | **5/5 passed** |
 | Sanitized/synthetic evaluation replay | **10/10 passed** |
 | Component-profile audit (`--as-of 2026-07-28`) | **11/11 fresh; 0 stale; 0 invalid** |
@@ -41,14 +43,14 @@ tools and are not bundled dependencies.
 | PowerShell parser | Passed for every published `.ps1` entry |
 | Plugin manifest validator | Passed |
 | Skill validator | Passed |
-| JSON Schema compilation | **16/16 schemas passed** with Ajv 8.20.0, Draft 2020-12 |
-| Schema instance validation | **24/24 documents passed** |
+| JSON Schema parsing/runtime coverage | **17/17 schemas parsed**; health and envelope contracts covered by Python validators |
+| Previously published Schema instance validation baseline | **24/24 documents passed** |
 | UTF-8 and mojibake gate | 158 text files passed |
 | JSON parsing | 74 files passed |
 | Restricted YAML parsing | 1 file passed |
 | Python AST syntax | 27 files passed |
 | Markdown relative links | 116 links; 0 missing |
-| Repository privacy/release gate | Passed; 158 files; 0 high-risk findings; 156 manifest / 157 checksum entries |
+| Repository privacy/release gate | Passed; 165 files; 0 high-risk findings; 163 manifest / 164 checksum entries |
 
 ## Component-profile provenance and freshness
 

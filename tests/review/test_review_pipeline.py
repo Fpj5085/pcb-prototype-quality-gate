@@ -12,6 +12,23 @@ SCRIPT = REPO / "scripts" / "run-review-pipeline.py"
 FIXTURE = REPO / "tests" / "review" / "fixtures" / "synthetic-safe-input.json"
 PROFILES = REPO / "src" / "review" / "component-profiles.json"
 ADAPTER_SCHEMA = "pcb-prototype-quality-gate-readonly-adapter/1.0"
+HEALTH_SCHEMA = "pcb-prototype-quality-gate-readonly-adapter-health/1.0"
+
+
+def health_receipt(status="ready"):
+    errors = [] if status == "ready" else [{"class": "upstream_5xx", "message": "gateway returned 502"}]
+    return {
+        "schema": HEALTH_SCHEMA,
+        "status": status,
+        "adapter": {"name": "fixture-adapter", "version": "test", "readOnly": True, "edaWrites": 0},
+        "probe": {
+            "probedAt": "2026-07-29T04:00:00+00:00",
+            "transport": {"ok": status == "ready", "httpStatus": 200 if status == "ready" else 502, "contentType": "application/json"},
+            "session": {"windowCount": 1, "uniqueTarget": True, "readOnly": True, "edaWrites": 0},
+            "response": {"jsonObject": True, "protocolValid": True},
+        },
+        "errors": errors,
+    }
 
 
 def adapter_envelope(design):
@@ -88,6 +105,33 @@ class ReviewPipelineTests(unittest.TestCase):
             )
             self.assertEqual(completed.returncode, 2)
             self.assertIn("normalizedDesignSha256", completed.stderr)
+
+    def test_pipeline_requires_ready_health_when_health_evidence_is_supplied(self):
+        with tempfile.TemporaryDirectory(dir=REPO) as name:
+            root = Path(name)
+            health_path = root / "health.json"
+            health_path.write_text(json.dumps(health_receipt("blocked"), ensure_ascii=False), encoding="utf-8")
+            completed = subprocess.run(
+                [sys.executable, str(SCRIPT), "--input", str(FIXTURE), "--profiles", str(PROFILES), "--output", str(root / "run"), "--health-evidence", str(health_path)],
+                cwd=REPO, text=True, encoding="utf-8", capture_output=True, check=False,
+            )
+            self.assertEqual(completed.returncode, 2)
+            self.assertIn("upstream_5xx", completed.stderr)
+
+    def test_pipeline_records_ready_health_without_granting_eda_access(self):
+        with tempfile.TemporaryDirectory(dir=REPO) as name:
+            root = Path(name)
+            health_path = root / "health.json"
+            health_path.write_text(json.dumps(health_receipt(), ensure_ascii=False), encoding="utf-8")
+            completed = subprocess.run(
+                [sys.executable, str(SCRIPT), "--input", str(FIXTURE), "--profiles", str(PROFILES), "--output", str(root / "run"), "--health-evidence", str(health_path)],
+                cwd=REPO, text=True, encoding="utf-8", capture_output=True, check=False,
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            run = json.loads((root / "run" / "pipeline-run.json").read_text(encoding="utf-8"))
+            self.assertEqual(run["trustBoundary"]["environmentHealth"], "validated-read-only")
+            self.assertFalse(run["trustBoundary"]["edaAccess"])
+            self.assertEqual(run["trustBoundary"]["edaWrites"], 0)
 
     def test_pipeline_rejects_unpaired_repair_arguments(self):
         with tempfile.TemporaryDirectory(dir=REPO) as name:

@@ -12,7 +12,7 @@ The Draft generator is a replaceable adapter, not the trusted core. The project'
 
 [简体中文](README.zh-CN.md)
 
-[Install](INSTALL.md) · [Demo](docs/demo.md) · [Evidence schema](docs/evidence-schema.md) · [M2 evidence gate](docs/m2-evidence-gate.md) · [Pipeline entry](docs/pipeline.md) · [Reproducible release](docs/reproducible-release.md) · [Roadmap](docs/roadmap.md)
+[Install](INSTALL.md) · [Demo](docs/demo.md) · [Evidence schema](docs/evidence-schema.md) · [M2 evidence gate](docs/m2-evidence-gate.md) · [Pipeline entry](docs/pipeline.md) · [Read-only adapter envelope](schemas/readonly-adapter-envelope.schema.json) · [Adapter health gate](schemas/readonly-adapter-health.schema.json) · [Reproducible release](docs/reproducible-release.md) · [Roadmap](docs/roadmap.md)
 
 ## Why this exists
 
@@ -203,7 +203,9 @@ For local plugin setup and removal, see [INSTALL.md](INSTALL.md). The plugin shi
 - `release-audit/` — publication inventory and scan results.
 - `examples/` — ordinary-Chinese requests and expected output boundaries.
 - `scripts/import_m2_evidence.py` — offline, explicit and privacy-rejecting M2 evidence gate.
-- `scripts/plan-local-bypass.py` — deterministic `ADD_LOCAL_BYPASS_CAP` plan gate.
+- `scripts/plan-local-bypass.py` — deterministic `ADD_LOCAL_BYPASS_CAP` plan gate;
+- `scripts/build-readonly-adapter-envelope.py` — offline-only assembler for explicit sanitized read-only capture facts;
+- `scripts/validate-readonly-adapter-health.py` — offline fail-closed health gate for external read-only adapter probe receipts;
 - `scripts/release-verify.py`, `update-integrity.py`, `build-release.py` — reproducible local verification and packaging.
 
 ## Security and privacy

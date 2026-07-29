@@ -4,8 +4,8 @@
   "candidateStatus": "local-review-candidate-not-published",
   "algorithm": "SHA-256",
   "reproducible": true,
-  "fileCount": 156,
-  "repositoryFileCountIncludingIntegrityFiles": 158,
+  "fileCount": 163,
+  "repositoryFileCountIncludingIntegrityFiles": 165,
   "selfHashExclusions": [
     "FILE-MANIFEST.json",
     "SHA256SUMS.txt"
@@ -28,8 +28,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 5036,
-      "sha256": "4edb0fd5bb315442e78bdcfb4968fd6239ad00a412d56e0347211479e8e2f367"
+      "bytes": 5384,
+      "sha256": "24dc2d85255013d9c6960ec3bd57eb434a61fe847bb0f729d2f65ea5218d6246"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -68,18 +68,18 @@
     },
     {
       "path": "PUBLIC-FILES.md",
-      "bytes": 6979,
-      "sha256": "7209b194cc61ff4960eb94d9b4d9ffc393657f1032ab70c6c36c7d32cb584c69"
+      "bytes": 7311,
+      "sha256": "3536fbcc8807678ebb419588c2202771b2ddf9f0dd85c22461ef0ace3fd2f538"
     },
     {
       "path": "README.md",
-      "bytes": 13974,
-      "sha256": "f85a8a4b6510e6555de22ecbeafb0cce9be4e21b1243833a3f90e02aad2a99b5"
+      "bytes": 14376,
+      "sha256": "9bd48f1b4fdbd8095288c9fa15deb1222f74955b0d53c1222533e917ea0814e8"
     },
     {
       "path": "README.zh-CN.md",
-      "bytes": 11627,
-      "sha256": "cb3f81b4a611cafa4fccfb5bc6efc4fe61e38b41a5216d96a48894732e49e8e0"
+      "bytes": 12488,
+      "sha256": "94b458c0d990b5b23bfe87782aa2cfbb1862312f48271070db3c4b9827efa0c6"
     },
     {
       "path": "RELEASE-CHECKLIST.md",
@@ -93,8 +93,8 @@
     },
     {
       "path": "TEST-REPORT.md",
-      "bytes": 10489,
-      "sha256": "7e257d373514d6c6c3510673667ba81fd0018e7047b5eee2e9db3945bc585914"
+      "bytes": 10775,
+      "sha256": "e1639d0b7760270eb1df1037831a57bd4dec0c4fab6b265a0a6f9d31977fa227"
     },
     {
       "path": "THIRD_PARTY.md",
@@ -133,8 +133,8 @@
     },
     {
       "path": "docs/pipeline.md",
-      "bytes": 3790,
-      "sha256": "336f3cebee4c2356182c47459978fb0ba924cb92b4f6809ef79b435f517bb6c2"
+      "bytes": 6786,
+      "sha256": "c015d2b2f418b8c3bb82f2c4d27970c684daaa0ac4e4d1492fc35674c576470d"
     },
     {
       "path": "docs/privacy.md",
@@ -158,8 +158,8 @@
     },
     {
       "path": "docs/roadmap.md",
-      "bytes": 3665,
-      "sha256": "79cea0d96511af0478baf35b336e2a9c8354a73b5fe8e8a1b8a6b2145735e827"
+      "bytes": 4105,
+      "sha256": "3520c263ac1d4dc7f3516c4be8e9e9ba3de1c12e44a365066225305bbb9877e7"
     },
     {
       "path": "docs/supported-repairs.md",
@@ -428,8 +428,8 @@
     },
     {
       "path": "release-audit/FILE-PROVENANCE.md",
-      "bytes": 31228,
-      "sha256": "7a951500cb5365e4e1aff4fd99407c4d97836586e02b38a70c0209f599205051"
+      "bytes": 32709,
+      "sha256": "4814009e2642935ab136bdc730a9e4458138cf4179f94170b6f697bbfeea38ed"
     },
     {
       "path": "release-audit/M2-INTEGRATION-STATUS.md",
@@ -448,8 +448,8 @@
     },
     {
       "path": "release-audit/SOURCE-INVENTORY.md",
-      "bytes": 3853,
-      "sha256": "39d44e574bef32f61a1a1218598dc30d26425288b4d60acac051a4fb21fd8181"
+      "bytes": 4703,
+      "sha256": "35bbce0dd7b62b034a7a987c04e166581431f4d3defddc6a9046e03351f2f827"
     },
     {
       "path": "release-audit/m2-live-evidence-summary.json",
@@ -547,6 +547,16 @@
       "sha256": "9c033a2171db78747e1919f9958a8e3360f429268d2794d667bbac63678e45f9"
     },
     {
+      "path": "schemas/readonly-adapter-health.schema.json",
+      "bytes": 2621,
+      "sha256": "cccd8db65b3cf76d5e2f8e918bc562e610da6318f8cd59bcffdfe1f384e99460"
+    },
+    {
+      "path": "scripts/build-readonly-adapter-envelope.py",
+      "bytes": 3029,
+      "sha256": "bb3c24bac081afae0493cec8cf5a93e75b6102a594ffcff69d6064e24a2c657f"
+    },
+    {
       "path": "scripts/build-release.py",
       "bytes": 4387,
       "sha256": "1ed17a038775a726a3c86a6f9445979d7e7a8ea41704b020982cd145b18b53a1"
@@ -578,13 +588,18 @@
     },
     {
       "path": "scripts/run-review-pipeline.py",
-      "bytes": 6008,
-      "sha256": "619e0316a55cb3fbe94ceb975016966d9b02192c7b156b44f75636c17eabeab9"
+      "bytes": 6690,
+      "sha256": "79346eb67e7cca3997a75dd5dcf2a895486ceb0b419fb5d216e97f3e43d5809a"
     },
     {
       "path": "scripts/update-integrity.py",
       "bytes": 4039,
       "sha256": "0489d6a6d7b0eff041e59c0d6cdf98ef12fb20deb1614dcf06a3ace4f44c01ea"
+    },
+    {
+      "path": "scripts/validate-readonly-adapter-health.py",
+      "bytes": 1419,
+      "sha256": "3bf69d4716bec20ca3902acabdb77b2cad9b127ca73a3b5fb9e9aa8d932c4db4"
     },
     {
       "path": "skills/jlceda-hardware-design/SKILL.md",
@@ -645,6 +660,16 @@
       "path": "src/review/readonly_adapter_contract.py",
       "bytes": 7226,
       "sha256": "bd99213b72d0bd6f66d1922a83ab5670e2aa6fa4a4cbad1e85eb9be947cae19d"
+    },
+    {
+      "path": "src/review/readonly_adapter_export.py",
+      "bytes": 4208,
+      "sha256": "fa7516f426261212dd2029240968c9731d6af645360614015896a85831cc71c7"
+    },
+    {
+      "path": "src/review/readonly_adapter_health.py",
+      "bytes": 7167,
+      "sha256": "4160b62137f9ca514e22313add6f8ff1a61f3cf64ab9dd09d7cdaa7c88a14061"
     },
     {
       "path": "tests/__init__.py",
@@ -782,14 +807,24 @@
       "sha256": "de9aaec82d741f9cb6f7741b891ba920a32d3386f2cbbedda733916a9c5e36c0"
     },
     {
+      "path": "tests/review/test_readonly_adapter_export.py",
+      "bytes": 4705,
+      "sha256": "63495e5caa032c18cad75858a7841bb5ff91dfef9733fc132c7836a2d9113b76"
+    },
+    {
+      "path": "tests/review/test_readonly_adapter_health.py",
+      "bytes": 3021,
+      "sha256": "17aa7f133e8a2a08550bb0b13374e48fa048cfd32d9500c719d8cc1bb78d6811"
+    },
+    {
       "path": "tests/review/test_release_runtime.py",
       "bytes": 13123,
       "sha256": "3e95e0afaef69a983e950214e8aa97bf2001686196a6cfe7a5cfc7c5b1e9927a"
     },
     {
       "path": "tests/review/test_review_pipeline.py",
-      "bytes": 5455,
-      "sha256": "284bb070f148d35642b061a273982ef29022834208c0327788f547751912336e"
+      "bytes": 8051,
+      "sha256": "5ec446e91676629c5fad1f12a2cca7f8480edd54bd87f6f3a0a7005eb58aeb4e"
     }
   ]
 }

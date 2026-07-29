@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pcb-prototype-quality-gate-readonly-adapter-health/1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "status", "adapter", "probe", "errors"],
+  "properties": {
+    "schema": {"const": "pcb-prototype-quality-gate-readonly-adapter-health/1.0"},
+    "status": {"enum": ["ready", "blocked", "unknown"]},
+    "adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "readOnly", "edaWrites"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "readOnly": {"const": true},
+        "edaWrites": {"const": 0}
+      }
+    },
+    "probe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["probedAt", "transport", "session", "response"],
+      "properties": {
+        "probedAt": {"type": "string", "format": "date-time"},
+        "transport": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["ok", "httpStatus", "contentType"],
+          "properties": {
+            "ok": {"type": "boolean"},
+            "httpStatus": {"type": ["integer", "null"], "minimum": 100, "maximum": 599},
+            "contentType": {"type": ["string", "null"]}
+          }
+        },
+        "session": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["windowCount", "uniqueTarget", "readOnly", "edaWrites"],
+          "properties": {
+            "windowCount": {"type": "integer", "minimum": 0},
+            "uniqueTarget": {"type": "boolean"},
+            "readOnly": {"type": "boolean"},
+            "edaWrites": {"type": "integer", "minimum": 0}
+          }
+        },
+        "response": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["jsonObject", "protocolValid"],
+          "properties": {
+            "jsonObject": {"type": "boolean"},
+            "protocolValid": {"type": "boolean"}
+          }
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["class", "message"],
+        "properties": {
+          "class": {"enum": ["adapter_unavailable", "upstream_5xx", "timeout_unknown", "malformed_response", "no_window", "target_ambiguous", "read_only_violation", "unexpected_write_count", "protocol_mismatch", "internal_error"]},
+          "message": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

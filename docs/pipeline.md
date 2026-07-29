@@ -76,9 +76,69 @@ python scripts/run-review-pipeline.py `
 
 任一阶段状态未知，都必须先读回确认，禁止盲目重试。
 
+## 只读导出器边界
+
+仓库提供一个离线的证据包组装入口：
+
+```powershell
+python scripts/build-readonly-adapter-envelope.py `
+  --design <normalized-design.json> `
+  --capture <sanitized-readonly-capture.json> `
+  --adapter-name <environment-adapter-name> `
+  --adapter-version <version> `
+  --output out/adapter-envelope.json
+```
+
+该命令只把外部适配器已经独立采集的脱敏 `capturedAt`、三重 target 指纹、原理图/PCB 状态哈希和三项持久化证明，与明确提供的 normalized design 组装起来，并重新计算 `normalizedDesignSha256` 后通过同一运行时契约校验。它不会从截图、ACK、部分响应或私有字段推断任何事实；capture 多余字段、失败/超时的 partial state、非法指纹和非完整证明都会 fail closed。
+
+如果现场采集失败或状态未知，只输出无现场状态的失败包：
+
+```powershell
+python scripts/build-readonly-adapter-envelope.py `
+  --status unknown `
+  --error-class timeout_unknown `
+  --message "readback timed out" `
+  --adapter-name <environment-adapter-name> `
+  --adapter-version <version> `
+  --output out/adapter-envelope-unknown.json
+```
+
+这个导出器仍是离线边界，不是 Gateway/Bridge 实现；真正环境适配器必须自行完成窗口选择、目标稳定性和独立读回，并把脱敏事实交给它。仓库不会把合成输入提升为 live 证据。
+
+## 502/超时后的安全恢复
+
+当前环境侧未完成的不是审核核心，而是 live Gateway/Bridge 的可用性和证据采集。此前出现 502 时，正确动作不是重试写入或重新派发 mutation，而是先生成一个**只读健康探针回执**，再决定是否允许进入采集阶段。
+
+健康契约：[readonly-adapter-health.schema.json](../schemas/readonly-adapter-health.schema.json)，离线验证入口：
+
+```powershell
+python scripts/validate-readonly-adapter-health.py `
+  --input <external-health-probe.json>
+```
+
+只有 `status=ready` 才能清除健康门；它必须同时满足：HTTP 200、JSON 协议有效、恰好一个目标窗口、目标唯一、只读能力、EDA 写入计数为 0。502、超时、无窗口、多窗口、目标歧义、协议错误或任何写入迹象都会保持阻断。若只想记录诊断而不放行：
+
+```powershell
+python scripts/validate-readonly-adapter-health.py `
+  --input <external-health-probe.json> `
+  --allow-blocked
+```
+
+健康门可以作为审核管线的可选前置证明：
+
+```powershell
+python scripts/run-review-pipeline.py `
+  --input <normalized-design.json> `
+  --profiles src/review/component-profiles.json `
+  --health-evidence <ready-health-probe.json> `
+  --output out/pipeline-run
+```
+
+这一步仍不会连接或写入 EDA，也不会把健康探针当作设计读回证据。健康门通过后，还必须由 live 适配器独立采集并通过只读 evidence envelope；健康门不授予审批、修正或制造权限。
+
 ## 当前边界
 
-- 入口可自动完成：规范化、独立审核、报告生成、唯一白名单计划预览；
+- 入口可自动完成：规范化、独立审核、报告生成、唯一白名单计划预览、显式只读证据包组装与契约校验；
 - 入口不会自动完成：调用 EasyEDA Copilot、选择 EDA 窗口、真实 EDA 写入、审批、保存重载、制造输出；
 - 真实 Gateway/Bridge 仍是独立环境集成，不得把它的 ACK 当作审计证据；
 - `suitable_for_low_risk_prototype` 仍不代表实物验证、Manufacturing Release、上传、下单或支付。

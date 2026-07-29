@@ -12,7 +12,7 @@ Draft 生成器是可替换的适配器，不是可信核心。项目的核心�
 
 [English](README.md)
 
-[安装](INSTALL.md) · [演示](docs/demo.md) · [证据结构](docs/evidence-schema.md) · [M2证据导入门](docs/m2-evidence-gate.md) · [编排入口](docs/pipeline.md) · [可重复发布](docs/reproducible-release.md) · [路线图](docs/roadmap.md)
+[安装](INSTALL.md) · [演示](docs/demo.md) · [证据结构](docs/evidence-schema.md) · [M2证据导入门](docs/m2-evidence-gate.md) · [编排入口](docs/pipeline.md) · [只读适配器健康门](schemas/readonly-adapter-health.schema.json) · [可重复发布](docs/reproducible-release.md) · [路线图](docs/roadmap.md)
 
 ## 为什么需要它
 
@@ -167,6 +167,10 @@ BEFORE/AFTER 闭环通过后只产生一个最小、幂等的公开摘要。当�
 
 输入是归一化工程证据，不是原始 EDA 项目。任何 live mutation 适配器都需要独立安全审计。
 
+只读适配器证据包的离线组装入口是 `scripts/build-readonly-adapter-envelope.py`：它只接受外部适配器已独立采集的脱敏 capture 和明确的 normalized design，重新计算规范化设计哈希，并拒绝 partial state；它不连接 EDA，也不把 ACK 或合成输入提升为现场证据。完整命令与失败/未知示例见 [Pipeline entry](docs/pipeline.md)。
+
+针对 Gateway/Bridge 的 502、超时、无窗口或目标歧义，新增 `scripts/validate-readonly-adapter-health.py` 健康门：只有外部探针证明 HTTP 200、JSON 协议有效、单一目标、只读且零写入，才允许进入后续证据采集；健康门本身不授予 EDA 写入权。
+
 本地插件安装和卸载见 [INSTALL.md](INSTALL.md)。插件不内置 MCP、工作站 wrapper 或第三方 EDA 扩展；live EDA 属于环境集成能力。
 
 ## 评估案例
@@ -197,6 +201,7 @@ v0.1.0-alpha 主要公开审核模型、证据结构、脱敏评估样例和受�
 - [路线图](docs/roadmap.md)
 - [M2现场证据导入门](docs/m2-evidence-gate.md)
 - [可重复本地发布](docs/reproducible-release.md)
+- [只读适配器证据包契约](schemas/readonly-adapter-envelope.schema.json)
 - [简历表述边界](docs/resume.md)
 - [安全策略](SECURITY.md)
 - [可公开文件](PUBLIC-FILES.md)

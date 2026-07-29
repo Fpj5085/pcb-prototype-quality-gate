@@ -40,7 +40,13 @@ This inventory classifies every file in the public candidate. "Project-authored"
 | `docs/privacy.md` | O-public-doc | Project-authored public-release documentation or example text | Third-party names/links are nominative/reference-only; claims remain evidence-scoped |
 | `docs/pipeline.md` | O-public-doc | Project-authored adapter-neutral review pipeline documentation | No live EDA adapter or mutation runtime bundled |
 | `scripts/run-review-pipeline.py` | O-project-code | Project-authored adapter-neutral orchestration entry that reuses the review and bounded-plan modules | Never connects to EDA or executes mutation |
+| `scripts/build-readonly-adapter-envelope.py` | O-project-code | Project-authored offline assembler for explicit sanitized read-only capture facts | Derives only the normalized-design digest; never discovers EDA state or emits partial evidence |
+| `scripts/validate-readonly-adapter-health.py` | O-project-code | Project-authored offline validator for external read-only adapter health receipts | Never performs network requests or accesses EDA |
+| `src/review/readonly_adapter_export.py` | O-project-code | Project-authored fail-closed envelope assembly and contract reuse | Accepts explicit capture facts only; no Gateway/Bridge access |
+| `src/review/readonly_adapter_health.py` | O-project-code | Project-authored fail-closed health receipt validator and safe summary | Classifies transport/session/protocol facts without contacting the environment |
 | `tests/review/test_review_pipeline.py` | O-project-test | Project-authored regression coverage for the offline orchestration entry | Verifies zero EDA access and zero writes |
+| `tests/review/test_readonly_adapter_export.py` | O-project-test | Project-authored regression coverage for complete and failed envelope assembly | Verifies digest derivation, partial-state rejection and allow-listed failures |
+| `tests/review/test_readonly_adapter_health.py` | O-project-test | Project-authored health gate regression coverage | Covers 502, diagnostic-only mode, target ambiguity and write-signal rejection |
 | `docs/reproducible-release.md` | O-public-doc | Project-authored deterministic local release and verification instructions | Git, ZIP, SHA-256, and Python names are functional references; no tool code copied |
 | `docs/resume.md` | O-public-doc | Project-authored public-release documentation or example text | Third-party names/links are nominative/reference-only; claims remain evidence-scoped |
 | `docs/review-model.md` | O-public-doc | Project-authored public-release documentation or example text | Third-party names/links are nominative/reference-only; claims remain evidence-scoped |
@@ -120,6 +126,7 @@ This inventory classifies every file in the public candidate. "Project-authored"
 | `schemas/pin-consistency-report.schema.json` | C-private-copied | Project schema copied from the private working tree | No upstream marker found; explicit Apache-2.0 relicensing attestation required |
 | `schemas/project-snapshot.schema.json` | C-private-copied | Project schema copied from the private working tree | No upstream marker found; explicit Apache-2.0 relicensing attestation required |
 | `schemas/readonly-adapter-envelope.schema.json` | O-public-schema | Project-authored strict read-only adapter handoff schema | No live connector or mutation capability bundled |
+| `schemas/readonly-adapter-health.schema.json` | O-public-schema | Project-authored strict health-probe receipt schema | Transport/session/protocol diagnostics only; no connector bundled |
 | `schemas/prototype-review-input.schema.json` | O-public-schema | Project-authored runtime schema created for the release candidate | Apache-2.0 after ownership attestation; JSON Schema vocabulary is reference-only |
 | `schemas/prototype-review-output.schema.json` | O-public-schema | Project-authored runtime schema created for the release candidate | Apache-2.0 after ownership attestation; JSON Schema vocabulary is reference-only |
 | `scripts/build-release.py` | O-public-code | Project-authored deterministic local archive builder created for this candidate | Apache-2.0 after ownership attestation; Git and Python are user-provided |
