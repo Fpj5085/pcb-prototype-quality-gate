@@ -12,7 +12,7 @@ The Draft generator is a replaceable adapter, not the trusted core. The project'
 
 [简体中文](README.zh-CN.md)
 
-[Install](INSTALL.md) · [Demo](docs/demo.md) · [Evidence schema](docs/evidence-schema.md) · [M2 evidence gate](docs/m2-evidence-gate.md) · [Reproducible release](docs/reproducible-release.md) · [Roadmap](docs/roadmap.md)
+[Install](INSTALL.md) · [Demo](docs/demo.md) · [Evidence schema](docs/evidence-schema.md) · [M2 evidence gate](docs/m2-evidence-gate.md) · [Pipeline entry](docs/pipeline.md) · [Reproducible release](docs/reproducible-release.md) · [Roadmap](docs/roadmap.md)
 
 ## Why this exists
 

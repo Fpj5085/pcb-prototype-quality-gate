@@ -49,8 +49,15 @@ class InputValidationError(ValueError):
     """Raised when normalized evidence is structurally unsafe to review."""
 
 
+def _reject_nonstandard_json_constant(value: str) -> Any:
+    raise InputValidationError(f"non-standard JSON numeric constant is not allowed: {value}")
+
+
 def read_json(path: Path) -> Any:
-    return json.loads(path.read_text(encoding="utf-8-sig"))
+    return json.loads(
+        path.read_text(encoding="utf-8-sig"),
+        parse_constant=_reject_nonstandard_json_constant,
+    )
 
 
 def write_json(path: Path, value: Any) -> None:
@@ -68,6 +75,13 @@ def distance(a: dict[str, Any], b: dict[str, Any]) -> float:
 
 def confidence_rank(value: str) -> int:
     return {"low": 0, "medium": 1, "high": 2}.get(value, 0)
+
+
+def conservative_confidence(*values: str | None) -> str:
+    ranked = [value for value in values if value in {"low", "medium", "high"}]
+    if not ranked:
+        return "low"
+    return min(ranked, key=confidence_rank)
 
 
 def _is_absolute_path(value: str) -> bool:
@@ -140,6 +154,161 @@ def _check_unique_rows(rows: list[Any], key: str, label: str) -> None:
         seen.add(value)
 
 
+def _require_non_empty_string(value: Any, label: str) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise InputValidationError(f"{label} must be a non-empty string")
+    return value
+
+
+def _require_finite_number(
+    value: Any,
+    label: str,
+    *,
+    minimum: float | None = None,
+    exclusive_minimum: float | None = None,
+) -> float:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise InputValidationError(f"{label} must be a finite JSON number")
+    number = float(value)
+    if not math.isfinite(number):
+        raise InputValidationError(f"{label} must be a finite JSON number")
+    if minimum is not None and number < minimum:
+        raise InputValidationError(f"{label} must be >= {minimum:g}")
+    if exclusive_minimum is not None and number <= exclusive_minimum:
+        raise InputValidationError(f"{label} must be > {exclusive_minimum:g}")
+    return number
+
+
+def _require_integer(
+    value: Any,
+    label: str,
+    *,
+    minimum: int | None = None,
+) -> int:
+    if type(value) is not int:
+        raise InputValidationError(f"{label} must be a JSON integer")
+    if minimum is not None and value < minimum:
+        raise InputValidationError(f"{label} must be >= {minimum}")
+    return value
+
+
+def _validate_confidence(value: Any, label: str) -> None:
+    if value not in {"low", "medium", "high"}:
+        raise InputValidationError(f"{label} must be low, medium or high")
+
+
+def _validate_assumptions(row: dict[str, Any], label: str) -> None:
+    if "assumptions" not in row:
+        return
+    assumptions = _require_list(row["assumptions"], f"{label}.assumptions")
+    if any(not isinstance(item, str) or not item.strip() for item in assumptions):
+        raise InputValidationError(f"{label}.assumptions items must be non-empty strings")
+
+
+def _validate_rule_rows(design: dict[str, Any]) -> None:
+    row_contracts: dict[str, dict[str, Any]] = {
+        "powerPaths": {
+            "strings": ("regulatorRef", "inputNet", "outputNet"),
+            "requiredNumbers": {"sourceMinV": {"minimum": 0}},
+            "optionalNumbers": {"sourceMaxV": {"minimum": 0}, "outputV": {"minimum": 0}},
+        },
+        "protectedCircuits": {
+            "strings": ("fuseRef",),
+            "requiredNumbers": {"continuousCurrentA": {"minimum": 0}, "surgeCurrentA": {"minimum": 0}},
+            "optionalNumbers": {"holdDerating": {"exclusive_minimum": 0}},
+        },
+        "regulatorUses": {
+            "strings": ("regulatorRef",),
+            "requiredNumbers": {"inputMaxV": {"minimum": 0}, "loadMaxA": {"minimum": 0}},
+            "optionalNumbers": {
+                "outputV": {"minimum": 0},
+                "thermalResistanceCPerW": {"exclusive_minimum": 0},
+                "recommendedMaxDissipationW": {"exclusive_minimum": 0},
+                "cautionRiseC": {"minimum": 0},
+                "blockerRiseC": {"minimum": 0},
+            },
+        },
+        "hbridgeUses": {
+            "strings": ("driverRef",),
+            "requiredNumbers": {"perChannelRunA": {"minimum": 0}},
+            "optionalNumbers": {"perChannelPeakA": {"minimum": 0}, "maxEstimatedRiseC": {"exclusive_minimum": 0}},
+            "requiredIntegers": {"channelsUsed": {"minimum": 1}},
+        },
+        "decouplingRequirements": {
+            "strings": ("targetRef", "supplyNet"),
+            "optionalStrings": ("returnNet",),
+            "optionalNumbers": {
+                "minCapacitanceUf": {"minimum": 0},
+                "maxCapacitanceUf": {"minimum": 0},
+                "maxDistanceMm": {"minimum": 0},
+            },
+        },
+        "bulkCapRequirements": {
+            "strings": ("targetRef", "supplyNet"),
+            "optionalStrings": ("returnNet",),
+            "requiredNumbers": {"minCapacitanceUf": {"minimum": 0}},
+            "optionalNumbers": {"maxDistanceMm": {"minimum": 0}},
+        },
+        "voltageDividers": {
+            "strings": ("id",),
+            "requiredNumbers": {
+                "inputMaxV": {"minimum": 0},
+                "topOhm": {"exclusive_minimum": 0},
+                "bottomOhm": {"exclusive_minimum": 0},
+                "receiverAbsMaxV": {"exclusive_minimum": 0},
+            },
+            "optionalNumbers": {"requiredMarginV": {"minimum": 0}},
+        },
+    }
+    for section, contract in row_contracts.items():
+        rows = _require_list(design.get(section, []), f"input.{section}")
+        for index, value in enumerate(rows):
+            row = _require_mapping(value, f"input.{section}[{index}]")
+            label = f"input.{section}[{index}]"
+            for field in contract.get("strings", ()):
+                _require_non_empty_string(row.get(field), f"{label}.{field}")
+            for field in contract.get("optionalStrings", ()):
+                if field in row:
+                    _require_non_empty_string(row[field], f"{label}.{field}")
+            for field, limits in contract.get("requiredNumbers", {}).items():
+                if field not in row:
+                    raise InputValidationError(f"{label}.{field} is required")
+                _require_finite_number(row[field], f"{label}.{field}", **limits)
+            for field, limits in contract.get("optionalNumbers", {}).items():
+                if field in row:
+                    _require_finite_number(row[field], f"{label}.{field}", **limits)
+            for field, limits in contract.get("requiredIntegers", {}).items():
+                if field not in row:
+                    raise InputValidationError(f"{label}.{field} is required")
+                _require_integer(row[field], f"{label}.{field}", **limits)
+            if "confidence" in row:
+                _validate_confidence(row["confidence"], f"{label}.confidence")
+            if "severity" in row and row["severity"] not in {"blocker", "advisory"}:
+                raise InputValidationError(f"{label}.severity must be blocker or advisory")
+            _validate_assumptions(row, label)
+            if section == "powerPaths":
+                series_refs = _require_list(row.get("seriesRefs", []), f"{label}.seriesRefs")
+                if any(not isinstance(item, str) or not item.strip() for item in series_refs):
+                    raise InputValidationError(f"{label}.seriesRefs items must be non-empty strings")
+                if "sourceMaxV" in row and float(row["sourceMaxV"]) < float(row["sourceMinV"]):
+                    raise InputValidationError(f"{label}.sourceMaxV must be >= sourceMinV")
+            if section == "protectedCircuits" and float(row["surgeCurrentA"]) < float(row["continuousCurrentA"]):
+                raise InputValidationError(f"{label}.surgeCurrentA must be >= continuousCurrentA")
+            if section == "regulatorUses":
+                caution = float(row.get("cautionRiseC", 50))
+                blocker = float(row.get("blockerRiseC", 80))
+                if blocker < caution:
+                    raise InputValidationError(f"{label}.blockerRiseC must be >= cautionRiseC")
+            if section == "hbridgeUses" and "perChannelPeakA" in row:
+                if float(row["perChannelPeakA"]) < float(row["perChannelRunA"]):
+                    raise InputValidationError(f"{label}.perChannelPeakA must be >= perChannelRunA")
+            if section == "decouplingRequirements":
+                minimum = float(row.get("minCapacitanceUf", 0))
+                maximum = float(row.get("maxCapacitanceUf", math.inf))
+                if maximum < minimum:
+                    raise InputValidationError(f"{label}.maxCapacitanceUf must be >= minCapacitanceUf")
+
+
 def validate_design(design: Any) -> dict[str, Any]:
     """Validate the minimum normalized evidence contract without third-party packages."""
     d = _require_mapping(design, "input")
@@ -154,19 +323,102 @@ def validate_design(design: Any) -> dict[str, Any]:
     _check_unique_rows(components, "ref", "input.components")
     _check_unique_rows(nets, "name", "input.nets")
     for index, component in enumerate(components):
+        label = f"input.components[{index}]"
         if ("x" in component) != ("y" in component):
-            raise InputValidationError(f"input.components[{index}] must provide both x and y or neither")
+            raise InputValidationError(f"{label} must provide both x and y or neither")
         for coordinate in ("x", "y"):
-            if coordinate in component and not isinstance(component[coordinate], (int, float)):
-                raise InputValidationError(f"input.components[{index}].{coordinate} must be numeric")
-        if "nets" in component and not isinstance(component["nets"], list):
-            raise InputValidationError(f"input.components[{index}].nets must be a JSON array")
-        if len(component.get("nets", [])) != len(set(component.get("nets", []))):
-            raise InputValidationError(f"input.components[{index}].nets must not contain duplicates")
+            if coordinate in component:
+                _require_finite_number(component[coordinate], f"{label}.{coordinate}")
+        if "capacitanceUf" in component:
+            _require_finite_number(component["capacitanceUf"], f"{label}.capacitanceUf", minimum=0)
+        if "critical" in component and type(component["critical"]) is not bool:
+            raise InputValidationError(f"{label}.critical must be a JSON boolean")
+        if "nets" in component:
+            component_nets = _require_list(component["nets"], f"{label}.nets")
+            if any(not isinstance(item, str) or not item.strip() for item in component_nets):
+                raise InputValidationError(f"{label}.nets items must be non-empty strings")
+            if len(component_nets) != len(set(component_nets)):
+                raise InputValidationError(f"{label}.nets must not contain duplicates")
+    for index, net in enumerate(nets):
+        label = f"input.nets[{index}]"
+        if "designCurrentA" in net:
+            _require_finite_number(net["designCurrentA"], f"{label}.designCurrentA", minimum=0)
+        if "minWidthMm" in net:
+            _require_finite_number(net["minWidthMm"], f"{label}.minWidthMm", exclusive_minimum=0)
     if "sourceEvidence" in d:
         evidence = _require_list(d["sourceEvidence"], "input.sourceEvidence")
-        if any(not isinstance(item, str) for item in evidence):
-            raise InputValidationError("input.sourceEvidence items must be strings")
+        if any(not isinstance(item, str) or not item.strip() for item in evidence):
+            raise InputValidationError("input.sourceEvidence items must be non-empty strings")
+    metadata = d.get("fixtureMetadata")
+    if metadata is not None:
+        metadata = _require_mapping(metadata, "input.fixtureMetadata")
+        for field in ("liveEdaVerified", "persistenceEvidenceIncluded", "notForManufacturing"):
+            if field in metadata and type(metadata[field]) is not bool:
+                raise InputValidationError(f"input.fixtureMetadata.{field} must be a JSON boolean")
+    if "pcb" in d:
+        pcb = _require_mapping(d["pcb"], "input.pcb")
+        if "traceCapacity" in pcb:
+            trace_capacity = _require_mapping(pcb["traceCapacity"], "input.pcb.traceCapacity")
+            for field, limits in {
+                "copperOz": {"exclusive_minimum": 0},
+                "allowedRiseC": {"exclusive_minimum": 0},
+                "currentMargin": {"minimum": 1},
+            }.items():
+                if field in trace_capacity:
+                    _require_finite_number(trace_capacity[field], f"input.pcb.traceCapacity.{field}", **limits)
+    if "groundReview" in d:
+        ground = _require_mapping(d["groundReview"], "input.groundReview")
+        _require_integer(ground.get("pours"), "input.groundReview.pours", minimum=0)
+        _require_integer(ground.get("islands"), "input.groundReview.islands", minimum=0)
+        for field in ("returnPathVerified", "powerLogicReturnSeparated"):
+            if type(ground.get(field)) is not bool:
+                raise InputValidationError(f"input.groundReview.{field} must be a JSON boolean")
+        if "confidence" in ground:
+            _validate_confidence(ground["confidence"], "input.groundReview.confidence")
+        _validate_assumptions(ground, "input.groundReview")
+    if "schematicTopology" in d:
+        topology = _require_mapping(d["schematicTopology"], "input.schematicTopology")
+        for field in ("floatingInputs", "sameNameConflicts"):
+            values = _require_list(topology.get(field), f"input.schematicTopology.{field}")
+            if any(not isinstance(item, str) or not item.strip() for item in values):
+                raise InputValidationError(f"input.schematicTopology.{field} items must be non-empty strings")
+        for field in ("pinPadVerified", "hiddenPowerPinsVerified"):
+            if type(topology.get(field)) is not bool:
+                raise InputValidationError(f"input.schematicTopology.{field} must be a JSON boolean")
+        if "confidence" in topology:
+            _validate_confidence(topology["confidence"], "input.schematicTopology.confidence")
+        _validate_assumptions(topology, "input.schematicTopology")
+    if "debugInterface" in d:
+        debug = _require_mapping(d["debugInterface"], "input.debugInterface")
+        for field in ("requiredSignals", "presentSignals"):
+            values = _require_list(debug.get(field), f"input.debugInterface.{field}")
+            if any(not isinstance(item, str) or not item.strip() for item in values):
+                raise InputValidationError(f"input.debugInterface.{field} items must be non-empty strings")
+        if "locations" in debug:
+            locations = _require_list(debug["locations"], "input.debugInterface.locations")
+            if any(not isinstance(item, str) or not item.strip() for item in locations):
+                raise InputValidationError("input.debugInterface.locations items must be non-empty strings")
+    if "usability" in d:
+        usability = _require_mapping(d["usability"], "input.usability")
+        for field in ("missingTestpointNets", "missingSilkscreenLabels"):
+            if field in usability:
+                values = _require_list(usability[field], f"input.usability.{field}")
+                if any(not isinstance(item, str) or not item.strip() for item in values):
+                    raise InputValidationError(f"input.usability.{field} items must be non-empty strings")
+        if "antennaKeepout" in usability:
+            antenna = _require_mapping(usability["antennaKeepout"], "input.usability.antennaKeepout")
+            if type(antenna.get("verified")) is not bool:
+                raise InputValidationError("input.usability.antennaKeepout.verified must be a JSON boolean")
+            if "confidence" in antenna:
+                _validate_confidence(antenna["confidence"], "input.usability.antennaKeepout.confidence")
+            _validate_assumptions(antenna, "input.usability.antennaKeepout")
+    pins = _require_list(d.get("firmwarePins", []), "input.firmwarePins")
+    for index, pin in enumerate(pins):
+        pin = _require_mapping(pin, f"input.firmwarePins[{index}]")
+        _require_non_empty_string(pin.get("pin"), f"input.firmwarePins[{index}].pin")
+        if "net" in pin and pin["net"] is not None:
+            _require_non_empty_string(pin["net"], f"input.firmwarePins[{index}].net")
+    _validate_rule_rows(d)
     return d
 
 
@@ -186,8 +438,52 @@ def validate_profiles(profiles: Any) -> dict[str, Any]:
         for field in ("manufacturer", "title", "confidence", "redistribution"):
             if not isinstance(source.get(field), str) or not source[field]:
                 raise InputValidationError(f"profile {key!r}.source.{field} must be a non-empty string")
-        if source["confidence"] not in {"low", "medium", "high"}:
-            raise InputValidationError(f"profile {key!r}.source.confidence must be low, medium or high")
+        _validate_confidence(source["confidence"], f"profile {key!r}.source.confidence")
+        supported = profile.get("supportedPackages")
+        if supported is not None:
+            supported = _require_list(supported, f"profile {key!r}.supportedPackages")
+            if any(not isinstance(item, str) or not item.strip() for item in supported):
+                raise InputValidationError(f"profile {key!r}.supportedPackages items must be non-empty strings")
+        kind_contracts: dict[str, dict[str, dict[str, float]]] = {
+            "linear_regulator": {"outputV": {"minimum": 0}},
+            "switching_regulator": {"outputV": {"minimum": 0}},
+            "series_diode": {"forwardDropV": {"minimum": 0}},
+            "ideal_diode": {"forwardDropV": {"minimum": 0}},
+            "resettable_fuse": {"holdCurrentA": {"exclusive_minimum": 0}, "tripCurrentA": {"exclusive_minimum": 0}},
+            "fuse": {"holdCurrentA": {"exclusive_minimum": 0}, "tripCurrentA": {"exclusive_minimum": 0}},
+            "hbridge": {
+                "continuousCurrentPerChannelA": {"exclusive_minimum": 0},
+                "peakCurrentPerChannelA": {"exclusive_minimum": 0},
+                "bridgeDropAtRatedV": {"minimum": 0},
+                "thetaJaCPerW": {"exclusive_minimum": 0},
+            },
+        }
+        for field, limits in kind_contracts.get(profile["kind"], {}).items():
+            if field not in profile:
+                raise InputValidationError(f"profile {key!r}.{field} is required for kind {profile['kind']}")
+            _require_finite_number(profile[field], f"profile {key!r}.{field}", **limits)
+        if profile["kind"] in {"linear_regulator", "switching_regulator"}:
+            dropout_field = "dropoutMaxV" if "dropoutMaxV" in profile else "dropoutTypicalV"
+            if dropout_field not in profile:
+                raise InputValidationError(f"profile {key!r} requires dropoutMaxV or dropoutTypicalV")
+            _require_finite_number(profile[dropout_field], f"profile {key!r}.{dropout_field}", minimum=0)
+        if profile["kind"] in {"resettable_fuse", "fuse"}:
+            if float(profile["tripCurrentA"]) < float(profile["holdCurrentA"]):
+                raise InputValidationError(f"profile {key!r}.tripCurrentA must be >= holdCurrentA")
+        if profile["kind"] == "hbridge":
+            if float(profile["peakCurrentPerChannelA"]) < float(profile["continuousCurrentPerChannelA"]):
+                raise InputValidationError(
+                    f"profile {key!r}.peakCurrentPerChannelA must be >= continuousCurrentPerChannelA"
+                )
+        for field in (
+            "maxInputV",
+            "thermalResistanceCPerW",
+            "recommendedMaxDissipationW",
+            "nominalV",
+            "inputAbsMaxV",
+        ):
+            if field in profile:
+                _require_finite_number(profile[field], f"profile {key!r}.{field}", minimum=0)
     return data
 
 
@@ -209,11 +505,12 @@ class Finding:
 
 class Review:
     def __init__(self, design: dict[str, Any], profiles: dict[str, Any]):
-        self.d = design
-        self.profiles = profiles.get("profiles", profiles)
+        self.d = validate_design(design)
+        validated_profiles = validate_profiles(profiles)
+        self.profiles = validated_profiles["profiles"]
         self.findings: list[Finding] = []
-        self.components = {c["ref"]: c for c in design.get("components", [])}
-        self.nets = {n["name"]: n for n in design.get("nets", [])}
+        self.components = {c["ref"]: c for c in self.d.get("components", [])}
+        self.nets = {n["name"]: n for n in self.d.get("nets", [])}
         self.evidence_completeness: dict[str, Any] = {
             "status": "incomplete",
             "requiredFields": list(REQUIRED_PROTOTYPE_GATES),
@@ -243,6 +540,12 @@ class Review:
             "fields": {k: profile.get(k) for k in fields if k in profile},
             "sourceConfidence": source.get("confidence", "low"),
         }]
+
+    @staticmethod
+    def profile_confidence(profile: dict[str, Any] | None) -> str:
+        if not profile:
+            return "low"
+        return profile.get("source", {}).get("confidence", "low")
 
     def run(self) -> dict[str, Any]:
         self.rule_identity_and_profiles()
@@ -296,12 +599,16 @@ class Review:
                 continue
             vin_min = float(path["sourceMinV"])
             drops = []
+            source_confidences = [self.profile_confidence(p)]
             for ref in path.get("seriesRefs", []):
                 comp = self.components.get(ref)
                 cp = self.profile(comp) if comp else None
                 drop = float((cp or {}).get("forwardDropV", comp.get("forwardDropV", 0) if comp else 0))
                 drops.append((ref, drop))
+                if cp:
+                    source_confidences.append(self.profile_confidence(cp))
                 vin_min -= drop
+            finding_confidence = conservative_confidence(*source_confidences)
             output = float(p.get("outputV", path.get("outputV", 0)))
             dropout = float(p.get("dropoutMaxV", p.get("dropoutTypicalV", 0)))
             margin = vin_min - output - dropout
@@ -309,7 +616,7 @@ class Review:
             ev.append({"sourceMinV": path["sourceMinV"], "seriesDropsV": drops})
             if margin < 0:
                 self.add(
-                    id=f"POWER_HEADROOM:{regulator['ref']}", severity="blocker", confidence="high",
+                    id=f"POWER_HEADROOM:{regulator['ref']}", severity="blocker", confidence=finding_confidence,
                     title="最低输入电压不足以维持稳压输出", riskZh="低电量或低输入电压时电源轨会下降，系统可能不启动、复位或外设异常。",
                     locations=[regulator["ref"], path.get("inputNet", ""), path.get("outputNet", "")], evidence=ev,
                     calculation=f"{path['sourceMinV']:.3g}V - series {sum(v for _, v in drops):.3g}V - {output:.3g}V - dropout {dropout:.3g}V = {margin:.3g}V",
@@ -318,7 +625,7 @@ class Review:
                     unresolvedAssumptions=path.get("assumptions", []), ruleFamily="power")
             else:
                 self.add(
-                    id=f"POWER_HEADROOM_PASS:{regulator['ref']}", severity="pass", confidence="high",
+                    id=f"POWER_HEADROOM_PASS:{regulator['ref']}", severity="pass", confidence=finding_confidence,
                     title="最低输入电压压差裕量通过", riskZh="最低输入条件仍保留稳压余量。",
                     locations=[regulator["ref"]], evidence=ev, calculation=f"headroom margin={margin:.3g}V",
                     recommendationZh="保持当前输入范围与器件额定值绑定。", revalidation="边界电压负载测试。",
@@ -329,7 +636,7 @@ class Review:
                 max_at_reg = float(source_max) - sum(v for _, v in drops)
                 if max_at_reg > float(max_vin):
                     self.add(
-                        id=f"ABS_MAX_INPUT:{regulator['ref']}", severity="blocker", confidence="high",
+                        id=f"ABS_MAX_INPUT:{regulator['ref']}", severity="blocker", confidence=finding_confidence,
                         title="稳压器输入超过绝对最大额定值", riskZh="高输入条件可能造成器件永久损坏。",
                         locations=[regulator["ref"]], evidence=self.evidence_for(p, ["maxInputV"]),
                         calculation=f"max at input={max_at_reg:.3g}V > max={max_vin}V",
@@ -352,7 +659,7 @@ class Review:
             usable_hold = hold * derating
             if continuous > usable_hold:
                 self.add(
-                    id=f"FUSE_HOLD:{fuse['ref']}", severity="blocker", confidence="high",
+                    id=f"FUSE_HOLD:{fuse['ref']}", severity="blocker", confidence=self.profile_confidence(p),
                     title="保护器件保持电流低于正常负载预算", riskZh="正常启动或运行时保护器件可能升阻或动作，引起掉电和复位。",
                     locations=[fuse["ref"]], evidence=self.evidence_for(p, ["holdCurrentA", "tripCurrentA"]),
                     calculation=f"continuous={continuous:.3g}A > derated hold={hold:.3g}×{derating:.2g}={usable_hold:.3g}A; surge={surge:.3g}A; trip={trip:.3g}A",
@@ -361,7 +668,7 @@ class Review:
                     unresolvedAssumptions=circuit.get("assumptions", []), ruleFamily="protection")
             elif surge >= trip:
                 self.add(
-                    id=f"FUSE_SURGE:{fuse['ref']}", severity="advisory", confidence="high",
+                    id=f"FUSE_SURGE:{fuse['ref']}", severity="advisory", confidence=self.profile_confidence(p),
                     title="启动浪涌可能进入保护器件动作区", riskZh="启动可靠性取决于浪涌持续时间和器件动作曲线。",
                     locations=[fuse["ref"]], evidence=self.evidence_for(p, ["holdCurrentA", "tripCurrentA"]),
                     calculation=f"surge={surge:.3g}A >= trip reference={trip:.3g}A",
@@ -369,7 +676,7 @@ class Review:
                     unresolvedAssumptions=circuit.get("assumptions", []), ruleFamily="protection")
             else:
                 self.add(
-                    id=f"FUSE_PASS:{fuse['ref']}", severity="pass", confidence="high", title="保护器件电流预算通过",
+                    id=f"FUSE_PASS:{fuse['ref']}", severity="pass", confidence=self.profile_confidence(p), title="保护器件电流预算通过",
                     riskZh="正常负载和浪涌均低于当前保护预算。", locations=[fuse["ref"]],
                     evidence=self.evidence_for(p, ["holdCurrentA", "tripCurrentA"]),
                     calculation=f"continuous={continuous:.3g}A <= derated hold={usable_hold:.3g}A; surge={surge:.3g}A < trip={trip:.3g}A",
@@ -402,7 +709,8 @@ class Review:
             elif rise > caution_rise:
                 severity = "advisory"
             self.add(
-                id=f"REGULATOR_THERMAL:{comp['ref']}", severity=severity, confidence=use.get("confidence", "medium"),
+                id=f"REGULATOR_THERMAL:{comp['ref']}", severity=severity,
+                confidence=conservative_confidence(use.get("confidence", "medium"), self.profile_confidence(p)),
                 title="稳压器功耗/温升预算" + ("超限" if severity == "blocker" else ("需要核验" if severity == "advisory" else "通过")),
                 riskZh="线性稳压器在高输入和负载下会把压差变为热量，可能过热、降额或使输出失稳。" if severity != "pass" else "配置负载下稳压器损耗和估算温升在门限内。",
                 locations=[comp["ref"]], evidence=self.evidence_for(p, ["outputV", "thermalResistanceCPerW", "recommendedMaxDissipationW"]),
@@ -432,7 +740,7 @@ class Review:
             blocker = run > continuous_max + 1e-12 or peak > peak_max + 1e-12 or rise > allowed_rise + 1e-12
             severity = "blocker" if blocker else ("advisory" if rise > allowed_rise * 0.65 else "pass")
             self.add(
-                id=f"HBRIDGE_THERMAL:{comp['ref']}", severity=severity, confidence="high",
+                id=f"HBRIDGE_THERMAL:{comp['ref']}", severity=severity, confidence=self.profile_confidence(p),
                 title="H 桥电流、压降与热预算" + ("超限" if blocker else "通过"),
                 riskZh="驱动压降会降低负载电压，过高损耗会造成过热或热保护。" if severity != "pass" else "驱动电流和估算温升在配置门限内。",
                 locations=[comp["ref"]], evidence=self.evidence_for(p, ["continuousCurrentPerChannelA", "peakCurrentPerChannelA", "bridgeDropAtRatedV", "thetaJaCPerW"]),
@@ -815,6 +1123,25 @@ class Review:
             return RATING_SUITABLE, unresolved
 
         rating, unresolved = rating_for(self.findings)
+        declared_assumptions = sorted({
+            item
+            for section in (
+                "powerPaths",
+                "protectedCircuits",
+                "regulatorUses",
+                "hbridgeUses",
+                "decouplingRequirements",
+                "bulkCapRequirements",
+                "voltageDividers",
+            )
+            for row in self.d.get(section, [])
+            for item in row.get("assumptions", [])
+        } | {
+            item
+            for section in ("groundReview", "schematicTopology")
+            for item in self.d.get(section, {}).get("assumptions", [])
+        })
+        unresolved = sorted(set(unresolved) | set(declared_assumptions))
         forecast_findings = [f for f in self.findings if not f.id.startswith(EVIDENCE_ONLY_FINDING_PREFIXES)]
         engineering_forecast_rating, _forecast_unresolved = rating_for(forecast_findings)
         all_blockers = [f for f in self.findings if f.severity == "blocker"]
@@ -894,8 +1221,21 @@ def normalize_raw_input(spec: dict[str, Any], spec_path: Path) -> dict[str, Any]
         design["fixtureMetadata"] = context["fixtureMetadata"]
     elif "fixtureMetadata" in spec:
         design["fixtureMetadata"] = spec["fixtureMetadata"]
-    for key in ["powerPaths", "protectedCircuits", "hbridgeUses", "regulatorUses", "decouplingRequirements", "bulkCapRequirements", "voltageDividers", "debugInterface", "usability", "pcb", "groundReview", "schematicTopology", "firmwarePins"]:
-        design[key] = context.get(key, [] if key not in {"debugInterface", "usability", "pcb", "groundReview", "schematicTopology"} else {})
+    list_sections = [
+        "powerPaths",
+        "protectedCircuits",
+        "hbridgeUses",
+        "regulatorUses",
+        "decouplingRequirements",
+        "bulkCapRequirements",
+        "voltageDividers",
+        "firmwarePins",
+    ]
+    for key in list_sections:
+        design[key] = context.get(key, [])
+    for key in ("debugInterface", "usability", "pcb", "groundReview", "schematicTopology"):
+        if key in context:
+            design[key] = context[key]
     return design
 
 

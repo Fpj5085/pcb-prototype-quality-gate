@@ -2,7 +2,7 @@
 
 This is the complete intended file set for the local v0.1.1-alpha Git repository and release archive. All paths are repository-relative. Local Git metadata and the external ZIP/checksum sidecar are not part of the archive.
 
-**Total intended repository files: 151.**
+**Total intended repository files: 155.**
 
 ## Complete inventory
 
@@ -33,6 +33,7 @@ This is the complete intended file set for the local v0.1.1-alpha Git repository
 - `docs/limitations.md`
 - `docs/m2-evidence-gate.md`
 - `docs/privacy.md`
+- `docs/pipeline.md`
 - `docs/reproducible-release.md`
 - `docs/resume.md`
 - `docs/review-model.md`
@@ -119,6 +120,7 @@ This is the complete intended file set for the local v0.1.1-alpha Git repository
 - `scripts/prototype-review.ps1`
 - `scripts/release-verify.py`
 - `scripts/run-evals.py`
+- `scripts/run-review-pipeline.py`
 - `scripts/update-integrity.py`
 - `skills/jlceda-hardware-design/SKILL.md`
 - `skills/jlceda-hardware-design/agents/openai.yaml`
@@ -155,5 +157,7 @@ This is the complete intended file set for the local v0.1.1-alpha Git repository
 - `tests/review/fixtures/synthetic-safe-input.json`
 - `tests/review/test_component_profile_audit.py`
 - `tests/review/test_diverse_benchmarks.py`
+- `tests/review/test_input_safety_boundaries.py`
 - `tests/review/test_prototype_review.py`
 - `tests/review/test_release_runtime.py`
+- `tests/review/test_review_pipeline.py`

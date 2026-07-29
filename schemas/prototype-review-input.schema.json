@@ -4,6 +4,120 @@
   "title": "JLCEDA Prototype review normalized input",
   "type": "object",
   "required": ["schema", "designName", "components", "nets", "checks"],
+  "$defs": {
+    "confidence": {"enum": ["low", "medium", "high"]},
+    "assumptions": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "powerPath": {
+      "type": "object",
+      "required": ["regulatorRef", "inputNet", "outputNet", "sourceMinV"],
+      "properties": {
+        "regulatorRef": {"type": "string", "minLength": 1},
+        "inputNet": {"type": "string", "minLength": 1},
+        "outputNet": {"type": "string", "minLength": 1},
+        "seriesRefs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "sourceMinV": {"type": "number", "minimum": 0},
+        "sourceMaxV": {"type": "number", "minimum": 0},
+        "outputV": {"type": "number", "minimum": 0},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "assumptions": {"$ref": "#/$defs/assumptions"}
+      },
+      "additionalProperties": true
+    },
+    "protectedCircuit": {
+      "type": "object",
+      "required": ["fuseRef", "continuousCurrentA", "surgeCurrentA"],
+      "properties": {
+        "fuseRef": {"type": "string", "minLength": 1},
+        "continuousCurrentA": {"type": "number", "minimum": 0},
+        "surgeCurrentA": {"type": "number", "minimum": 0},
+        "holdDerating": {"type": "number", "exclusiveMinimum": 0},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "assumptions": {"$ref": "#/$defs/assumptions"}
+      },
+      "additionalProperties": true
+    },
+    "regulatorUse": {
+      "type": "object",
+      "required": ["regulatorRef", "inputMaxV", "loadMaxA"],
+      "properties": {
+        "regulatorRef": {"type": "string", "minLength": 1},
+        "inputMaxV": {"type": "number", "minimum": 0},
+        "loadMaxA": {"type": "number", "minimum": 0},
+        "outputV": {"type": "number", "minimum": 0},
+        "thermalResistanceCPerW": {"type": "number", "exclusiveMinimum": 0},
+        "recommendedMaxDissipationW": {"type": "number", "exclusiveMinimum": 0},
+        "cautionRiseC": {"type": "number", "minimum": 0},
+        "blockerRiseC": {"type": "number", "minimum": 0},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "assumptions": {"$ref": "#/$defs/assumptions"}
+      },
+      "additionalProperties": true
+    },
+    "hbridgeUse": {
+      "type": "object",
+      "required": ["driverRef", "perChannelRunA", "channelsUsed"],
+      "properties": {
+        "driverRef": {"type": "string", "minLength": 1},
+        "perChannelRunA": {"type": "number", "minimum": 0},
+        "perChannelPeakA": {"type": "number", "minimum": 0},
+        "channelsUsed": {"type": "integer", "minimum": 1},
+        "maxEstimatedRiseC": {"type": "number", "exclusiveMinimum": 0},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "assumptions": {"$ref": "#/$defs/assumptions"}
+      },
+      "additionalProperties": true
+    },
+    "localCapRequirement": {
+      "type": "object",
+      "required": ["targetRef", "supplyNet"],
+      "properties": {
+        "targetRef": {"type": "string", "minLength": 1},
+        "supplyNet": {"type": "string", "minLength": 1},
+        "returnNet": {"type": "string", "minLength": 1},
+        "minCapacitanceUf": {"type": "number", "minimum": 0},
+        "maxCapacitanceUf": {"type": "number", "minimum": 0},
+        "maxDistanceMm": {"type": "number", "minimum": 0},
+        "severity": {"enum": ["blocker", "advisory"]},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "assumptions": {"$ref": "#/$defs/assumptions"}
+      },
+      "additionalProperties": true
+    },
+    "bulkCapRequirement": {
+      "type": "object",
+      "required": ["targetRef", "supplyNet", "minCapacitanceUf"],
+      "properties": {
+        "targetRef": {"type": "string", "minLength": 1},
+        "supplyNet": {"type": "string", "minLength": 1},
+        "returnNet": {"type": "string", "minLength": 1},
+        "minCapacitanceUf": {"type": "number", "minimum": 0},
+        "maxDistanceMm": {"type": "number", "minimum": 0},
+        "severity": {"enum": ["blocker", "advisory"]},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "assumptions": {"$ref": "#/$defs/assumptions"}
+      },
+      "additionalProperties": true
+    },
+    "voltageDivider": {
+      "type": "object",
+      "required": ["id", "inputMaxV", "topOhm", "bottomOhm", "receiverAbsMaxV"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "inputMaxV": {"type": "number", "minimum": 0},
+        "topOhm": {"type": "number", "exclusiveMinimum": 0},
+        "bottomOhm": {"type": "number", "exclusiveMinimum": 0},
+        "receiverAbsMaxV": {"type": "number", "exclusiveMinimum": 0},
+        "requiredMarginV": {"type": "number", "minimum": 0},
+        "locations": {"type": "array", "items": {"type": "string"}},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "assumptions": {"$ref": "#/$defs/assumptions"}
+      },
+      "additionalProperties": true
+    }
+  },
   "properties": {
     "schema": {"const": "jlceda-prototype-review-input/1.0"},
     "designName": {"type": "string", "minLength": 1},
@@ -21,7 +135,7 @@
           "capacitanceUf": {"type": "number", "minimum": 0},
           "x": {"type": "number"},
           "y": {"type": "number"},
-          "nets": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+          "nets": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
         },
         "additionalProperties": true
       }
@@ -46,9 +160,7 @@
         "schematicErrors": {"type": "integer", "minimum": 0},
         "schematicWarnings": {"type": "integer", "minimum": 0},
         "schematicWarningDetailsAvailable": {"type": "boolean"},
-        "schematicWarningDisposition": {
-          "enum": ["unreviewed", "explained_and_accepted", "requires_correction"]
-        },
+        "schematicWarningDisposition": {"enum": ["unreviewed", "explained_and_accepted", "requires_correction"]},
         "pcbDrcFindings": {"type": "integer", "minimum": 0},
         "unroutedNets": {"type": "integer", "minimum": 0},
         "containment": {"type": "boolean"},
@@ -67,20 +179,99 @@
       },
       "additionalProperties": true
     },
-    "sourceEvidence": {"type": "array", "items": {"type": "string"}},
-    "powerPaths": {"type": "array", "items": {"type": "object"}},
-    "protectedCircuits": {"type": "array", "items": {"type": "object"}},
-    "hbridgeUses": {"type": "array", "items": {"type": "object"}},
-    "regulatorUses": {"type": "array", "items": {"type": "object"}},
-    "decouplingRequirements": {"type": "array", "items": {"type": "object"}},
-    "bulkCapRequirements": {"type": "array", "items": {"type": "object"}},
-    "voltageDividers": {"type": "array", "items": {"type": "object"}},
-    "debugInterface": {"type": "object"},
-    "usability": {"type": "object"},
-    "pcb": {"type": "object"},
-    "groundReview": {"type": "object"},
-    "schematicTopology": {"type": "object"},
-    "firmwarePins": {"type": "array", "items": {"type": "object"}}
+    "sourceEvidence": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "powerPaths": {"type": "array", "items": {"$ref": "#/$defs/powerPath"}},
+    "protectedCircuits": {"type": "array", "items": {"$ref": "#/$defs/protectedCircuit"}},
+    "hbridgeUses": {"type": "array", "items": {"$ref": "#/$defs/hbridgeUse"}},
+    "regulatorUses": {"type": "array", "items": {"$ref": "#/$defs/regulatorUse"}},
+    "decouplingRequirements": {"type": "array", "items": {"$ref": "#/$defs/localCapRequirement"}},
+    "bulkCapRequirements": {"type": "array", "items": {"$ref": "#/$defs/bulkCapRequirement"}},
+    "voltageDividers": {"type": "array", "items": {"$ref": "#/$defs/voltageDivider"}},
+    "debugInterface": {
+      "type": "object",
+      "required": ["requiredSignals", "presentSignals"],
+      "properties": {
+        "requiredSignals": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "presentSignals": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "locations": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      },
+      "additionalProperties": true
+    },
+    "usability": {
+      "type": "object",
+      "properties": {
+        "missingTestpointNets": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "missingSilkscreenLabels": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "antennaKeepout": {
+          "type": "object",
+          "required": ["verified"],
+          "properties": {
+            "verified": {"type": "boolean"},
+            "confidence": {"$ref": "#/$defs/confidence"},
+            "locations": {"type": "array", "items": {"type": "string", "minLength": 1}},
+            "assumptions": {"$ref": "#/$defs/assumptions"}
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "pcb": {
+      "type": "object",
+      "properties": {
+        "traceCapacity": {
+          "type": "object",
+          "properties": {
+            "copperOz": {"type": "number", "exclusiveMinimum": 0},
+            "allowedRiseC": {"type": "number", "exclusiveMinimum": 0},
+            "currentMargin": {"type": "number", "minimum": 1}
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "groundReview": {
+      "type": "object",
+      "required": ["pours", "islands", "returnPathVerified", "powerLogicReturnSeparated"],
+      "properties": {
+        "pours": {"type": "integer", "minimum": 0},
+        "islands": {"type": "integer", "minimum": 0},
+        "returnPathVerified": {"type": "boolean"},
+        "powerLogicReturnSeparated": {"type": "boolean"},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "assumptions": {"$ref": "#/$defs/assumptions"}
+      },
+      "additionalProperties": true
+    },
+    "schematicTopology": {
+      "type": "object",
+      "required": ["floatingInputs", "sameNameConflicts", "pinPadVerified", "hiddenPowerPinsVerified"],
+      "properties": {
+        "floatingInputs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "sameNameConflicts": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "pinPadVerified": {"type": "boolean"},
+        "hiddenPowerPinsVerified": {"type": "boolean"},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "assumptions": {"$ref": "#/$defs/assumptions"}
+      },
+      "additionalProperties": true
+    },
+    "firmwarePins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["pin"],
+        "properties": {
+          "pin": {"type": "string", "minLength": 1},
+          "net": {"type": ["string", "null"], "minLength": 1},
+          "port": {"type": "string"},
+          "purpose": {"type": "string"},
+          "direction": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    }
   },
   "additionalProperties": true
 }

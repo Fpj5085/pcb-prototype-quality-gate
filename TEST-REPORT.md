@@ -1,11 +1,12 @@
 # Test report — v0.1.1-alpha baseline and post-release hardening
 
 Date: 2026-07-29
-Scope: the published v0.1.1-alpha baseline plus an uncommitted post-release
-component-profile provenance/freshness enhancement. This run validated the
-offline runtime, sanitized M2/M3 evidence boundary, fail-closed local-bypass
-planner, new profile audit and release tooling. It performed no EDA mutation,
-network publication, upload, manufacturing, ordering or payment.
+Scope: the published v0.1.1-alpha baseline plus local post-release hardening for
+component-profile provenance, diverse offline benchmarks, normalized-input
+safety boundaries and the adapter-neutral offline pipeline entry. This run validated the offline runtime, sanitized M2/M3
+evidence boundary, fail-closed local-bypass planner, profile audit and release
+tooling. It performed no EDA mutation, network publication, upload,
+manufacturing, ordering or payment.
 
 ## Environment
 
@@ -23,12 +24,14 @@ tools and are not bundled dependencies.
 
 | Gate | Result |
 | --- | --- |
-| Complete Python test suite | **69/69 passed** |
+| Complete Python test suite | **84/84 passed** |
 | Prototype rule/runtime tests | **32/32 passed** |
+| Normalized-input safety-boundary tests | **13/13 passed** |
 | Component-profile provenance/freshness tests | **10/10 passed** |
 | Diverse offline benchmark tests | **4/4 passed** |
 | M2 evidence-import gate tests | **11/11 passed** |
 | Local-bypass repair-plan tests | **7/7 passed** |
+| Adapter-neutral pipeline tests | **2/2 passed** |
 | Reproducible release-tool tests | **5/5 passed** |
 | Sanitized/synthetic evaluation replay | **10/10 passed** |
 | Component-profile audit (`--as-of 2026-07-28`) | **11/11 fresh; 0 stale; 0 invalid** |
@@ -59,6 +62,19 @@ output determinism.
 The audit does not feed findings into `rating` or `engineeringForecastRating`,
 does not change the stable three-value rating enum and does not widen the sole
 public repair family `ADD_LOCAL_BYPASS_CAP`.
+
+## Normalized-input safety boundaries
+
+The runtime now rejects non-standard JSON numeric constants, non-finite values,
+boolean-as-number values, missing calculation operands, physically inverted
+ranges, invalid confidence/severity values and malformed optional containers
+before any engineering rule executes. It also validates component-profile
+numeric limits and ordering. Finding confidence cannot exceed the source profile
+confidence, and explicitly declared assumptions remain visible at top level even
+when the associated rule passes. A reproduced `NaN` power-path input had
+previously emitted `POWER_HEADROOM_PASS`; the same input is now rejected before
+review. Raw normalization remains compatible by omitting absent optional object
+groups rather than injecting ambiguous empty objects.
 
 ## M2 import matrix
 
@@ -174,8 +190,8 @@ WorkBuddy injects a host `sitecustomize` safe-delete hook that could not recycle
 three test temporary directories on this Windows workspace. The first full run
 therefore completed every assertion but reported three cleanup errors. Because
 the candidate uses only the Python standard library, the complete suite was
-rerun with `python -S`, which disables external site hooks; all 65 passed and all
-temporary directories were removed. No test assertion or product code was
+rerun with `python -S`, which disables external site hooks; the current full
+suite passed and all temporary directories were removed. No test assertion or product code was
 changed to obtain that result.
 
 Archive build and archive-against-committed-tree verification are performed only

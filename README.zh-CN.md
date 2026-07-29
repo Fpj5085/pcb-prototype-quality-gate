@@ -12,7 +12,7 @@ Draft 生成器是可替换的适配器，不是可信核心。项目的核心�
 
 [English](README.md)
 
-[安装](INSTALL.md) · [演示](docs/demo.md) · [证据结构](docs/evidence-schema.md) · [M2证据导入门](docs/m2-evidence-gate.md) · [可重复发布](docs/reproducible-release.md) · [路线图](docs/roadmap.md)
+[安装](INSTALL.md) · [演示](docs/demo.md) · [证据结构](docs/evidence-schema.md) · [M2证据导入门](docs/m2-evidence-gate.md) · [编排入口](docs/pipeline.md) · [可重复发布](docs/reproducible-release.md) · [路线图](docs/roadmap.md)
 
 ## 为什么需要它
 

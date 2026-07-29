@@ -38,6 +38,9 @@ This inventory classifies every file in the public candidate. "Project-authored"
 | `docs/limitations.md` | O-public-doc | Project-authored public-release documentation or example text | Third-party names/links are nominative/reference-only; claims remain evidence-scoped |
 | `docs/m2-evidence-gate.md` | O-public-doc | Project-authored public documentation for the deterministic sanitized-evidence gate | Explains synthetic fixtures and pending/live boundary; no raw M2 evidence copied |
 | `docs/privacy.md` | O-public-doc | Project-authored public-release documentation or example text | Third-party names/links are nominative/reference-only; claims remain evidence-scoped |
+| `docs/pipeline.md` | O-public-doc | Project-authored adapter-neutral review pipeline documentation | No live EDA adapter or mutation runtime bundled |
+| `scripts/run-review-pipeline.py` | O-project-code | Project-authored adapter-neutral orchestration entry that reuses the review and bounded-plan modules | Never connects to EDA or executes mutation |
+| `tests/review/test_review_pipeline.py` | O-project-test | Project-authored regression coverage for the offline orchestration entry | Verifies zero EDA access and zero writes |
 | `docs/reproducible-release.md` | O-public-doc | Project-authored deterministic local release and verification instructions | Git, ZIP, SHA-256, and Python names are functional references; no tool code copied |
 | `docs/resume.md` | O-public-doc | Project-authored public-release documentation or example text | Third-party names/links are nominative/reference-only; claims remain evidence-scoped |
 | `docs/review-model.md` | O-public-doc | Project-authored public-release documentation or example text | Third-party names/links are nominative/reference-only; claims remain evidence-scoped |
@@ -160,5 +163,6 @@ This inventory classifies every file in the public candidate. "Project-authored"
 | `tests/review/fixtures/synthetic-safe-input.json` | S-synthetic | Byte-identical test copy of the project-authored synthetic safe input | Original synthetic data; no physical/live claim |
 | `tests/review/test_component_profile_audit.py` | O-public-test | Project-authored adversarial coverage for deterministic provenance and freshness policy | Apache-2.0 after ownership attestation; synthetic metadata only; no network access |
 | `tests/review/test_diverse_benchmarks.py` | O-public-test | Project-authored coverage for three original synthetic BEFORE/AFTER benchmark pairs | Apache-2.0 after ownership attestation; zero-write fixtures only |
+| `tests/review/test_input_safety_boundaries.py` | O-public-test | Project-authored adversarial coverage for normalized-input numeric, confidence, range, container and assumption boundaries | Apache-2.0 after ownership attestation; synthetic inputs only; no EDA access |
 | `tests/review/test_prototype_review.py` | A-private-adapted | Project tests adapted for portable repository-relative execution | Apache-2.0 only after ownership attestation; standard library only |
 | `tests/review/test_release_runtime.py` | A-private-adapted | Project tests adapted for portable repository-relative execution | Apache-2.0 only after ownership attestation; standard library only |

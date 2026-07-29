@@ -49,6 +49,8 @@ Inputs must separate three kinds of information:
 
 An unknown value should be omitted or marked as unknown according to the schema. It should not be replaced with a precise-looking guess.
 
+The runtime additionally rejects non-standard JSON numeric constants (`NaN`, `Infinity`), non-finite numbers, boolean values in numeric fields, malformed optional containers and incomplete rule rows before any calculation runs. Explicit assumptions remain visible in the output even when a related rule passes. A finding derived from a component profile cannot claim confidence higher than that profile source.
+
 ## Component profiles
 
 Generic rules refer to a profile key; they do not hard-code a fixture designator. A profile may contain electrical limits, package expectations and evidence metadata. Critical facts should include:
