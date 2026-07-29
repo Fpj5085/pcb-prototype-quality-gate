@@ -119,6 +119,7 @@ This inventory classifies every file in the public candidate. "Project-authored"
 | `schemas/m2-public-evidence-summary.schema.json` | O-public-schema | Project-authored minimal-public-summary schema created for this candidate | Apache-2.0 after ownership attestation; contains no vendor API schema |
 | `schemas/pin-consistency-report.schema.json` | C-private-copied | Project schema copied from the private working tree | No upstream marker found; explicit Apache-2.0 relicensing attestation required |
 | `schemas/project-snapshot.schema.json` | C-private-copied | Project schema copied from the private working tree | No upstream marker found; explicit Apache-2.0 relicensing attestation required |
+| `schemas/readonly-adapter-envelope.schema.json` | O-public-schema | Project-authored strict read-only adapter handoff schema | No live connector or mutation capability bundled |
 | `schemas/prototype-review-input.schema.json` | O-public-schema | Project-authored runtime schema created for the release candidate | Apache-2.0 after ownership attestation; JSON Schema vocabulary is reference-only |
 | `schemas/prototype-review-output.schema.json` | O-public-schema | Project-authored runtime schema created for the release candidate | Apache-2.0 after ownership attestation; JSON Schema vocabulary is reference-only |
 | `scripts/build-release.py` | O-public-code | Project-authored deterministic local archive builder created for this candidate | Apache-2.0 after ownership attestation; Git and Python are user-provided |
@@ -139,6 +140,7 @@ This inventory classifies every file in the public candidate. "Project-authored"
 | `src/review/component-profiles.json` | F-factual-profile | Project-authored profile structure and thresholds with manufacturer factual citations | Official links, names, MPNs and numeric facts only; no PDF/table/figure |
 | `src/review/component_profile_audit.py` | O-public-code | Project-authored deterministic offline provenance and freshness auditor | Apache-2.0 after ownership attestation; standard library only; performs no network or EDA access |
 | `src/review/prototype_review.py` | A-private-adapted | Project review engine adapted and portabilized from a private working tree | Apache-2.0 only after authorship/relicensing attestation; standard library only |
+| `src/review/readonly_adapter_contract.py` | O-public-code | Project-authored fail-closed validator for sanitized read-only adapter evidence | Standard library only; validates files and never connects to EDA or writes designs |
 | `tests/__init__.py` | A-private-adapted | Project tests adapted for portable repository-relative execution | Apache-2.0 only after ownership attestation; standard library only |
 | `tests/m2_gate/__init__.py` | O-public-test | Project-authored test-package marker | Apache-2.0 after ownership attestation |
 | `tests/m2_gate/fixtures/README.md` | O-public-doc | Project-authored declaration that all enclosed positive evidence is synthetic gate data | Retain next to fixtures; positive live flags are not live M2 proof |
@@ -164,5 +166,6 @@ This inventory classifies every file in the public candidate. "Project-authored"
 | `tests/review/test_component_profile_audit.py` | O-public-test | Project-authored adversarial coverage for deterministic provenance and freshness policy | Apache-2.0 after ownership attestation; synthetic metadata only; no network access |
 | `tests/review/test_diverse_benchmarks.py` | O-public-test | Project-authored coverage for three original synthetic BEFORE/AFTER benchmark pairs | Apache-2.0 after ownership attestation; zero-write fixtures only |
 | `tests/review/test_input_safety_boundaries.py` | O-public-test | Project-authored adversarial coverage for normalized-input numeric, confidence, range, container and assumption boundaries | Apache-2.0 after ownership attestation; synthetic inputs only; no EDA access |
+| `tests/review/test_readonly_adapter_contract.py` | O-public-test | Project-authored adversarial coverage for read-only adapter target, digest, persistence and failure boundaries | Synthetic envelopes only; no EDA access or mutation |
 | `tests/review/test_prototype_review.py` | A-private-adapted | Project tests adapted for portable repository-relative execution | Apache-2.0 only after ownership attestation; standard library only |
 | `tests/review/test_release_runtime.py` | A-private-adapted | Project tests adapted for portable repository-relative execution | Apache-2.0 only after ownership attestation; standard library only |

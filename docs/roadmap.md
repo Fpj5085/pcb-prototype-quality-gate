@@ -37,7 +37,7 @@ The scoped M2 case and one independent M3 sensor-adapter repetition have now pas
 - [completed after v0.1.1] add three original synthetic BEFORE/AFTER benchmark pairs for power input, sensor interface and low-speed communication, each with a declared fixture-only scope;
 - [completed after v0.1.1] reject non-finite/boolean numeric inputs, malformed optional containers, missing calculation operands and invalid confidence/range values; cap finding confidence at source confidence and retain declared assumptions in output;
 - [completed locally] add an adapter-neutral offline pipeline entry that normalizes input, runs independent review and emits a zero-write pipeline receipt; live adapter execution remains external;
-- publish a formal adapter contract for read-only collection from multiple EDA environments;
+- [completed locally] publish a formal, fail-closed read-only adapter evidence envelope and consume it from the offline pipeline; live Bridge collection remains separately audited;
 - validate additional addition-only repair families one at a time;
 - [completed after v0.1.1] add deterministic offline component-profile provenance and freshness checks with an explicit as-of date;
 - add reproducible report localization without changing machine enums.

@@ -2,7 +2,7 @@
 
 This is the complete intended file set for the local v0.1.1-alpha Git repository and release archive. All paths are repository-relative. Local Git metadata and the external ZIP/checksum sidecar are not part of the archive.
 
-**Total intended repository files: 155.**
+**Total intended repository files: 158.**
 
 ## Complete inventory
 
@@ -112,6 +112,7 @@ This is the complete intended file set for the local v0.1.1-alpha Git repository
 - `schemas/m2-public-evidence-summary.schema.json`
 - `schemas/pin-consistency-report.schema.json`
 - `schemas/project-snapshot.schema.json`
+- `schemas/readonly-adapter-envelope.schema.json`
 - `schemas/prototype-review-input.schema.json`
 - `schemas/prototype-review-output.schema.json`
 - `scripts/build-release.py`
@@ -133,6 +134,7 @@ This is the complete intended file set for the local v0.1.1-alpha Git repository
 - `src/review/component-profiles.json`
 - `src/review/component_profile_audit.py`
 - `src/review/prototype_review.py`
+- `src/review/readonly_adapter_contract.py`
 - `tests/__init__.py`
 - `tests/m2_gate/__init__.py`
 - `tests/m2_gate/fixtures/README.md`
@@ -159,5 +161,6 @@ This is the complete intended file set for the local v0.1.1-alpha Git repository
 - `tests/review/test_diverse_benchmarks.py`
 - `tests/review/test_input_safety_boundaries.py`
 - `tests/review/test_prototype_review.py`
+- `tests/review/test_readonly_adapter_contract.py`
 - `tests/review/test_release_runtime.py`
 - `tests/review/test_review_pipeline.py`

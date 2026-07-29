@@ -4,8 +4,8 @@
   "candidateStatus": "local-review-candidate-not-published",
   "algorithm": "SHA-256",
   "reproducible": true,
-  "fileCount": 153,
-  "repositoryFileCountIncludingIntegrityFiles": 155,
+  "fileCount": 156,
+  "repositoryFileCountIncludingIntegrityFiles": 158,
   "selfHashExclusions": [
     "FILE-MANIFEST.json",
     "SHA256SUMS.txt"
@@ -28,8 +28,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 4712,
-      "sha256": "5a422c9ab29ab3c24a8ff1e31bb646f9095b728e1a12ed58bb666d9cfb950274"
+      "bytes": 5036,
+      "sha256": "4edb0fd5bb315442e78bdcfb4968fd6239ad00a412d56e0347211479e8e2f367"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -68,8 +68,8 @@
     },
     {
       "path": "PUBLIC-FILES.md",
-      "bytes": 6831,
-      "sha256": "6ce14b7a793e91b42f2a2d31d9882ece332601bf4b6644ab036f725a10c28658"
+      "bytes": 6979,
+      "sha256": "7209b194cc61ff4960eb94d9b4d9ffc393657f1032ab70c6c36c7d32cb584c69"
     },
     {
       "path": "README.md",
@@ -93,8 +93,8 @@
     },
     {
       "path": "TEST-REPORT.md",
-      "bytes": 10334,
-      "sha256": "7710d9c2d0b3bcabfaba0be0c1eed4b5388ea74dd728df14699a75c2a2e9dd0d"
+      "bytes": 10489,
+      "sha256": "7e257d373514d6c6c3510673667ba81fd0018e7047b5eee2e9db3945bc585914"
     },
     {
       "path": "THIRD_PARTY.md",
@@ -108,8 +108,8 @@
     },
     {
       "path": "docs/architecture.md",
-      "bytes": 6368,
-      "sha256": "e4d231b28e6ae824e30a671ec1ea773683f8dbf97f886b777a4da44ea11525f2"
+      "bytes": 6586,
+      "sha256": "1a6249e7fc48c08ad56bf36038dbae5ed4e87c528a8321f8d1d0f422cd68b784"
     },
     {
       "path": "docs/demo.md",
@@ -118,8 +118,8 @@
     },
     {
       "path": "docs/evidence-schema.md",
-      "bytes": 8321,
-      "sha256": "b557050a4c0bb208341e76adb3bd6676f64a096ec39fcc6df91383aa02fd1eaa"
+      "bytes": 8574,
+      "sha256": "8d1d343578561c69d35a5f0389b6a1f5b9cfcca7524320c258ba305396eecbf0"
     },
     {
       "path": "docs/limitations.md",
@@ -133,8 +133,8 @@
     },
     {
       "path": "docs/pipeline.md",
-      "bytes": 2885,
-      "sha256": "e5f210a648364eedb4c67c57fb05316c10e22013f5ba8bb98668865ead72f373"
+      "bytes": 3790,
+      "sha256": "336f3cebee4c2356182c47459978fb0ba924cb92b4f6809ef79b435f517bb6c2"
     },
     {
       "path": "docs/privacy.md",
@@ -158,8 +158,8 @@
     },
     {
       "path": "docs/roadmap.md",
-      "bytes": 3577,
-      "sha256": "781195624352a57f08e0e3749bc04b15967123ef167a547f5a806f04058aeb57"
+      "bytes": 3665,
+      "sha256": "79cea0d96511af0478baf35b336e2a9c8354a73b5fe8e8a1b8a6b2145735e827"
     },
     {
       "path": "docs/supported-repairs.md",
@@ -428,8 +428,8 @@
     },
     {
       "path": "release-audit/FILE-PROVENANCE.md",
-      "bytes": 30580,
-      "sha256": "521b4e75970ba939333507451b1ffa976256664c35b22fa54ed5ace100ab17c7"
+      "bytes": 31228,
+      "sha256": "7a951500cb5365e4e1aff4fd99407c4d97836586e02b38a70c0209f599205051"
     },
     {
       "path": "release-audit/M2-INTEGRATION-STATUS.md",
@@ -542,6 +542,11 @@
       "sha256": "6e30951af1c3e8694df7dbc91748280b4c844b12ae44803c513e3cfe6a7812eb"
     },
     {
+      "path": "schemas/readonly-adapter-envelope.schema.json",
+      "bytes": 3727,
+      "sha256": "9c033a2171db78747e1919f9958a8e3360f429268d2794d667bbac63678e45f9"
+    },
+    {
       "path": "scripts/build-release.py",
       "bytes": 4387,
       "sha256": "1ed17a038775a726a3c86a6f9445979d7e7a8ea41704b020982cd145b18b53a1"
@@ -573,8 +578,8 @@
     },
     {
       "path": "scripts/run-review-pipeline.py",
-      "bytes": 5129,
-      "sha256": "1f282f6c97dac558e265fc676e20b17e74c3c7a73443513ed937d274f6f6f0e6"
+      "bytes": 6008,
+      "sha256": "619e0316a55cb3fbe94ceb975016966d9b02192c7b156b44f75636c17eabeab9"
     },
     {
       "path": "scripts/update-integrity.py",
@@ -635,6 +640,11 @@
       "path": "src/review/prototype_review.py",
       "bytes": 81421,
       "sha256": "3195f7115a6af0c882e21cff14f723a163c82a3876638ee8d2bffced225539cc"
+    },
+    {
+      "path": "src/review/readonly_adapter_contract.py",
+      "bytes": 7226,
+      "sha256": "bd99213b72d0bd6f66d1922a83ab5670e2aa6fa4a4cbad1e85eb9be947cae19d"
     },
     {
       "path": "tests/__init__.py",
@@ -767,14 +777,19 @@
       "sha256": "548e7d12ba8668bf425c0fff46ec972bcd63adcce85ce16502fa7b885f4affb9"
     },
     {
+      "path": "tests/review/test_readonly_adapter_contract.py",
+      "bytes": 3421,
+      "sha256": "de9aaec82d741f9cb6f7741b891ba920a32d3386f2cbbedda733916a9c5e36c0"
+    },
+    {
       "path": "tests/review/test_release_runtime.py",
       "bytes": 13123,
       "sha256": "3e95e0afaef69a983e950214e8aa97bf2001686196a6cfe7a5cfc7c5b1e9927a"
     },
     {
       "path": "tests/review/test_review_pipeline.py",
-      "bytes": 2214,
-      "sha256": "2eabfaee7db5c9763c8571f6e726f6a839dafb6b3226f61d6bce1fdf27a5a4b7"
+      "bytes": 5455,
+      "sha256": "284bb070f148d35642b061a273982ef29022834208c0327788f547751912336e"
     }
   ]
 }

@@ -43,13 +43,24 @@ python scripts/run-review-pipeline.py `
 
 ## 适配器交接契约
 
-外部 Draft 生成器或 live EDA 适配器必须先独立读回当前状态，再交给入口。至少应提供：
+仓库现在发布一个严格的只读证据包契约：
 
-1. 与原理图/PCB同一版本的归一化设计证据；
-2. 当前目标身份、来源和状态哈希（私有环境内保存，公共输出需脱敏）；
+- Schema：`pcb-prototype-quality-gate-readonly-adapter/1.0`；
+- JSON Schema：[readonly-adapter-envelope.schema.json](../schemas/readonly-adapter-envelope.schema.json)；
+- 运行时检查：[readonly_adapter_contract.py](../src/review/readonly_adapter_contract.py)。
+
+外部 Draft 生成器或 live EDA 适配器必须先独立读回当前状态，再交给入口。完整证据包必须提供：
+
+1. 脱敏的目标身份指纹：工程、原理图页、PCB 页各一个 SHA-256；
+2. 原理图状态哈希、PCB 状态哈希和归一化设计内容哈希；
 3. `checks` 六项 Prototype 状态门；
 4. 器件、网络、几何、规则计算和假设的显式字段；
-5. 失败、超时或状态未知时的明确结果，不得用生成器 ACK 代替读回。
+5. `savedReloaded=true`、`independentReadback=true`、`targetStable=true`；
+6. `readOnly=true`、`edaWrites=0`；
+7. 失败、超时或状态未知时必须令 `capture=null`、`normalizedDesign=null`，并提供至少一个白名单分类错误；不得携带部分现场状态，也不得用生成器 ACK 代替读回。
+
+入口通过 `--adapter-evidence <envelope.json>` 消费该证据包，并要求它的
+`normalizedDesign` 与 `--input` **字节无关但结构完全相等**；哈希不一致、字段缺失、目标漂移或任何不完整状态都会 fail closed。适配器包只用于当前只读审核，不获得审批或写入权限。
 
 适配器完成写入后，仍必须在入口之外执行受控的：
 

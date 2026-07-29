@@ -35,9 +35,14 @@ from prototype_review import (  # noqa: E402
     validate_profiles,
     write_json,
 )
+from readonly_adapter_contract import (  # noqa: E402
+    AdapterContractError,
+    adapter_summary,
+    validate_adapter_envelope,
+)
 
 
-PIPELINE_SCHEMA = "pcb-prototype-quality-gate-pipeline-run/1.0"
+PIPELINE_SCHEMA = "pcb-prototype-quality-gate-pipeline-run/1.1"
 
 
 def _relative_or_name(path: Path, root: Path) -> str:
@@ -54,9 +59,15 @@ def run_pipeline(
     *,
     repair_evidence_path: Path | None = None,
     goal: str | None = None,
+    adapter_evidence_path: Path | None = None,
 ) -> dict[str, Any]:
-    """Run normalization, independent review and optional repair planning."""
+    """Run adapter validation, normalization, independent review and repair planning."""
     raw = read_json(input_path)
+    adapter = None
+    if adapter_evidence_path is not None:
+        adapter = validate_adapter_envelope(read_json(adapter_evidence_path))
+        if adapter["normalizedDesign"] != raw:
+            raise AdapterContractError("--input must exactly equal adapter normalizedDesign")
     design = validate_design(normalize_raw_input(raw, input_path.resolve()))
     profiles = validate_profiles(read_json(profiles_path))
     result = Review(design, profiles).run()
@@ -72,7 +83,7 @@ def run_pipeline(
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "trustBoundary": {
             "draftGenerator": "external-adapter",
-            "currentStateReadback": "input-file-supplied",
+            "currentStateReadback": "validated-readonly-envelope" if adapter is not None else "input-file-supplied",
             "independentReview": "local-review-engine",
             "edaAccess": False,
             "edaWrites": 0,
@@ -81,6 +92,7 @@ def run_pipeline(
         "inputs": {
             "design": _relative_or_name(input_path, REPO),
             "profiles": _relative_or_name(profiles_path, REPO),
+            **({"adapterEvidence": _relative_or_name(adapter_evidence_path, REPO), "adapter": adapter_summary(adapter)} if adapter is not None else {}),
         },
         "review": {
             "rating": result["rating"],
@@ -122,6 +134,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--repair-evidence", type=Path)
     parser.add_argument("--goal")
+    parser.add_argument("--adapter-evidence", type=Path, help="validated read-only adapter envelope; must contain the exact --input JSON")
     args = parser.parse_args(argv)
     try:
         run = run_pipeline(
@@ -130,6 +143,7 @@ def main(argv: list[str] | None = None) -> int:
             args.output,
             repair_evidence_path=args.repair_evidence,
             goal=args.goal,
+            adapter_evidence_path=args.adapter_evidence,
         )
     except (OSError, json.JSONDecodeError, InputValidationError, RepairPlanError, KeyError, TypeError, ValueError) as exc:
         print(

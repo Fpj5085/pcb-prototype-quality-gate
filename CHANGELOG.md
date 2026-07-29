@@ -15,7 +15,8 @@ and version labels follow Semantic Versioning conventions.
 - profile metadata and schema constraints for source type, document revision, retrieval date and review interval;
 - fail-closed normalized-input validation for non-finite numbers, boolean-as-number values, missing calculation operands, inverted physical ranges and malformed optional containers;
 - profile-bounded finding confidence and top-level retention of explicitly declared assumptions, including assumptions attached to passing rules;
-- adapter-neutral offline pipeline entry for normalized input → independent review → optional immutable repair-plan preview, with explicit zero-write receipt and regression coverage.
+- adapter-neutral offline pipeline entry for normalized input → independent review → optional immutable repair-plan preview, with explicit zero-write receipt and regression coverage;
+- strict fail-closed read-only adapter evidence envelope with target fingerprints, schematic/PCB digests, canonical design digest, persistence proof and allow-listed failure states; failed or unknown envelopes cannot carry partial capture/design evidence, and the pipeline can consume complete envelopes without EDA access.
 
 ### Compatibility
 

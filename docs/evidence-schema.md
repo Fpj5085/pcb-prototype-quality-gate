@@ -12,6 +12,7 @@ The repository includes reusable JSON Schemas for the review engine and the gove
 | Component profiles | [`component-profiles.schema.json`](../schemas/component-profiles.schema.json) | Sourced limits and package facts used by generic rules. |
 | Prototype review output | [`prototype-review-output.schema.json`](../schemas/prototype-review-output.schema.json) | Rating, counts, findings and unresolved assumptions. |
 | Read-only project snapshot | [`project-snapshot.schema.json`](../schemas/project-snapshot.schema.json) | Captured project/schematic/PCB evidence with content integrity. |
+| Read-only adapter envelope | [`readonly-adapter-envelope.schema.json`](../schemas/readonly-adapter-envelope.schema.json) | Strict handoff envelope for sanitized current-state readback, target fingerprints, persistence proof and classified failures. |
 | Circuit intent | [`circuit-dsl.schema.json`](../schemas/circuit-dsl.schema.json) | Offline design intent, constraints and unresolved items. |
 | Component lockfile | [`component-lockfile.schema.json`](../schemas/component-lockfile.schema.json) | Component identity, package, pin map and source-document claims. |
 | Hardware contract | [`hardware-contract.schema.json`](../schemas/hardware-contract.schema.json) | Board, signal, interface and power-domain contract. |

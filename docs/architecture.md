@@ -34,7 +34,7 @@ flowchart TB
   V --> C
 ```
 
-The public repository includes the router policy, normalized evidence contracts, review engine, evaluation fixtures and an adapter-neutral offline pipeline entry. A live EDA adapter is an integration boundary and must be audited separately. The pipeline entry can prepare a zero-write immutable repair preview, but approval, adapter execution, persistence verification and fresh re-review remain separate governed stages.
+The public repository includes the router policy, normalized evidence contracts, review engine, evaluation fixtures and an adapter-neutral offline pipeline entry. The read-only adapter envelope is a strict handoff contract, not a live connector: it binds sanitized target fingerprints, current schematic/PCB digests, canonical normalized-design content and persistence proof. A live EDA adapter remains an integration boundary and must be audited separately. The pipeline entry can prepare a zero-write immutable repair preview, but approval, adapter execution, persistence verification and fresh re-review remain separate governed stages.
 
 The Draft generator can be swapped without changing the evidence contracts or review rules. Its success acknowledgement is never an input of equal trust to independent current-state readback. The core value begins at that trust boundary: normalize what actually exists, review it conservatively, constrain any repair, and require persistence plus regression evidence before updating the user-facing rating.
 
