@@ -8,7 +8,7 @@
   "properties": {
     "schemaVersion": { "const": "1.0.0" },
     "kind": { "const": "hardware-contract" },
-    "status": { "enum": ["draft", "reviewed", "approved"] },
+    "status": { "enum": ["draft", "reviewed", "approved", "requirements-complete", "requirements-incomplete"] },
     "generatedAt": { "type": "string", "format": "date-time" },
     "sourceSnapshot": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
     "board": {
