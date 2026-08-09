@@ -1,6 +1,6 @@
 # codex-jlceda-hardware-agent
 
-> **v0.1.2-alpha local candidate · NOT FOR MANUFACTURING**
+> **v0.1.3-alpha local candidate · NOT FOR MANUFACTURING**
 
 **An independent prototype-readiness quality gate and bounded repair loop for editable JLCEDA designs.**
 
@@ -100,7 +100,7 @@ re-verification) was completed and passed in the real environment and is
 described honestly in
 [`examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md`](examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md).
 
-## What v0.1.2-alpha includes
+## What v0.1.3-alpha includes
 
 - ordinary-language routing into **Draft**, **Prototype**, and **Manufacturing Release** work modes;
 - adapter-neutral handoff from a replaceable Draft generator or an existing editable design into independent current-state review;
@@ -113,7 +113,8 @@ described honestly in
 - an adversarial two-motor controller fixture where EDA gates pass but engineering blockers remain;
 - deterministic component-profile provenance/freshness auditing and fail-closed normalized-input safety checks;
 - three additional synthetic BEFORE/AFTER benchmark pairs covering power input, sensor interfaces and low-speed communication;
-- an adapter-neutral offline Pipeline plus strict read-only Adapter Envelope and health contracts that accept no partial evidence and grant no EDA write authority.
+- an adapter-neutral offline Pipeline plus strict read-only Adapter Envelope and health contracts that accept no partial evidence and grant no EDA write authority;
+- a fail-closed requirements gate (requirements input → structured hardware contract) and a one-command public closed-loop demo for the real M2 case — 新增需求门禁与可复现闭环演示.
 
 ## What it does not claim
 

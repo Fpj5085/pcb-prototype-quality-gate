@@ -1,6 +1,6 @@
 # Privacy, secret and release-hygiene scan
 
-Candidate: `pcb-prototype-quality-gate` v0.1.2-alpha
+Candidate: `pcb-prototype-quality-gate` v0.1.3-alpha
 Scope: the complete repository tree excluding local Git metadata.
 
 ## Result

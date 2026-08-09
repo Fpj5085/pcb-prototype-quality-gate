@@ -1,9 +1,9 @@
-# Test report — v0.1.2-alpha local candidate
+# Test report — v0.1.3-alpha local candidate
 
-Date: 2026-07-29
-Scope: the v0.1.2-alpha local candidate, based on the published v0.1.1-alpha baseline plus hardening for
+Date: 2026-08-09
+Scope: the v0.1.3-alpha local candidate, based on the published v0.1.2-alpha baseline plus hardening for
 component-profile provenance, diverse offline benchmarks, normalized-input
-safety boundaries, the adapter-neutral offline pipeline entry, the fail-closed read-only adapter evidence envelope, its offline-only explicit-capture assembler and its offline health gate for external adapter failures. This run validated the offline runtime, sanitized M2/M3
+safety boundaries, the adapter-neutral offline pipeline entry, the fail-closed read-only adapter evidence envelope, its offline-only explicit-capture assembler, its offline health gate for external adapter failures, the fail-closed requirements gate and the public offline closed-loop demo for the real M2 case. This run validated the offline runtime, sanitized M2/M3
 evidence boundary, fail-closed local-bypass planner, profile audit and release
 tooling. Separate environment qualification completed a guided read-only review on an independent second NOT FOR MANUFACTURING fixture with four state reads, zero EDA writes and a low-risk Prototype rating; raw project identities and receipts remain outside this public candidate. The packaged test run itself performed no EDA mutation, network publication, upload,
 manufacturing, ordering or payment.
@@ -24,7 +24,7 @@ tools and are not bundled dependencies.
 
 | Gate | Result |
 | --- | --- |
-| Complete Python test suite | **105/105 passed** |
+| Complete Python test suite | **138/138 passed** |
 | Prototype rule/runtime tests | **32/32 passed** |
 | Normalized-input safety-boundary tests | **13/13 passed** |
 | Component-profile provenance/freshness tests | **10/10 passed** |
@@ -35,6 +35,7 @@ tools and are not bundled dependencies.
 | Read-only envelope exporter tests | **4/4 passed** |
 | Read-only adapter health gate tests | **6/6 passed** |
 | Adapter-neutral pipeline tests | **6/6 passed** |
+| Requirements-gate tests | **33/33 passed** |
 | Reproducible release-tool and no-delete archive tests | **6/6 passed** |
 | Sanitized/synthetic evaluation replay | **10/10 passed** |
 | Component-profile audit (`--as-of 2026-07-29`) | **11/11 fresh; 0 stale; 0 invalid** |
@@ -43,14 +44,14 @@ tools and are not bundled dependencies.
 | PowerShell parser | Passed for every published `.ps1` entry |
 | Plugin manifest validator | Passed |
 | Skill validator | Passed |
-| JSON Schema parsing/runtime coverage | **17/17 schemas parsed**; health and envelope contracts covered by Python validators |
+| JSON Schema parsing/runtime coverage | **19/19 schemas parsed**; health and envelope contracts covered by Python validators |
 | Previously published Schema instance validation baseline | **24/24 documents passed** |
-| UTF-8 and mojibake gate | 165 text files passed |
-| JSON parsing | 75 files passed |
+| UTF-8 and mojibake gate | 174 text files passed |
+| JSON parsing | 78 files passed |
 | Restricted YAML parsing | 1 file passed |
-| Python AST syntax | 33 files passed |
-| Markdown relative links | 122 links; 0 missing |
-| Repository privacy/release gate | Passed; 165 files; 0 high-risk findings; 163 manifest / 164 checksum entries |
+| Python AST syntax | 38 files passed |
+| Markdown relative links | 125 links; 0 missing |
+| Repository privacy/release gate | Passed; 174 files; 0 high-risk findings; 172 manifest / 173 checksum entries |
 
 ## Component-profile provenance and freshness
 

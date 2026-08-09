@@ -1,6 +1,6 @@
 {
   "schema": "codex-jlceda-release-file-manifest/1.1",
-  "version": "0.1.2-alpha",
+  "version": "0.1.3-alpha",
   "candidateStatus": "local-review-candidate-not-published",
   "algorithm": "SHA-256",
   "reproducible": true,
@@ -14,7 +14,7 @@
     {
       "path": ".codex-plugin/plugin.json",
       "bytes": 1357,
-      "sha256": "071f64442b327bdcef467bec183c0a4f34e4d62f1fd470baa29c88f1bbd79d2d"
+      "sha256": "6521782ad99507755ea5ae2dab9a79d6d6403a9ced259f01a00c1627f41da559"
     },
     {
       "path": ".gitattributes",
@@ -28,8 +28,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 6765,
-      "sha256": "b5fe50b23827888433dc01804d33cfff99c98f48341614df2ea9045f4abca16d"
+      "bytes": 7374,
+      "sha256": "92a410ef558e9e312a48a7c8b23ecb3724046df9ef24f2112e0e51c3feb665bc"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -44,7 +44,7 @@
     {
       "path": "INSTALL.md",
       "bytes": 4277,
-      "sha256": "9130b1ac932785215e2a9f6a7249e5cc7c37cb02f2e20ffd86629a72bd2d2280"
+      "sha256": "8a74b7fca53165f94945686fc20899d49f881d40c20a0cac9ac5be462f9b9018"
     },
     {
       "path": "LICENSE",
@@ -64,27 +64,27 @@
     {
       "path": "PRIVACY-SCAN.md",
       "bytes": 4014,
-      "sha256": "3ca54fe3a4e158d8be75d7aa6a62320e740b11fe5a99f90c7fbb3689b256d737"
+      "sha256": "c567e9a75e315fd3ec59188db2f4aa43a046ac9609917b01daf7e3c539df490c"
     },
     {
       "path": "PUBLIC-FILES.md",
       "bytes": 7497,
-      "sha256": "bb3962901a8b412371ffb18426d0836d4e92c33924bec56934cf7f8b5227f55d"
+      "sha256": "1955be68856525dadd75888c8d8768bdf9f1b7e067cb55e7d75e6e01cda3a4a7"
     },
     {
       "path": "README.md",
-      "bytes": 16972,
-      "sha256": "157c77e9cefb4af8cbf0579f5cf936d8107dc9ac18c0da6852644602a5d17f2b"
+      "bytes": 17171,
+      "sha256": "1200773db51cca49eff516820dbfb94ba7c2694821133eec32420ae1cb6ebab6"
     },
     {
       "path": "README.zh-CN.md",
-      "bytes": 14761,
-      "sha256": "90b5c09562afd43bc96739fab4a42f7f556707bb674fcf31e0854d77b3fa48cf"
+      "bytes": 14881,
+      "sha256": "46806f09ccdc8d735c4d39d51f1427ccf9f3a33259a516f38a1ea86ecabdf4d8"
     },
     {
       "path": "RELEASE-CHECKLIST.md",
       "bytes": 7311,
-      "sha256": "dae24163f7db1f04dcc3e4669e547df89ac26ff5dee29524b1498ce2947ab370"
+      "sha256": "2b98c7abffce8ee22b5447243f336e7653da07eb73bcdcbdd33c13153222514f"
     },
     {
       "path": "SECURITY.md",
@@ -93,8 +93,8 @@
     },
     {
       "path": "TEST-REPORT.md",
-      "bytes": 11193,
-      "sha256": "1f0adfb0c207daf29b347a34ff1306e0c55f5e5f3c1cf5b61188c63c8fdec712"
+      "bytes": 11333,
+      "sha256": "d064533caf3756bee90efe632f7d02a05b804ce392f0ff62dc3bb2488db87c10"
     },
     {
       "path": "THIRD_PARTY.md",
@@ -104,7 +104,7 @@
     {
       "path": "VERSION",
       "bytes": 12,
-      "sha256": "c270f410e2b7ea39521e3632d7ca34eebbb6d45a6941ad7dec5de91febc361fa"
+      "sha256": "7be49832737f466e19b0c302ee64373eed5160c10ad465347ab2176103da7266"
     },
     {
       "path": "docs/architecture.md",
@@ -144,7 +144,7 @@
     {
       "path": "docs/reproducible-release.md",
       "bytes": 2341,
-      "sha256": "8a12ad3c88d5ccc8bda03aaaaaab94eae76b500713647af9dbfa7614ae40558f"
+      "sha256": "9a1b769acd4d6fd6d819d9b338d1dfb404bc24ddcaac5b845f46e7786d8c1433"
     },
     {
       "path": "docs/resume.md",
@@ -439,7 +439,7 @@
     {
       "path": "release-audit/DOCS-REVIEW.md",
       "bytes": 4803,
-      "sha256": "7f889b81fdcad6c2ae851afb18a5813562d00ae28160417bea0c19ed618d4e1a"
+      "sha256": "e10a82a1daccad822d6f1d233f69eee74507e8c36910d73dbaf6640f50297575"
     },
     {
       "path": "release-audit/FILE-PROVENANCE.md",

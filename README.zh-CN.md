@@ -1,6 +1,6 @@
 # codex-jlceda-hardware-agent
 
-> **v0.1.2-alpha 本地候选 · NOT FOR MANUFACTURING（不可直接制造）**
+> **v0.1.3-alpha 本地候选 · NOT FOR MANUFACTURING（不可直接制造）**
 
 **面向真实可编辑嘉立创EDA设计的独立 Prototype 打样前质量门与受控修正闭环。**
 
@@ -83,7 +83,7 @@ python -B scripts/run-closed-loop-demo.py
 在 [`examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md`](examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md)
 中如实说明。
 
-## v0.1.2-alpha 包含
+## v0.1.3-alpha 包含
 
 - 普通语言请求到 **Draft / Prototype / Manufacturing Release** 工作模式的治理规则；
 - 从可替换 Draft 生成器或既有可编辑设计进入独立现场读回的适配器中立交接；
@@ -98,6 +98,7 @@ python -B scripts/run-closed-loop-demo.py
 - 适配器中立的离线 Pipeline，以及不接受部分证据、不授予 EDA 写权限的严格只读 Adapter Envelope 和健康门。
 
 - 独立 M3 传感器转接板重复验证：真实 5 器件 BEFORE 仅命中本地旁路 blocker；白名单 `ADD_LOCAL_BYPASS_CAP` 加入锁定的 100nF X7R C0805；保存重载后的 6 器件 AFTER 通过 ERC、连通性、板框包含、严格 DRC 和全新复审。
+- 新增 fail-closed 需求门禁（需求输入 → 结构化硬件规格）与可一键复现的公开闭环演示。
 
 ## 不宣称
 

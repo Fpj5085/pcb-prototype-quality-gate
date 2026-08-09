@@ -1,6 +1,6 @@
 # Installation and removal
 
-v0.1.2-alpha has five usable surfaces:
+v0.1.3-alpha has five usable surfaces:
 
 1. the offline Prototype review CLI, which runs without JLCEDA;
 2. the fail-closed `ADD_LOCAL_BYPASS_CAP` repair-plan CLI, which emits an immutable public plan without private EDA IDs;
@@ -15,7 +15,7 @@ Live EDA collection or mutation requires a separately installed and audited envi
 After extracting the local release package, compare its digest with the published candidate checksum:
 
 ```powershell
-Get-FileHash ./pcb-prototype-quality-gate-v0.1.2-alpha.zip -Algorithm SHA256
+Get-FileHash ./pcb-prototype-quality-gate-v0.1.3-alpha.zip -Algorithm SHA256
 ```
 
 Then compare repository files with `SHA256SUMS.txt` before running them.

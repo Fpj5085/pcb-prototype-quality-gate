@@ -50,7 +50,7 @@ objects rather than mutable working-tree files:
 git status --short
 python scripts/build-release.py
 python scripts/release-verify.py `
-  --archive ../pcb-prototype-quality-gate-v0.1.2-alpha.zip
+  --archive ../pcb-prototype-quality-gate-v0.1.3-alpha.zip
 ```
 
 The builder sorts paths, stores every committed blob under one top-level

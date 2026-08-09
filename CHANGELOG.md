@@ -4,6 +4,15 @@ This project-authored history records release-relevant changes. Its section
 layout is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and version labels follow Semantic Versioning conventions.
 
+## [0.1.3-alpha] - 2026-08-09
+
+Status: local release candidate; no push, tag, GitHub Release or upload is implied.
+
+### Added
+
+- fail-closed requirements gate: `requirements-input` schema, deterministic `src/spec/requirements_gate.py` engine and `scripts/requirements-gate.py` CLI, with a 33-test `tests/spec/` suite; missing facts are recorded as `unresolved` instead of guessed;
+- public offline closed-loop demo: `examples/m2-closed-loop/` replay data plus `scripts/run-closed-loop-demo.py`, and new "运行端到端闭环示例" (Run the closed loop offline) sections in `README.md` / `README.zh-CN.md`.
+
 ## [0.1.2-alpha] - 2026-07-29
 
 Status: local release candidate; no push, tag, GitHub Release or upload is implied.

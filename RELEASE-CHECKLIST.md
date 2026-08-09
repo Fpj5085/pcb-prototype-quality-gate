@@ -1,4 +1,4 @@
-# v0.1.2-alpha release checklist
+# v0.1.3-alpha release checklist
 
 This checklist distinguishes completed local release preparation from human decisions and any future network publication.
 
@@ -75,7 +75,7 @@ This checklist distinguishes completed local release preparation from human deci
 
 - [x] Public repository `Fpj5085/pcb-prototype-quality-gate` and published prerelease `v0.1.1-alpha` remain unchanged.
 - [x] No v0.1.2-alpha GitHub push, tag, Release upload or network publication was performed during preparation.
-- [ ] **Maintainer:** review the final v0.1.2-alpha commit, ZIP and SHA-256 sidecar.
-- [ ] **Maintainer:** make the separate final decision to push the reviewed commit, create tag/Release `v0.1.2-alpha`, and upload the reviewed archive.
+- [ ] **Maintainer:** review the final v0.1.3-alpha commit, ZIP and SHA-256 sidecar.
+- [ ] **Maintainer:** make the separate final decision to push the reviewed commit, create tag/Release `v0.1.3-alpha`, and upload the reviewed archive.
 
 Unchecked human/publication items do not block this **local review candidate**. They intentionally block a public tag or upload.
