@@ -1,0 +1,139 @@
+{
+  "schema": "jlceda-prototype-review-input/1.0",
+  "designName": "M2 5V/1A 一进二出电源分配板(公开清洗示例,闭环 BEFORE 状态)",
+  "components": [
+    {
+      "ref": "J1",
+      "value": "5V_INPUT",
+      "package": "HDR-TH_2P-P2.54-V-M-2",
+      "x": -18.8,
+      "y": 0,
+      "nets": [
+        "+5V",
+        "GND"
+      ]
+    },
+    {
+      "ref": "J2",
+      "value": "5V_OUTPUT_A",
+      "package": "HDR-TH_2P-P2.54-V-M-2",
+      "x": 18.8,
+      "y": 5,
+      "nets": [
+        "+5V",
+        "GND"
+      ]
+    },
+    {
+      "ref": "J3",
+      "value": "5V_OUTPUT_B",
+      "package": "HDR-TH_2P-P2.54-V-M-2",
+      "x": 18.8,
+      "y": -5,
+      "nets": [
+        "+5V",
+        "GND"
+      ]
+    },
+    {
+      "ref": "C1",
+      "value": "10uF",
+      "package": "C0805",
+      "x": -14,
+      "y": 0,
+      "nets": [
+        "+5V",
+        "GND"
+      ],
+      "capacitanceUf": 10
+    },
+    {
+      "ref": "C2",
+      "value": "10uF",
+      "package": "C0805",
+      "x": 15,
+      "y": 5,
+      "nets": [
+        "+5V",
+        "GND"
+      ],
+      "capacitanceUf": 10
+    },
+    {
+      "ref": "C3",
+      "value": "10uF",
+      "package": "C0805",
+      "x": 15,
+      "y": -5,
+      "nets": [
+        "+5V",
+        "GND"
+      ],
+      "capacitanceUf": 10
+    }
+  ],
+  "nets": [
+    {
+      "name": "+5V",
+      "minWidthMm": 1.2192,
+      "maxWidthMm": 1.2192,
+      "vias": 1,
+      "role": "power",
+      "designCurrentA": 1.0
+    },
+    {
+      "name": "GND",
+      "minWidthMm": 1.2192,
+      "maxWidthMm": 1.2192,
+      "vias": 1,
+      "role": "high_current_return",
+      "designCurrentA": 1.0
+    }
+  ],
+  "checks": {
+    "schematicErrors": 0,
+    "schematicWarnings": 0,
+    "schematicWarningDetailsAvailable": true,
+    "pcbDrcFindings": 0,
+    "unroutedNets": 0,
+    "containment": true
+  },
+  "sourceEvidence": [
+    "清洗后的公开示例数据:合成坐标与网络,仅复现真实 M2 案例的语义;不含私有 EDA UUID/器件ID/审批信息"
+  ],
+  "decouplingRequirements": [
+    {
+      "targetRef": "J2",
+      "supplyNet": "+5V",
+      "returnNet": "GND",
+      "minCapacitanceUf": 0.08,
+      "maxCapacitanceUf": 0.22,
+      "maxDistanceMm": 7,
+      "severity": "blocker",
+      "assumptions": [
+        "J2 代表物理输出分路区域;真实现场复审时需按 EDA 坐标重算距离"
+      ]
+    }
+  ],
+  "pcb": {
+    "traceCapacity": {
+      "copperOz": 1,
+      "allowedRiseC": 10,
+      "currentMargin": 1.25
+    }
+  },
+  "schematicTopology": {
+    "floatingInputs": [],
+    "sameNameConflicts": [],
+    "pinPadVerified": true,
+    "hiddenPowerPinsVerified": true,
+    "confidence": "high"
+  },
+  "fixtureMetadata": {
+    "fixtureType": "cleaned-public-replay-of-m2-before-state",
+    "executionStatus": "offline-replay; live EDA save/reload evidence is not claimed",
+    "liveEdaVerified": false,
+    "persistenceEvidenceIncluded": false,
+    "notForManufacturing": true
+  }
+}

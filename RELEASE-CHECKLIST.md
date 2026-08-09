@@ -26,8 +26,9 @@ This checklist distinguishes completed local release preparation from human deci
 
 ## Functional validation
 
-- [x] Local-only addition after this checklist: offline fail-closed requirements gate (requirements-input schema, `src/spec/requirements_gate.py`, `scripts/requirements-gate.py`, `tests/spec/`) adds 33 passing tests on top of the 105 published suite; not pushed, tagged or uploaded, and integrity files are not yet regenerated for it.
-- [x] Local-only addition after this checklist: `hardware-contract` schema status enum extended (additive) with `requirements-complete` and `requirements-incomplete`; the gate output is self-checked against the schema; not published, integrity files not regenerated.
+- [x] Local-only addition after this checklist: closed-loop public example for the real M2 case (cleaned inputs + one-command offline demo `scripts/run-closed-loop-demo.py`); it replays only the offline needs→contract→review→rating chain, performs no EDA write and claims no automatic repair; not published, integrity files regenerated (174 files).
+- [x] Local-only addition after this checklist: offline fail-closed requirements gate (requirements-input schema, `src/spec/requirements_gate.py`, `scripts/requirements-gate.py`, `tests/spec/`) adds 33 passing tests on top of the 105 published suite; not pushed, tagged or uploaded, and integrity files regenerated.
+- [x] Local-only addition after this checklist: `hardware-contract` schema status enum extended (additive) with `requirements-complete` and `requirements-incomplete`; the gate output is self-checked against the schema; not published, integrity files regenerated.
 - [x] Complete Python suite: 105/105, covering Prototype/runtime, M2 evidence import, local-bypass planning, profile audit, input safety, diverse benchmarks, read-only adapter contracts, health gate, Pipeline, no-delete test-workspace archival and release tooling.
 - [x] Sanitized/synthetic eval replay: 10/10.
 - [x] Component-profile audit: 11/11 fresh, 0 stale, 0 invalid at the locked as-of date.

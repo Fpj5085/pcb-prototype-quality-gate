@@ -54,6 +54,35 @@ DRC 校验的是几何与连接规则,**它不校验设计在电气和热学上�
 [`jlceda-prototype-review-evidence/1.0`](docs/evidence-schema.md)。该 fixture 覆盖的
 九个风险族列举于 [docs/demo.md](docs/demo.md);结论边界见文末 **Alpha 边界**。
 
+### 运行端到端闭环示例
+
+M2 电源分配板(5V/1A、一进二出)是真正在真实 EDA 环境中**完整跑通受治理闭环**的案例。
+真实闭环:独立审核命中**且仅命中一个**高置信度 blocker
+`DECOUPLING_DISTANCE:J2:+5V`(J2 输出口缺少足够近的旁路电容;最近的是 10uF 储能电容,
+不在 0.08–0.22uF 旁路范围内),评级 `not_suitable_for_prototype`;白名单
+`ADD_LOCAL_BYPASS_CAP` 修正加入 100nF 旁路电容;在真实编辑器里改图、保存重载;
+复审后评级提升为 `suitable_for_low_risk_prototype`。该闭环**真实发生**;其私有 EDA
+证据不随本仓库发布。另有一次独立的 M3 复现,对五器件传感器适配器 fixture 走通了
+同一闭环:同一唯一 blocker、同一白名单修正、保存重载后同一评级提升。
+
+本仓库发布的是这段闭环中**可离线运行**的部分——中文需求 → 硬件规格(hardware-contract)
+→ 确定性审核 → 评级——用清洗后的数据,任何克隆者都能一键复现:
+
+```powershell
+python -B scripts/run-closed-loop-demo.py
+```
+
+输出在 `examples/m2-closed-loop/output/`:`hardware-contract.json`、
+`machine-review.json` 及中文审核报告/摘要,以及一份把“需求→规格→评级”串起来的
+`demo-summary.zh.md`。预期结果:评级 `not_suitable_for_prototype`,唯一 blocker 为
+`DECOUPLING_DISTANCE:J2:+5V`,无其他 blocker。加 `--now <ISO8601>` 可固定全部时间戳,
+使两次运行输出字节一致(与 `scripts/requirements-gate.py --now` 同一约定)。
+
+公开示例用合成坐标只复现“需求→规格→审核→评级”这段离线链路,不宣称自动画板或自动修正;
+完整闭环(真实 EDA 画板、白名单修正、保存重载复验)已在真实环境完成并通过,
+在 [`examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md`](examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md)
+中如实说明。
+
 ## v0.1.2-alpha 包含
 
 - 普通语言请求到 **Draft / Prototype / Manufacturing Release** 工作模式的治理规则；

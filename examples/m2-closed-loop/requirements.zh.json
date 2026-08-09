@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "jlceda-requirements-input/1.0",
+  "description": "M2 电源分配板:5V/1A 单路直流输入,一进二出,将输入电源分配给两路输出接口;板载储能与去耦电容;无 MCU 与通信逻辑,仅做电源分配。",
+  "powerInput": {
+    "domainName": "+5V",
+    "inputType": "直流稳压电源输入(5V)",
+    "nominalVoltageV": 5.0,
+    "minVoltageV": 4.5,
+    "maxVoltageV": 5.5,
+    "maxCurrentA": 1.0,
+    "voltageDomains": [
+      {
+        "name": "+5V",
+        "nominalVoltageV": 5.0,
+        "minVoltageV": 4.5,
+        "maxVoltageV": 5.5,
+        "maxCurrentA": 1.0
+      },
+      {
+        "name": "GND",
+        "nominalVoltageV": 0.0,
+        "minVoltageV": 0.0,
+        "maxVoltageV": 0.0,
+        "maxCurrentA": 1.0
+      }
+    ]
+  },
+  "functionModules": [
+    {
+      "id": "m2-input",
+      "name": "输入连接器 J1",
+      "role": "power-input",
+      "designator": "J1",
+      "voltageDomain": "+5V",
+      "requiredSignals": 2,
+      "notes": "接入 5V/1A 稳压电源;两路输出共享该输入"
+    },
+    {
+      "id": "m2-output-a",
+      "name": "输出连接器 J2",
+      "role": "power-output",
+      "designator": "J2",
+      "voltageDomain": "+5V",
+      "requiredSignals": 2
+    },
+    {
+      "id": "m2-output-b",
+      "name": "输出连接器 J3",
+      "role": "power-output",
+      "designator": "J3",
+      "voltageDomain": "+5V",
+      "requiredSignals": 2
+    }
+  ],
+  "interfaceRequirements": [
+    {
+      "name": "PWR_IN",
+      "direction": "input",
+      "voltageDomain": "+5V",
+      "signals": [
+        {
+          "name": "+5V",
+          "direction": "power",
+          "voltageDomain": "+5V"
+        },
+        {
+          "name": "GND",
+          "direction": "power",
+          "voltageDomain": "GND"
+        }
+      ]
+    },
+    {
+      "name": "PWR_OUT_A",
+      "direction": "output",
+      "voltageDomain": "+5V",
+      "signals": [
+        {
+          "name": "+5V",
+          "direction": "power",
+          "voltageDomain": "+5V"
+        },
+        {
+          "name": "GND",
+          "direction": "power",
+          "voltageDomain": "GND"
+        }
+      ]
+    },
+    {
+      "name": "PWR_OUT_B",
+      "direction": "output",
+      "voltageDomain": "+5V",
+      "signals": [
+        {
+          "name": "+5V",
+          "direction": "power",
+          "voltageDomain": "+5V"
+        },
+        {
+          "name": "GND",
+          "direction": "power",
+          "voltageDomain": "GND"
+        }
+      ]
+    }
+  ],
+  "mechanical": {
+    "connectorPositions": [
+      {
+        "name": "J1",
+        "positionMm": "(-18.8, 0)"
+      },
+      {
+        "name": "J2",
+        "positionMm": "(18.8, 5)"
+      },
+      {
+        "name": "J3",
+        "positionMm": "(18.8, -5)"
+      }
+    ],
+    "notes": "坐标为公开示例的合成值,不表示任何私有设计数据"
+  },
+  "acceptanceCriteria": [
+    "输入 5V/1A 时两路输出接口均正常供电",
+    "输入口附近提供储能电容,输出口附近提供合格去耦电容",
+    "自动审核不得存在 blocker,评级达到适合低风险样板"
+  ]
+}

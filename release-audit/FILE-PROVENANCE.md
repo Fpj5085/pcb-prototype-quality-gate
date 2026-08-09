@@ -105,6 +105,9 @@ This inventory classifies every file in the public candidate. "Project-authored"
 | `evidence/m3-independent-repetition/m2-live-evidence-summary.json` | G-sanitized-result | Deterministic gate-generated minimum summary from explicitly sanitized M3 evidence | Legacy filename retained for gate compatibility; case field identifies M3; no private identifiers |
 | `examples/README.md` | O-public-doc | Project-authored public-release documentation or example text | Third-party names/links are nominative/reference-only; claims remain evidence-scoped |
 | `examples/expected-output.zh-CN.md` | O-public-doc | Project-authored public-release documentation or example text | Third-party names/links are nominative/reference-only; claims remain evidence-scoped |
+| `examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md` | O-public-doc | Project-authored public documentation for the M2 closed-loop demo | Claims are evidence-scoped; real EDA loop described, not replayed |
+| `examples/m2-closed-loop/design-data.json` | S-synthetic | Project-authored synthetic/cleaned M2 review input | Synthetic coordinates/nets only; no private EDA identity or raw evidence |
+| `examples/m2-closed-loop/requirements.zh.json` | S-synthetic | Project-authored cleaned Chinese requirements for the M2 case | Synthetic/example values only; missing facts are intentional gaps |
 | `examples/ordinary-language-requests.zh-CN.md` | O-public-doc | Project-authored public-release documentation or example text | Third-party names/links are nominative/reference-only; claims remain evidence-scoped |
 | `release-audit/DOCS-REVIEW.md` | G-audit | Locally authored release audit record | No third-party report or private raw evidence copied |
 | `release-audit/FILE-PROVENANCE.md` | G-audit | Generated per-file provenance inventory plus release analysis | Regenerate/extend when public file set changes |
@@ -139,6 +142,7 @@ This inventory classifies every file in the public candidate. "Project-authored"
 | `scripts/prototype-review.ps1` | O-public-code | Thin project-authored release wrapper for repository-relative offline use | Apache-2.0 after ownership attestation; PowerShell is user-provided |
 | `scripts/requirements-gate.py` | O-public-code | Thin project-authored CLI for the offline fail-closed requirements gate | Apache-2.0 after ownership attestation; standard library only and no EDA access |
 | `scripts/release-verify.py` | O-public-code | Project-authored repository/privacy/integrity verifier created for this candidate | Apache-2.0 after ownership attestation; standard library only |
+| `scripts/run-closed-loop-demo.py` | O-public-code | Thin project-authored offline demo CLI for the M2 closed-loop public example | Apache-2.0 after ownership attestation; standard library only, no EDA access and no automatic-repair claim |
 | `scripts/run-evals.py` | O-public-code | Project-authored deterministic eval runner created for the release candidate | Apache-2.0 after ownership attestation; Python is user-provided |
 | `scripts/update-integrity.py` | O-public-code | Project-authored deterministic manifest/checksum generator created for this candidate | Apache-2.0 after ownership attestation; standard library only |
 | `skills/jlceda-hardware-design/SKILL.md` | R-public-rewrite | Public rewrite of project governance skill or host metadata | Private wrappers/runtime bindings excluded; host names are interoperability only |

@@ -10,6 +10,7 @@ Status: local release candidate; no push, tag, GitHub Release or upload is impli
 
 ### Added
 
+- closed-loop public example for the real M2 power-distribution case (local, not published): one-command offline replay of Chinese needs → hardware contract → review → rating over cleaned inputs (`examples/m2-closed-loop/`, `scripts/run-closed-loop-demo.py`); the real EDA closed loop is described honestly and never replayed or claimed in this example;
 - offline fail-closed requirements gate (requirements input -> structured hardware contract) with a new `requirements-input` schema, deterministic `--now` CLI and a synthetic test suite; records missing facts as `unresolved` instead of guessing and is not yet published;
 - `hardware-contract` output schema status enum extended (additive, backward compatible) with `requirements-complete` and `requirements-incomplete`; the gate self-checks every emitted contract against that schema before returning;
 - three original synthetic BEFORE/AFTER benchmark pairs for power input, sensor interface and low-speed communication, with fixture-scoped expected findings and zero-write execution metadata;

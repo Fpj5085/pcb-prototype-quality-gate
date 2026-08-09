@@ -2,7 +2,7 @@
 
 This is the complete intended file set for the local v0.1.2-alpha Git repository and release archive. All paths are repository-relative. Local Git metadata and the external ZIP/checksum sidecar are not part of the archive.
 
-**Total intended repository files: 170.**
+**Total intended repository files: 174.**
 
 ## Complete inventory
 
@@ -89,6 +89,9 @@ This is the complete intended file set for the local v0.1.2-alpha Git repository
 - `evidence/m3-independent-repetition/m2-live-evidence-summary.json`
 - `examples/README.md`
 - `examples/expected-output.zh-CN.md`
+- `examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md`
+- `examples/m2-closed-loop/design-data.json`
+- `examples/m2-closed-loop/requirements.zh.json`
 - `examples/ordinary-language-requests.zh-CN.md`
 - `release-audit/DOCS-REVIEW.md`
 - `release-audit/FILE-PROVENANCE.md`
@@ -124,6 +127,7 @@ This is the complete intended file set for the local v0.1.2-alpha Git repository
 - `scripts/prototype-review.ps1`
 - `scripts/release-verify.py`
 - `scripts/requirements-gate.py`
+- `scripts/run-closed-loop-demo.py`
 - `scripts/run-evals.py`
 - `scripts/run-review-pipeline.py`
 - `scripts/update-integrity.py`

@@ -61,6 +61,45 @@ risk families exercised by this fixture are enumerated in
 [docs/demo.md](docs/demo.md); see
 [What it does not claim](#what-it-does-not-claim) for the limits of this result.
 
+### Run the closed loop offline
+
+The M2 power-distribution board (5 V / 1 A, one input, two outputs) is the
+case that has actually completed the full governed loop in a real EDA
+environment. The real loop found exactly one high-confidence blocker —
+`DECOUPLING_DISTANCE:J2:+5V`: the J2 output port had no bypass capacitor close
+enough; its nearest capacitor was the 10 µF bulk cap, outside the 0.08–0.22 µF
+bypass window, and the rating was `not_suitable_for_prototype`. An allow-listed
+`ADD_LOCAL_BYPASS_CAP` repair added a 100 nF bypass, the schematic/PCB were
+modified in the real editor, saved and reloaded, and a fresh review upgraded
+the rating to `suitable_for_low_risk_prototype`. That closed loop is real; this
+repository does not bundle its private EDA evidence. An independent M3
+repetition closed the same loop for a five-component sensor-adapter fixture
+with the same single blocker, the same allow-listed repair, and the same
+rating upgrade after save/reload.
+
+What is bundled here is the offline, runnable part of that loop — Chinese
+needs → structured hardware contract → deterministic review → rating — with
+cleaned data, so any stranger can reproduce it after cloning:
+
+```powershell
+python -B scripts/run-closed-loop-demo.py
+```
+
+Outputs land in `examples/m2-closed-loop/output/`: `hardware-contract.json`,
+`machine-review.json` plus the Chinese review report/summary files, and a
+`demo-summary.zh.md` that ties needs → spec → rating together. The expected
+result is rating `not_suitable_for_prototype` with exactly one blocker,
+`DECOUPLING_DISTANCE:J2:+5V`, and no other blocker. Add
+`--now <ISO8601>` to pin every timestamp so two runs are byte-identical (same
+convention as `scripts/requirements-gate.py --now`).
+
+The public example replays only the offline needs→spec→review→rating chain with
+synthetic coordinates; it claims nothing about automatic layout or automatic
+repair. The full loop (real EDA drawing, allow-listed correction, save/reload
+re-verification) was completed and passed in the real environment and is
+described honestly in
+[`examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md`](examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md).
+
 ## What v0.1.2-alpha includes
 
 - ordinary-language routing into **Draft**, **Prototype**, and **Manufacturing Release** work modes;
