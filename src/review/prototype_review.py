@@ -366,6 +366,19 @@ def validate_design(design: Any) -> dict[str, Any]:
             }.items():
                 if field in trace_capacity:
                     _require_finite_number(trace_capacity[field], f"input.pcb.traceCapacity.{field}", **limits)
+    if "schematicSheet" in d:
+        sheet = _require_mapping(d["schematicSheet"], "input.schematicSheet")
+        for field in ("widthMm", "heightMm"):
+            if field not in sheet:
+                raise InputValidationError(f"input.schematicSheet.{field} is required")
+            _require_finite_number(sheet[field], f"input.schematicSheet.{field}", exclusive_minimum=0)
+        for field in ("originXmm", "originYmm"):
+            if field in sheet:
+                _require_finite_number(sheet[field], f"input.schematicSheet.{field}")
+        if "unitsPerMm" in sheet:
+            _require_finite_number(sheet["unitsPerMm"], "input.schematicSheet.unitsPerMm", exclusive_minimum=0)
+        if "containment" in sheet and type(sheet["containment"]) is not bool:
+            raise InputValidationError("input.schematicSheet.containment must be a JSON boolean")
     if "groundReview" in d:
         ground = _require_mapping(d["groundReview"], "input.groundReview")
         _require_integer(ground.get("pours"), "input.groundReview.pours", minimum=0)
@@ -558,6 +571,7 @@ class Review:
         self.rule_interfaces()
         self.rule_debug_and_usability()
         self.rule_schematic_and_pcb_gates()
+        self.rule_schematic_containment()
         self.rule_ground_and_topology()
         self.rule_firmware_pins()
         return self.result()
@@ -1053,6 +1067,99 @@ class Review:
             completeness["status"] = "incomplete"
         else:
             completeness["status"] = "complete"
+
+    def rule_schematic_containment(self) -> None:
+        """Fail-closed schematic sheet-frame containment check (schematicSheet + component x/y).
+
+        Coordinate convention (documented in the input schema and finding evidence):
+        (originXmm, originYmm) is the sheet's top-left corner in millimetres; the X axis
+        increases to the right and the Y axis decreases downward (EDA schematic convention,
+        so the top edge is originYmm and the bottom edge is originYmm-heightMm),
+        so the page spans x in [originXmm, originXmm+widthMm] and y in [originYmm-heightMm,
+        originYmm]. Component x/y are converted to millimetres via /unitsPerMm (default 1).
+        A component exactly on a page edge is considered inside (inclusive boundary).
+        """
+        sheet = self.d.get("schematicSheet")
+        if not isinstance(sheet, dict):
+            # No page-frame information -> the rule cannot geometrically judge and stays silent.
+            return
+        width_mm = float(sheet["widthMm"])
+        height_mm = float(sheet["heightMm"])
+        origin_x_mm = float(sheet.get("originXmm", 0.0))
+        origin_y_mm = float(sheet.get("originYmm", 0.0))
+        units_per_mm = float(sheet.get("unitsPerMm", 1.0))
+        page_x_min, page_x_max = origin_x_mm, origin_x_mm + width_mm
+        page_y_min, page_y_max = origin_y_mm - height_mm, origin_y_mm
+        external = sheet.get("containment")
+        if type(external) is bool:
+            # Externally-decided containment short-circuits geometric self-judgement.
+            if external:
+                self.add(
+                    id="SCHEMATIC_CONTAINMENT", severity="pass", confidence="high", title="元件均位于原理图页面内",
+                    riskZh="外部判定的原理图页面包含检查已通过。", locations=[],
+                    evidence=[{"containment": True, "decidedExternally": True}],
+                    calculation="schematicSheet.containment=true", recommendationZh="保持页面内的布局并保留边距。",
+                    revalidation="从 EDA 重新读取图框与元件坐标后重跑几何包含检查。", unresolvedAssumptions=[], ruleFamily="schematic_containment")
+            else:
+                self.add(
+                    id="SCHEMATIC_CONTAINMENT", severity="blocker", confidence="high", title="元件超出原理图页面",
+                    riskZh="绘制在图框外的元件在打印、装配和审阅中会被裁切或遗漏。", locations=[],
+                    evidence=[{"containment": False, "decidedExternally": True}],
+                    calculation="schematicSheet.containment=false", recommendationZh="把元件移入页面边界内并保留边距。",
+                    revalidation="从 EDA 重新执行所有图元的图框包含检查。", unresolvedAssumptions=[], ruleFamily="schematic_containment")
+            return
+        checked = 0
+        unchecked = 0
+        outside = []
+        for component in self.components.values():
+            if "x" not in component or "y" not in component:
+                unchecked += 1
+                self.add(
+                    id=f"CONTAINMENT_DATA_MISSING:{component['ref']}", severity="advisory", confidence="high",
+                    title="原理图页面检查缺少元件坐标", riskZh="该元件没有 x/y 坐标,无法判断是否位于图框内,页面包含检查不完整。",
+                    locations=[component["ref"]], evidence=[{"ref": component["ref"]}],
+                    calculation="component has no x/y coordinate", recommendationZh="从 EDA 读取该元件的图框内坐标后重新运行页面包含检查。",
+                    revalidation="补齐坐标后重跑原理图图框包含规则。", unresolvedAssumptions=[], ruleFamily="schematic_containment")
+                continue
+            x_mm = float(component["x"]) / units_per_mm
+            y_mm = float(component["y"]) / units_per_mm
+            checked += 1
+            inside = (
+                page_x_min - 1e-9 <= x_mm <= page_x_max + 1e-9
+                and page_y_min - 1e-9 <= y_mm <= page_y_max + 1e-9
+            )
+            if not inside:
+                outside.append(component["ref"])
+                self.add(
+                    id=f"SCHEMATIC_CONTAINMENT:{component['ref']}", severity="blocker", confidence="high",
+                    title="元件超出原理图页面", riskZh="绘制在图框外的元件在打印、装配和审阅中会被裁切或遗漏。",
+                    locations=[component["ref"]],
+                    evidence=[{
+                        "ref": component["ref"], "xMm": round(x_mm, 3), "yMm": round(y_mm, 3),
+                        "pageWidthMm": width_mm, "pageHeightMm": height_mm,
+                        "pageXMinMm": round(page_x_min, 3), "pageXMaxMm": round(page_x_max, 3),
+                        "pageYMinMm": round(page_y_min, 3), "pageYMaxMm": round(page_y_max, 3),
+                        "unitsPerMm": units_per_mm, "yDirection": "down",
+                    }],
+                    calculation=(
+                        f"x={x_mm:.3g}mm not in [{page_x_min:.3g},{page_x_max:.3g}]; "
+                        f"y={y_mm:.3g}mm not in [{page_y_min:.3g},{page_y_max:.3g}]"
+                    ),
+                    recommendationZh="把元件移入页面边界内并保留边距。",
+                    revalidation="从 EDA 重新读取图框与元件坐标后重跑几何包含检查。", unresolvedAssumptions=[], ruleFamily="schematic_containment")
+        # Fail-closed aggregate pass only when every component was checked and all were inside.
+        if checked and not outside and not unchecked:
+            self.add(
+                id="SCHEMATIC_CONTAINMENT", severity="pass", confidence="high", title="元件均位于原理图页面内",
+                riskZh=f"{checked} 个带坐标元件全部位于图框内。", locations=[],
+                evidence=[{
+                    "pageWidthMm": width_mm, "pageHeightMm": height_mm, "checkedComponents": checked,
+                    "pageXMinMm": round(page_x_min, 3), "pageXMaxMm": round(page_x_max, 3),
+                    "pageYMinMm": round(page_y_min, 3), "pageYMaxMm": round(page_y_max, 3),
+                    "unitsPerMm": units_per_mm, "yDirection": "down",
+                }],
+                calculation=f"{checked} components inside page", recommendationZh="保持页面内布局并保留边距。",
+                revalidation="从 EDA 重新读取图框与元件坐标后重跑几何包含检查。", unresolvedAssumptions=[], ruleFamily="schematic_containment")
 
     def rule_ground_and_topology(self) -> None:
         ground = self.d.get("groundReview", {})

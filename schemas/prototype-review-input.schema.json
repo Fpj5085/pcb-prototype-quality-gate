@@ -168,6 +168,20 @@
       },
       "additionalProperties": true
     },
+    "schematicSheet": {
+      "type": "object",
+      "required": ["widthMm", "heightMm"],
+      "description": "原理图页面/图框信息。约定:(originXmm, originYmm) 是图框左上角(毫米),x 向右为正、y 向下为负(EDA 原理图惯例);页面范围 x∈[originXmm, originXmm+widthMm],y∈[originYmm-heightMm, originYmm]。元件 x/y 先按 unitsPerMm 换算为毫米,再判定是否位于页面内。",
+      "properties": {
+        "widthMm": {"type": "number", "exclusiveMinimum": 0, "description": "页面物理宽度(毫米)"},
+        "heightMm": {"type": "number", "exclusiveMinimum": 0, "description": "页面物理高度(毫米)"},
+        "originXmm": {"type": "number", "default": 0, "description": "图框左上角 x(毫米),默认 0"},
+        "originYmm": {"type": "number", "default": 0, "description": "图框左上角 y(毫米),默认 0;y 向下为负,页面下边界为 originYmm-heightMm"},
+        "unitsPerMm": {"type": "number", "exclusiveMinimum": 0, "default": 1, "description": "元件坐标单位到毫米的换算(单位/毫米);例如坐标 10mil/unit → unitsPerMm=1/0.254≈3.937"},
+        "containment": {"type": "boolean", "description": "外部已判定的页面包含结论(可选);提供时引擎短路,否则引擎由元件坐标自行几何判定"}
+      },
+      "additionalProperties": true
+    },
     "fixtureMetadata": {
       "type": "object",
       "properties": {

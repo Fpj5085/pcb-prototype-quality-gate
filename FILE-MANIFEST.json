@@ -28,8 +28,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 8453,
-      "sha256": "e9a420617b5815a56c3ffd24aa3e3d5f60a9ca5aabc664257c57fe528a3a7fe9"
+      "bytes": 9327,
+      "sha256": "7b7ad64985f34dfb3eb9da01753bdb32bb14e8c7fa3e50e5cf35c6a2c2f56957"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -83,8 +83,8 @@
     },
     {
       "path": "RELEASE-CHECKLIST.md",
-      "bytes": 8535,
-      "sha256": "84520e600a2a9360c859d6623670121a153d2bc91eff98f279790e5d6750f541"
+      "bytes": 9322,
+      "sha256": "4a6c2a7fde5d2a748bf22b7de9d4c3449ea019c72ffc62596c6f04a5099da1d7"
     },
     {
       "path": "SECURITY.md",
@@ -548,8 +548,8 @@
     },
     {
       "path": "schemas/prototype-review-input.schema.json",
-      "bytes": 11372,
-      "sha256": "a52bd8c9d6a026a89303ebeacf6bb7c483821c1e4f07e858321789e6d1110a1e"
+      "bytes": 12728,
+      "sha256": "de4489cd1fc09fdb2c0235768c674f632946b7f0b6917dd55cd07ffd8724ef74"
     },
     {
       "path": "schemas/prototype-review-output.schema.json",
@@ -688,8 +688,8 @@
     },
     {
       "path": "src/review/prototype_review.py",
-      "bytes": 81421,
-      "sha256": "3195f7115a6af0c882e21cff14f723a163c82a3876638ee8d2bffced225539cc"
+      "bytes": 88939,
+      "sha256": "14215af5bd5effe84b77fba064590c54e6c4330661792c5481724a7a1a6cc353"
     },
     {
       "path": "src/review/readonly_adapter_contract.py",
@@ -848,8 +848,8 @@
     },
     {
       "path": "tests/review/test_prototype_review.py",
-      "bytes": 14203,
-      "sha256": "63b77e5fc86ee023fa214500dfa3c9b4d3cc602ab5296159e1ccc7fc678d1522"
+      "bytes": 25622,
+      "sha256": "b2cfef644f5b6af9933634a51e02de8b3da3cce130eca93c503c840ac4fef1a5"
     },
     {
       "path": "tests/review/test_readonly_adapter_contract.py",
