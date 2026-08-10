@@ -65,20 +65,33 @@ M2 电源分配板(5V/1A、一进二出)是真正在真实 EDA 环境中**完整
 证据不随本仓库发布。另有一次独立的 M3 复现,对五器件传感器适配器 fixture 走通了
 同一闭环:同一唯一 blocker、同一白名单修正、保存重载后同一评级提升。
 
-本仓库发布的是这段闭环中**可离线运行**的部分——中文需求 → 硬件规格(hardware-contract)
-→ 确定性审核 → 评级——用清洗后的数据,任何克隆者都能一键复现:
+本仓库发布的是这段闭环中**可离线运行**的部分,现已实现**一条命令全自动跑完**——
+中文需求 → 硬件规格(hardware-contract)→ **自动转换(review-input)** → 确定性审核 →
+评级,**无需任何预制设计数据**:
 
 ```powershell
 python -B scripts/run-closed-loop-demo.py
 ```
 
-输出在 `examples/m2-closed-loop/output/`:`hardware-contract.json`、
+默认运行只吃清洗后的中文需求(`examples/m2-closed-loop/requirements.zh.json`):
+需求门禁产出 `hardware-contract.json`,离线转换器(`src/spec/contract_to_review.py`,
+绝不猜测)将其投影为 `review-input.json`,再由确定性审核引擎评级。输出在
+`examples/m2-closed-loop/output/`:`hardware-contract.json`、`review-input.json`、
 `machine-review.json` 及中文审核报告/摘要,以及一份把“需求→规格→评级”串起来的
-`demo-summary.zh.md`。预期结果:评级 `not_suitable_for_prototype`,唯一 blocker 为
-`DECOUPLING_DISTANCE:J2:+5V`,无其他 blocker。加 `--now <ISO8601>` 可固定全部时间戳,
-使两次运行输出字节一致(与 `scripts/requirements-gate.py --now` 同一约定)。
+`demo-summary.zh.md`。
 
-公开示例用合成坐标只复现“需求→规格→审核→评级”这段离线链路,不宣称自动画板或自动修正;
+由于自动转换后的输入**诚实地不含器件级设计事实**(无电容、无走线宽度)且没有保存重载
+证据,预期结果:评级 `not_suitable_for_prototype`,唯一 blocker 为 `PERSISTENCE`
+(离线转换不携带保存/重载证据),外加 3 条 advisory:`TRACE_DATA_MISSING:+5V`、
+`TRACE_DATA_MISSING:GND`、`EVIDENCE_SCOPE:OFFLINE_FORECAST`。这是对“数据不足”的
+fail-closed 诚实结论,不是回归——只有具备完整器件级数据(如上面的真实 M2 闭环)才可能
+审出 `DECOUPLING_DISTANCE:J2:+5V` 这类工程 blocker。历史预制输入
+`examples/m2-closed-loop/design-data.json` 仍保留作为“完整设计数据样例”参考,可用
+`--design examples/m2-closed-loop/design-data.json` 直接作为审核输入(复现原始单一
+`DECOUPLING_DISTANCE:J2:+5V` 结果)。加 `--now <ISO8601>` 可固定全部时间戳,
+同一输出目录下两次运行输出字节一致(与 `scripts/requirements-gate.py --now` 同一约定)。
+
+公开示例只复现“需求→规格→自动转换→审核→评级”这段离线链路,不宣称自动画板或自动修正;
 完整闭环(真实 EDA 画板、白名单修正、保存重载复验)已在真实环境完成并通过,
 在 [`examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md`](examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md)
 中如实说明。

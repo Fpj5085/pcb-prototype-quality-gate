@@ -2,7 +2,7 @@
 
 This is the complete intended file set for the local v0.1.3-alpha Git repository and release archive. All paths are repository-relative. Local Git metadata and the external ZIP/checksum sidecar are not part of the archive.
 
-**Total intended repository files: 177.**
+**Total intended repository files: 178.**
 
 ## Complete inventory
 
@@ -171,6 +171,7 @@ This is the complete intended file set for the local v0.1.3-alpha Git repository
 - `tests/review/__init__.py`
 - `tests/review/fixtures/car-adversarial-input.json`
 - `tests/review/fixtures/synthetic-safe-input.json`
+- `tests/review/test_closed_loop_demo.py`
 - `tests/review/test_component_profile_audit.py`
 - `tests/review/test_diverse_benchmarks.py`
 - `tests/review/test_input_safety_boundaries.py`

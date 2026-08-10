@@ -77,27 +77,47 @@ repetition closed the same loop for a five-component sensor-adapter fixture
 with the same single blocker, the same allow-listed repair, and the same
 rating upgrade after save/reload.
 
-What is bundled here is the offline, runnable part of that loop — Chinese
-needs → structured hardware contract → deterministic review → rating — with
-cleaned data, so any stranger can reproduce it after cloning:
+What is bundled here is the offline, runnable part of that loop, and it now
+runs fully automatically with a single command — Chinese needs → structured
+hardware contract → automatic contract→review conversion → deterministic
+review → rating — with no prefab design data at all:
 
 ```powershell
 python -B scripts/run-closed-loop-demo.py
 ```
 
-Outputs land in `examples/m2-closed-loop/output/`: `hardware-contract.json`,
-`machine-review.json` plus the Chinese review report/summary files, and a
-`demo-summary.zh.md` that ties needs → spec → rating together. The expected
-result is rating `not_suitable_for_prototype` with exactly one blocker,
-`DECOUPLING_DISTANCE:J2:+5V`, and no other blocker. Add
-`--now <ISO8601>` to pin every timestamp so two runs are byte-identical (same
-convention as `scripts/requirements-gate.py --now`).
+The default run takes only the cleaned Chinese requirements
+(`examples/m2-closed-loop/requirements.zh.json`): the requirements gate emits
+`hardware-contract.json`, an offline converter
+(`src/spec/contract_to_review.py`, which never guesses) projects it into
+`review-input.json`, and the deterministic review engine rates it. Outputs land
+in `examples/m2-closed-loop/output/`: `hardware-contract.json`,
+`review-input.json`, `machine-review.json` plus the Chinese review
+report/summary files, and a `demo-summary.zh.md` that ties needs → spec →
+rating together.
 
-The public example replays only the offline needs→spec→review→rating chain with
-synthetic coordinates; it claims nothing about automatic layout or automatic
-repair. The full loop (real EDA drawing, allow-listed correction, save/reload
-re-verification) was completed and passed in the real environment and is
-described honestly in
+Because the auto-converted input honestly carries no device-level design facts
+(no capacitors, no trace widths) and no save/reload persistence evidence, the
+expected result is rating `not_suitable_for_prototype` with exactly one
+blocker — `PERSISTENCE` (an offline conversion carries no save/reload
+evidence) — plus three advisories: `TRACE_DATA_MISSING:+5V`,
+`TRACE_DATA_MISSING:GND` and `EVIDENCE_SCOPE:OFFLINE_FORECAST`. That is a
+fail-closed, honest answer to "insufficient data", not a regression: only a
+data-complete review (like the real M2 loop above) could surface an
+engineering finding such as `DECOUPLING_DISTANCE:J2:+5V`. The historical
+prefab input `examples/m2-closed-loop/design-data.json` is still kept as a
+complete-design-data reference sample and can be used directly as the review
+input with
+`--design examples/m2-closed-loop/design-data.json` (which reproduces the
+original single-`DECOUPLING_DISTANCE:J2:+5V` result). Add
+`--now <ISO8601>` to pin every timestamp so two runs into the same output
+directory are byte-identical (same convention as
+`scripts/requirements-gate.py --now`).
+
+The public example replays only the offline needs→spec→review→rating chain; it
+claims nothing about automatic layout or automatic repair. The full loop (real
+EDA drawing, allow-listed correction, save/reload re-verification) was
+completed and passed in the real environment and is described honestly in
 [`examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md`](examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md).
 
 ## What v0.1.3-alpha includes

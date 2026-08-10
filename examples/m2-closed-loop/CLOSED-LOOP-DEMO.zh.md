@@ -23,10 +23,12 @@ M2 是一块 5V/1A、一进二出的电源分配板:
 
 ## 公开示例复现哪一段
 
-本公开示例只复现上述闭环中**可离线运行**的一段链路:
+本公开示例只复现上述闭环中**可离线运行**的一段链路,现已全自动:
 
-> 中文需求 → 硬件规格(hardware-contract)→ 自动审核 → 评级
+> 中文需求 → 硬件规格(hardware-contract)→ **自动转换(review-input)** → 自动审核 → 评级
 
+默认运行**无需任何预制设计数据**:需求门禁产出的硬件规格经离线转换器
+(`src/spec/contract_to_review.py`,绝不猜测)自动投影为审核输入,再交给独立审核引擎。
 它**不**在此处自动画板、**不**执行任何 EDA 写入、**不**执行自动修正,也不伪造保存重载现场证据。真实闭环里的“EDA 画板/白名单修正/保存重载复验”一步已在真实环境完成,这里仅用清洗后的数据说明这一段链路长什么样、会产生什么结果。
 
 ## 如何运行
@@ -37,7 +39,7 @@ M2 是一块 5V/1A、一进二出的电源分配板:
 python -B scripts/run-closed-loop-demo.py
 ```
 
-加 `--now <ISO8601>` 可固定所有时间戳,使两次运行输出字节一致(可复现验证):
+加 `--now <ISO8601>` 可固定所有时间戳,同一输出目录下两次运行输出字节一致(可复现验证):
 
 ```powershell
 python -B scripts/run-closed-loop-demo.py --now 2026-08-09T00:00:00+00:00
@@ -46,28 +48,33 @@ python -B scripts/run-closed-loop-demo.py --now 2026-08-09T00:00:00+00:00
 输出目录:`examples/m2-closed-loop/output/`
 
 - `hardware-contract.json` —— 需求门禁产出的结构化硬件规格;
+- `review-input.json` —— 离线转换器把硬件规格自动投影成的审核输入(默认运行无预制设计数据);
 - `machine-review.json` / `prototype-review-report-zh.md` / `one-page-summary-zh.md` —— 审核结果(机器 JSON 与中文报告);
 - `evidence-manifest.json` —— 输出文件的 SHA-256 清单;
-- `demo-summary.zh.md` —— 一键汇总(需求→规格→审核→评级 + 真实闭环说明)。
+- `demo-summary.zh.md` —— 一键汇总(需求→规格→自动转换→审核→评级 + 真实闭环说明)。
 
 退出码:全链路成功为 0;任一步失败为非 0,并在 stderr 打印错误。
 
 ## 预期输出
 
 - 需求门禁状态:`requirements-incomplete`(fail-closed:缺失事实被记为未决项,不猜测;3 个组件、6 个信号、14 条未决项);
+- 自动转换:0 条转换日志(3 个机械连接器 J1/J2/J3 全部匹配到坐标与网络;转换器不虚构电容、走线宽度或封装);
 - 审核评级:`not_suitable_for_prototype`(当前不适合样板);
-- blocker:**且仅一个** —— `DECOUPLING_DISTANCE:J2:+5V`(J2 输出口缺少合格旁路;最近电容为 C2 10uF,距 3.8mm,超 0.08–0.22uF 旁路范围);
-- 附带 advisory(2,均为证据门,诚实标注离线范围):`EVIDENCE_INCOMPLETE:PERSISTENCE`(保存重载证据缺失)、`EVIDENCE_SCOPE:OFFLINE_FORECAST`(当前只是离线工程预测);
-- pass(3):`TRACE_PASS:+5V`、`TRACE_PASS:GND`、`SCHEMATIC_TOPOLOGY`。
+- blocker:**且仅一个** —— `PERSISTENCE`(保存重载持久性未通过:离线转换不携带保存/重载证据);
+- 附带 advisory(3,均为“数据不足”的诚实标注):`TRACE_DATA_MISSING:+5V`、`TRACE_DATA_MISSING:GND`(自动转换后的功率网络缺少线宽/电流密度约束)、`EVIDENCE_SCOPE:OFFLINE_FORECAST`(当前只是离线工程预测);
+- pass(0):离线自动链路没有可确认的通过项。
 
-评级 `not_suitable_for_prototype` 由唯一的高置信度 blocker 决定——这与真实 M2 BEFORE 状态一致。
+评级 `not_suitable_for_prototype` 由高置信度 blocker 决定——这是全自动链路对
+“数据不足”的 fail-closed 诚实结论:没有器件级设计数据与保存重载证据,就不能宣称适合样板。
+它与真实 M2 BEFORE 的工程性 blocker(见上文“真实闭环在哪一步做过”)不同:后者只有在
+具备完整器件级设计数据的真实 EDA 图纸中才能审出并修正。
 
 ## 数据如何清洗
 
-`examples/m2-closed-loop/` 下的两份输入数据为公开清洗/合成值,**不含任何私有 EDA 信息**:
+`examples/m2-closed-loop/` 下的输入数据为公开清洗/合成值,**不含任何私有 EDA 信息**:
 
-- `requirements.zh.json`:中文需求的结构化表达(5V/1A 输入、一进二出、连接器、储能与去耦、接口与电压域、验收标准);省略了真实需求中未承诺的字段(如逐路额定电流、锁定器件型号/厂商/封装 UUID、MCU 管脚映射),以体现真实缺项并展示 fail-closed 的未决项记录;
-- `design-data.json`:审核输入的归一化证据,坐标与网络为**合成值**(J1≈(-18.8,0)、J2≈(18.8,5)、J3≈(18.8,-5)、C1≈(-14,0)、C2/C3 输出侧),仅复现真实案例的**语义**——J2 附近最近的电容是 10uF 储能电容,不在旁路范围内,从而稳定命中唯一 blocker。
+- `requirements.zh.json`:中文需求的结构化表达(5V/1A 输入、一进二出、连接器、储能与去耦、接口与电压域、验收标准);省略了真实需求中未承诺的字段(如逐路额定电流、锁定器件型号/厂商/封装 UUID、MCU 管脚映射),以体现真实缺项并展示 fail-closed 的未决项记录。**demo 默认只使用这份需求**——其余输入均由门禁与转换器自动生成;
+- `design-data.json`:一份**完整设计数据样例**(归一化审核输入的 BEFORE 状态,含 6 器件、电容、走线宽度与去耦需求)。demo 默认不再使用它,保留仅作对比/复现真实 M2 工程 finding(`DECOUPLING_DISTANCE:J2:+5V`)的参考。如要复现,运行 `python -B scripts/run-closed-loop-demo.py --design examples/m2-closed-loop/design-data.json`。
 
 清洗边界:不包含真实 EDA UUID、primitive/library/device ID、审批 ID、token、截图路径、真实 receipts 或私有目录路径。全部数值均为合成/示例值,不代表任何私有设计。
 
