@@ -2,7 +2,7 @@
 
 This is the complete intended file set for the local v0.1.3-alpha Git repository and release archive. All paths are repository-relative. Local Git metadata and the external ZIP/checksum sidecar are not part of the archive.
 
-**Total intended repository files: 174.**
+**Total intended repository files: 177.**
 
 ## Complete inventory
 
@@ -122,6 +122,7 @@ This is the complete intended file set for the local v0.1.3-alpha Git repository
 - `schemas/requirements-input.schema.json`
 - `scripts/build-release.py`
 - `scripts/build-readonly-adapter-envelope.py`
+- `scripts/contract-to-review-cli.py`
 - `scripts/import_m2_evidence.py`
 - `scripts/plan-local-bypass.py`
 - `scripts/prototype-review.ps1`
@@ -146,6 +147,7 @@ This is the complete intended file set for the local v0.1.3-alpha Git repository
 - `src/review/readonly_adapter_contract.py`
 - `src/review/readonly_adapter_export.py`
 - `src/review/readonly_adapter_health.py`
+- `src/spec/contract_to_review.py`
 - `src/spec/requirements_gate.py`
 - `tests/__init__.py`
 - `tests/m2_gate/__init__.py`
@@ -179,4 +181,5 @@ This is the complete intended file set for the local v0.1.3-alpha Git repository
 - `tests/review/test_release_runtime.py`
 - `tests/review/test_review_pipeline.py`
 - `tests/spec/__init__.py`
+- `tests/spec/test_contract_to_review.py`
 - `tests/spec/test_requirements_gate.py`

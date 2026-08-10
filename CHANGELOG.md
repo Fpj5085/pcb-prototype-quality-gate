@@ -11,7 +11,8 @@ Status: local release candidate; no push, tag, GitHub Release or upload is impli
 ### Added
 
 - fail-closed requirements gate: `requirements-input` schema, deterministic `src/spec/requirements_gate.py` engine and `scripts/requirements-gate.py` CLI, with a 33-test `tests/spec/` suite; missing facts are recorded as `unresolved` instead of guessed;
-- public offline closed-loop demo: `examples/m2-closed-loop/` replay data plus `scripts/run-closed-loop-demo.py`, and new "运行端到端闭环示例" (Run the closed loop offline) sections in `README.md` / `README.zh-CN.md`.
+- public offline closed-loop demo: `examples/m2-closed-loop/` replay data plus `scripts/run-closed-loop-demo.py`, and new "运行端到端闭环示例" (Run the closed loop offline) sections in `README.md` / `README.zh-CN.md`;
+- offline contract→review-input converter: `src/spec/contract_to_review.py` projects the fail-closed gate's `hardware-contract` into `jlceda-prototype-review-input/1.0`, with `scripts/contract-to-review-cli.py` and a 26-test `tests/spec/test_contract_to_review.py` suite, closing the one-command "中文需求 → 规格 → 独立审核 → 评级" chain (local, not published; re-validates its output with the review engine's own `validate_design`).
 
 ## [0.1.2-alpha] - 2026-07-29
 
