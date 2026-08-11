@@ -4,6 +4,16 @@ This project-authored history records release-relevant changes. Its section
 layout is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and version labels follow Semantic Versioning conventions.
 
+## [0.1.4-alpha] - 2026-08-11
+
+Status: local release candidate; no push, tag, GitHub Release or upload is implied.
+
+### Added
+
+- offline contract→review-input converter: `src/spec/contract_to_review.py` projects the fail-closed gate's `hardware-contract` into `jlceda-prototype-review-input/1.0`, with `scripts/contract-to-review-cli.py` and a 28-test `tests/spec/test_contract_to_review.py` suite, closing the one-command "中文需求 → 规格 → 独立审核 → 评级" chain; it never guesses and re-validates its output with the review engine's own `validate_design`;
+- closed-loop demo wired to the converter: `scripts/run-closed-loop-demo.py` now auto-converts the gate's hardware contract into review input (`review-input.json`) by default, so the one-command "中文需求 → 规格 → 自动转换 → 审核 → 评级" chain needs no prefab design data; the explicit `--design` override keeps the old prefab path, and the default fail-closed outcome is one `PERSISTENCE` blocker plus three data-completeness advisories (`TRACE_DATA_MISSING`×2, `EVIDENCE_SCOPE:OFFLINE_FORECAST`), with end-to-end regression coverage in `tests/review/test_closed_loop_demo.py`;
+- schematic sheet-frame containment: additive `schematicSheet` block in the review-input schema (A4 page frame + origin + `unitsPerMm` coordinate conversion) and a new fail-closed `schematic_containment` rule family in `src/review/prototype_review.py` that geometrically judges each component's x/y against the page, emitting `SCHEMATIC_CONTAINMENT:<ref>` blockers (or an aggregate pass) with mm-coordinate evidence, `CONTAINMENT_DATA_MISSING` advisories for coordinates the check cannot see, and a short-circuit on an externally-decided `schematicSheet.containment` bool; 10 new tests cover the in-page pass, all four out-of-bounds sides, units→mm conversion, silent absence of `schematicSheet`, unguessed missing coordinates, external short-circuit and a real M2 BEFORE/AFTER replay (old units span -355..335 → 5 blockers; fixed 280..890 / -620..-200 units → pass).
+
 ## [0.1.3-alpha] - 2026-08-09
 
 Status: local release candidate; no push, tag, GitHub Release or upload is implied.
@@ -11,10 +21,7 @@ Status: local release candidate; no push, tag, GitHub Release or upload is impli
 ### Added
 
 - fail-closed requirements gate: `requirements-input` schema, deterministic `src/spec/requirements_gate.py` engine and `scripts/requirements-gate.py` CLI, with a 33-test `tests/spec/` suite; missing facts are recorded as `unresolved` instead of guessed;
-- public offline closed-loop demo: `examples/m2-closed-loop/` replay data plus `scripts/run-closed-loop-demo.py`, and new "运行端到端闭环示例" (Run the closed loop offline) sections in `README.md` / `README.zh-CN.md`;
-- offline contract→review-input converter: `src/spec/contract_to_review.py` projects the fail-closed gate's `hardware-contract` into `jlceda-prototype-review-input/1.0`, with `scripts/contract-to-review-cli.py` and a 26-test `tests/spec/test_contract_to_review.py` suite, closing the one-command "中文需求 → 规格 → 独立审核 → 评级" chain (local, not published; re-validates its output with the review engine's own `validate_design`);
-- closed-loop demo wired to the converter: `scripts/run-closed-loop-demo.py` now auto-converts the gate's hardware contract into review input (`review-input.json`) by default, so the one-command "中文需求 → 规格 → 自动转换 → 审核 → 评级" chain needs no prefab design data; the explicit `--design` override keeps the old prefab path, and the default fail-closed outcome is one `PERSISTENCE` blocker plus three data-completeness advisories (`TRACE_DATA_MISSING`×2, `EVIDENCE_SCOPE:OFFLINE_FORECAST`), with end-to-end regression coverage in `tests/review/test_closed_loop_demo.py` (local, not published);
-- schematic sheet-frame containment: additive `schematicSheet` block in the review-input schema (A4 page frame + origin + `unitsPerMm` coordinate conversion) and a new fail-closed `schematic_containment` rule family in `src/review/prototype_review.py` that geometrically judges each component's x/y against the page, emitting `SCHEMATIC_CONTAINMENT:<ref>` blockers (or an aggregate pass) with mm-coordinate evidence, `CONTAINMENT_DATA_MISSING` advisories for coordinates the check cannot see, and a short-circuit on an externally-decided `schematicSheet.containment` bool; 10 new tests cover the in-page pass, all four out-of-bounds sides, units→mm conversion, silent absence of `schematicSheet`, unguessed missing coordinates, external short-circuit and a real M2 BEFORE/AFTER replay (old units span -355..335 → 5 blockers; fixed 280..890 / -620..-200 units → pass).
+- public offline closed-loop demo: `examples/m2-closed-loop/` replay data plus `scripts/run-closed-loop-demo.py`, and new "运行端到端闭环示例" (Run the closed loop offline) sections in `README.md` / `README.zh-CN.md`.
 
 ## [0.1.2-alpha] - 2026-07-29
 

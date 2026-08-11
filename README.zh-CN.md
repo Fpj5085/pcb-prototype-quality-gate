@@ -1,6 +1,6 @@
 # codex-jlceda-hardware-agent
 
-> **v0.1.3-alpha 本地候选 · NOT FOR MANUFACTURING（不可直接制造）**
+> **v0.1.4-alpha 本地候选 · NOT FOR MANUFACTURING（不可直接制造）**
 
 **面向真实可编辑嘉立创EDA设计的独立 Prototype 打样前质量门与受控修正闭环。**
 
@@ -96,7 +96,7 @@ fail-closed 诚实结论,不是回归——只有具备完整器件级数据(如
 在 [`examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md`](examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md)
 中如实说明。
 
-## v0.1.3-alpha 包含
+## v0.1.4-alpha 包含
 
 - 普通语言请求到 **Draft / Prototype / Manufacturing Release** 工作模式的治理规则；
 - 从可替换 Draft 生成器或既有可编辑设计进入独立现场读回的适配器中立交接；
@@ -112,6 +112,9 @@ fail-closed 诚实结论,不是回归——只有具备完整器件级数据(如
 
 - 独立 M3 传感器转接板重复验证：真实 5 器件 BEFORE 仅命中本地旁路 blocker；白名单 `ADD_LOCAL_BYPASS_CAP` 加入锁定的 100nF X7R C0805；保存重载后的 6 器件 AFTER 通过 ERC、连通性、板框包含、严格 DRC 和全新复审。
 - 新增 fail-closed 需求门禁（需求输入 → 结构化硬件规格）与可一键复现的公开闭环演示。
+- contract→review-input 转换器（`src/spec/contract_to_review.py`）：把硬件规格（`hardware-contract`）自动投影为归一化审核输入，补齐离线“需求 → 评级”链路；
+- 闭环演示默认自动执行该转换，审核输入无需预制设计数据（`--design` 可回退旧预制路径），并对数据不完整的自动转换输入诚实给出 `not_suitable_for_prototype` 评级；
+- 原理图图框 containment 规则：新增 `schematicSheet` 输入块与 fail-closed `schematic_containment` 规则族，几何判定元件是否超出图框（`SCHEMATIC_CONTAINMENT:<ref>` blocker，附 mm 坐标证据；通过时给聚合 pass），缺坐标时记录 `CONTAINMENT_DATA_MISSING`，并支持外部给定的 `schematicSheet.containment` 布尔短路。
 
 ## 不宣称
 

@@ -1,6 +1,6 @@
 # Documentation and plugin release review
 
-Review scope: R2 documentation/product expression and R3 Codex plugin/skill packaging for v0.1.3-alpha. No EDA mutation, manufacturing or network publication was performed.
+Review scope: R2 documentation/product expression and R3 Codex plugin/skill packaging for v0.1.4-alpha. No EDA mutation, manufacturing or network publication was performed.
 
 ## Result
 
@@ -35,7 +35,7 @@ Review scope: R2 documentation/product expression and R3 Codex plugin/skill pack
 
 ## Plugin and skill structure
 
-- `.codex-plugin/plugin.json` uses strict semver `0.1.3-alpha` and repository-relative `./skills/` discovery.
+- `.codex-plugin/plugin.json` uses strict semver `0.1.4-alpha` and repository-relative `./skills/` discovery.
 - Canonical skill path is `skills/jlceda-hardware-design/`; the obsolete singular `skill/` copy was removed.
 - Skill frontmatter and `agents/openai.yaml` are present and use only relative references.
 - Installation documentation uses a user-created local marketplace and does not alter a workstation marketplace automatically.
@@ -59,7 +59,7 @@ Review scope: R2 documentation/product expression and R3 Codex plugin/skill pack
 
 ## Human confirmations before publication
 
-1. Review the final v0.1.3-alpha commit, ZIP and SHA-256 sidecar.
-2. Make a separate explicit decision before pushing the reviewed commit, creating the `v0.1.3-alpha` tag/Release or uploading assets.
+1. Review the final v0.1.4-alpha commit, ZIP and SHA-256 sidecar.
+2. Make a separate explicit decision before pushing the reviewed commit, creating the `v0.1.4-alpha` tag/Release or uploading assets.
 3. Keep live claims limited to the gate-generated minimal M2 and M3 summaries; do not publish raw receipts or relabel offline fixture bytes as live evidence.
 4. Preserve the NOT FOR MANUFACTURING and fixture-scoped repeatability boundaries.

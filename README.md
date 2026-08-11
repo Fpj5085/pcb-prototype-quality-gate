@@ -1,6 +1,6 @@
 # codex-jlceda-hardware-agent
 
-> **v0.1.3-alpha local candidate · NOT FOR MANUFACTURING**
+> **v0.1.4-alpha local candidate · NOT FOR MANUFACTURING**
 
 **An independent prototype-readiness quality gate and bounded repair loop for editable JLCEDA designs.**
 
@@ -120,7 +120,7 @@ EDA drawing, allow-listed correction, save/reload re-verification) was
 completed and passed in the real environment and is described honestly in
 [`examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md`](examples/m2-closed-loop/CLOSED-LOOP-DEMO.zh.md).
 
-## What v0.1.3-alpha includes
+## What v0.1.4-alpha includes
 
 - ordinary-language routing into **Draft**, **Prototype**, and **Manufacturing Release** work modes;
 - adapter-neutral handoff from a replaceable Draft generator or an existing editable design into independent current-state review;
@@ -135,6 +135,9 @@ completed and passed in the real environment and is described honestly in
 - three additional synthetic BEFORE/AFTER benchmark pairs covering power input, sensor interfaces and low-speed communication;
 - an adapter-neutral offline Pipeline plus strict read-only Adapter Envelope and health contracts that accept no partial evidence and grant no EDA write authority;
 - a fail-closed requirements gate (requirements input → structured hardware contract) and a one-command public closed-loop demo for the real M2 case — 新增需求门禁与可复现闭环演示.
+- a contract→review-input converter (`src/spec/contract_to_review.py`) that projects a hardware spec (`hardware-contract`) automatically into normalized review input, closing the offline "needs → rating" chain;
+- a closed-loop demo that auto-runs that conversion by default, so review input needs no prefab design data (`--design` falls back to the old prefab path), and honestly rates the data-incomplete auto-converted input `not_suitable_for_prototype`;
+- schematic sheet-frame containment: an additive `schematicSheet` input block and a fail-closed `schematic_containment` rule family that geometrically flags components drawn outside the schematic page (`SCHEMATIC_CONTAINMENT:<ref>` blockers with mm-coordinate evidence, or an aggregate pass), records `CONTAINMENT_DATA_MISSING` when coordinates are absent, and short-circuits on an externally-decided `schematicSheet.containment` bool.
 
 ## What it does not claim
 
